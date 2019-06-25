@@ -2,5 +2,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+}
+
+.main-container {
+    display: flex;
+    height: 720px;  /*it must be updated for responsiveness of the page*/
+    position: relative; 
+}
+
+#create-panel-col {
+    left: 20px;
+    bottom: 0;
+    position: absolute;
+    border: 1px;
+}
+
+.col-sm-3 {
+    padding-right: 0; 
+}
+
+.header-title-box {
+    background-color: darkgrey;
+    border-radius: 1px;
+}
+
+.header-btn-box.col-sm-3 {
+    padding-left: 0;
 }
