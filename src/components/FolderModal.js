@@ -18,7 +18,7 @@ class FolderModal extends React.Component {
     
     render() {
         return (
-            <Modal isOpen={this.props.handleShow}>
+            <Modal isOpen={this.props.handleShow} onRequestClose= {this.props.handleClose}>
                 <h3 className="modal-title">Create a new folder</h3>
                 <br></br><br></br>
                 <InputGroup className="mb-3">
@@ -30,7 +30,7 @@ class FolderModal extends React.Component {
                 </InputGroup>
                 <br></br>
                 <div className= "btns">
-                <Button className="close-btn" variant="secondary" onClick={this.handleClose}>
+                <Button className="close-btn" variant="secondary" onClick={this.props.handleClose}>
                    Close
                </Button>
                <Button variant="primary" >

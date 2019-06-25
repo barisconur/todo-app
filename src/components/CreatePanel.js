@@ -1,6 +1,6 @@
 import React from 'react';
-import self_css from '../styles/CreatePanel.css';
-import main_css from '../styles/App.css';
+import '../styles/CreatePanel.css';
+import '../styles/App.css';
 import addIcon from '../assets/add-icon.svg';
 import { Button } from 'react-bootstrap';
 import ListModal from './ListModal';
@@ -19,14 +19,16 @@ class CreatePanel extends React.Component {
                        <img className="add-icon-image" src={addIcon}></img>
                     </Button>
                     <h3>Create list</h3>
-                    <ListModal handleShow= {this.state.isCreateListOpen} closeModal= {!this.state.isCreateListOpen}/>
+                    <ListModal handleShow={this.state.isCreateListOpen}
+                        handleClose={this.handleListShow}/>
                 </div>
                 <div className="create-folder-wrapper">
                 <Button variant="primary" onClick= {this.handleFolderShow}>
                        <img className="add-icon-image" src={addIcon}></img>
                     </Button>
                     <h3>Create folder</h3>
-                    <FolderModal handleShow={this.state.isCreateFolderOpen} closeModal= {!this.state.isCreateFolderOpen}/>
+                    <FolderModal handleShow={this.state.isCreateFolderOpen} 
+                        handleClose={this.handleFolderShow} />
                 </div>
             </div>
             
@@ -34,11 +36,15 @@ class CreatePanel extends React.Component {
     }   
 
     handleListShow = () => {
-        this.setState(() => ({isCreateListOpen: true}));
+        this.setState({
+            isCreateListOpen: !this.state.isCreateListOpen
+        });
     };
     
     handleFolderShow = () => {
-        this.setState(() => ({isCreateFolderOpen: true}));
+        this.setState({
+            isCreateListOpen: !this.state.isCreateListOpen
+        });
     };
 
 } 

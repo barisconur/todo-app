@@ -7,14 +7,14 @@ class ListModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: false,
+            show: false,
             listName: ""
         };
     };
     
     render() {
         return (
-            <Modal isOpen={this.props.handleShow} onRequestClose= {this.props.closeModal}>
+            <Modal isOpen={this.props.handleShow} onRequestClose={this.props.handleClose}>
                 <h3 className="modal-title">Create a new list</h3>
                 <br></br><br></br>
                 <InputGroup className="mb-3">
@@ -26,10 +26,10 @@ class ListModal extends React.Component {
                 </InputGroup>
                 <br></br>
                 <div className= "btns">
-                <Button className="close-btn" variant="secondary" onClick={this.onRequestClose}>
+                <Button className="close-btn" variant="secondary" onClick={this.props.handleClose}>
                    Close
                </Button>
-               <Button variant="primary" >
+               <Button className="register-btn" variant="primary" onClick={this.props.handleClose}>
                    Register
                </Button>
                 </div>
