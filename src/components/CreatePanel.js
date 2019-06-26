@@ -3,49 +3,73 @@ import '../styles/CreatePanel.css';
 import '../styles/App.css';
 import addIcon from '../assets/add-icon.svg';
 import { Button } from 'react-bootstrap';
-import ListModal from './ListModal';
-import FolderModal from './FolderModal';
+import ModalContainer from './ModalContainer';
 
 class CreatePanel extends React.Component {
     state = {
-        isCreateListOpen: false,
-        isCreateFolderOpen: false
+        showModal: false,
+        modalName: "",
+        itemNameWillBeRegistered: ""
     }
     render() {
         return (
             <div className="create-panel-container">
                 <div className="create-list-wrapper"> 
-                    <Button variant="primary" onClick= {this.handleListShow}>
-                       <img className="add-icon-image" src={addIcon}></img>
+                    <Button className="create-list-btn" variant="primary" onClick= {this.handleListModal}>
+                       <img className="add-icon-image" src={addIcon} alt="add-list-img"></img>
                     </Button>
                     <h3>Create list</h3>
-                    <ListModal handleShow={this.state.isCreateListOpen}
-                        handleClose={this.handleListShow}/>
+                    <ModalContainer isModalShown={this.state.showModal} 
+                                    closeModal={this.handleClose}
+                                    register={this.registerList}
+                                    modal={this.state.modalName}/>
                 </div>
+
                 <div className="create-folder-wrapper">
-                <Button variant="primary" onClick= {this.handleFolderShow}>
-                       <img className="add-icon-image" src={addIcon}></img>
+                    <Button className="create-folder-btn" variant="primary" onClick= {this.handleFolderModal}>
+                       <img className="add-icon-image" src={addIcon} alt ="add-folder-img"></img>
                     </Button>
-                    <h3>Create folder</h3>
-                    <FolderModal handleShow={this.state.isCreateFolderOpen} 
-                        handleClose={this.handleFolderShow} />
+                    <h3>Create folder</h3>     
+
                 </div>
             </div>
             
           );
-    }   
+    } 
 
-    handleListShow = () => {
+    handleListModal = () => {
         this.setState({
-            isCreateListOpen: !this.state.isCreateListOpen
+            showModal: true,
+            modalName: 'List'
+        });
+    };  
+
+    handleFolderModal = () => {
+        this.setState({
+            showModal: true,
+            modalName: 'Folder'
         });
     };
-    
-    handleFolderShow = () => {
+
+    handleClose = () => {
         this.setState({
-            isCreateListOpen: !this.state.isCreateListOpen
+            showModal: false
         });
     };
+
+    registerList = () => {
+        this.handleClose();
+        this.setState({
+            itemNameWillBeRegistered: ""
+        })
+    }
+
+    registerFolder = () => {
+        this.handleClose();
+        this.setState( {
+            itemNameWillBeRegistered: ""
+        })
+    }
 
 } 
 

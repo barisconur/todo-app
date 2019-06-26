@@ -3,8 +3,7 @@ import SearchPanel from './SearchPanel';
 import CreatePanel from './CreatePanel';
 import ButtonPanel from './ButtonPanel';
 import {Container, Row, Col} from 'react-bootstrap';
-import ListModal from './ListModal';
-import css from '../styles/App.css';
+import '../styles/App.css';
 
 export default class AppMainPage extends React.Component {
   state = {

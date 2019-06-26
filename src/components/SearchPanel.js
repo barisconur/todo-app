@@ -1,10 +1,10 @@
 import React from 'react';
-import self_css from '../styles/SearchPanel.css'
-import main_css from '../styles/App.css';
+import '../styles/SearchPanel.css'
+import '../styles/App.css';
 import searchIcon from '../assets/search-icon.svg';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
 
-const SearchPanel = (props) => (
+const SearchPanel = () => (
     <InputGroup className="mb-3">
     <FormControl
       placeholder="Search..."
@@ -13,7 +13,7 @@ const SearchPanel = (props) => (
     />
     <InputGroup.Append>
       <Button variant="outline-secondary">
-          <img className="search-icon-image" src={searchIcon}></img>
+          <img className="search-icon-image" src={searchIcon} alt="search-icon"></img>
           </Button>
     </InputGroup.Append>
   </InputGroup>
