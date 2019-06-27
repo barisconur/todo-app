@@ -10,6 +10,11 @@
     position: relative; 
 }
 
+#lists-cont {
+    margin-top: 50px;
+    margin-left: 5px;
+}
+
 #create-panel-col {
     left: 20px;
     bottom: 0;

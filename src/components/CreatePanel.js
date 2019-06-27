@@ -21,19 +21,10 @@ class CreatePanel extends React.Component {
                     <h3>Create list</h3>
                     <ModalContainer isModalShown={this.state.showModal} 
                                     closeModal={this.handleClose}
-                                    register={this.registerList}
-                                    modal={this.state.modalName}/>
+                                    modal={this.state.modalName}
+                                    inputFromParent = {this.registerItem} />
                 </div>
-
-                <div className="create-folder-wrapper">
-                    <Button className="create-folder-btn" variant="primary" onClick= {this.handleFolderModal}>
-                       <img className="add-icon-image" src={addIcon} alt ="add-folder-img"></img>
-                    </Button>
-                    <h3>Create folder</h3>     
-
-                </div>
-            </div>
-            
+            </div>   
           );
     } 
 
@@ -57,20 +48,13 @@ class CreatePanel extends React.Component {
         });
     };
 
-    registerList = () => {
-        this.handleClose();
+    registerItem = (itemName) => {
         this.setState({
-            itemNameWillBeRegistered: ""
-        })
-    }
-
-    registerFolder = () => {
+                itemNameWillBeRegistered: itemName
+            });
+        this.props.registerItem(itemName);
         this.handleClose();
-        this.setState( {
-            itemNameWillBeRegistered: ""
-        })
     }
-
 } 
 
 export default CreatePanel; 
