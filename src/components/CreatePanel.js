@@ -9,7 +9,8 @@ class CreatePanel extends React.Component {
     state = {
         showModal: false,
         modalName: "",
-        itemNameWillBeRegistered: ""
+        itemNameWillBeRegistered: "",
+        index: 0
     }
     render() {
         return (
@@ -18,7 +19,7 @@ class CreatePanel extends React.Component {
                     <Button className="create-list-btn" variant="primary" onClick= {this.handleListModal}>
                        <img className="add-icon-image" src={addIcon} alt="add-list-img"></img>
                     </Button>
-                    <h3>Create list</h3>
+                    <h3 className="create-list-text">Create list</h3>
                     <ModalContainer isModalShown={this.state.showModal} 
                                     closeModal={this.handleClose}
                                     modal={this.state.modalName}
@@ -35,13 +36,6 @@ class CreatePanel extends React.Component {
         });
     };  
 
-    handleFolderModal = () => {
-        this.setState({
-            showModal: true,
-            modalName: 'Folder'
-        });
-    };
-
     handleClose = () => {
         this.setState({
             showModal: false
@@ -49,10 +43,11 @@ class CreatePanel extends React.Component {
     };
 
     registerItem = (itemName) => {
-        this.setState({
-                itemNameWillBeRegistered: itemName
-            });
-        this.props.registerItem(itemName);
+        this.setState(prevState => ({
+            itemNameWillBeRegistered: itemName,
+            index: prevState.index+1
+        }));
+        this.props.registerItem(itemName, this.state.index);
         this.handleClose();
     }
 } 

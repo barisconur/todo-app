@@ -11,6 +11,7 @@ export default class AppMainPage extends React.Component {
     allLists: [],
     selectedList: undefined,
     listCount: 0
+
   };
 
   render() {
@@ -26,12 +27,13 @@ export default class AppMainPage extends React.Component {
           <Row className="main-container">
             <Col sm={2} className="left-panel">
               <div id="lists-cont">
-                { this.state.allLists.map((list) => {
-                  return <List listItem={ list } key={this.state.listCount} removeItem ={this.removeListItem}></List>;
+                { this.state.allLists.map((list, index) => {
+                  return <List listItem={ list } key={index} id={index}
+                  removeItem ={this.removeListItem}></List>;
                 }) }
               </div>
               <div id="create-panel-col">
-                <CreatePanel registerItem={this.addList}/>
+                <CreatePanel registerItem={this.addListItem}/>
                 </div>
             </Col>
             <Col sm={9} className="elements-panel">
@@ -40,48 +42,25 @@ export default class AppMainPage extends React.Component {
               </div>
             </Col>
           </Row>
+
         </Container>  
       </div>
     );
   };
 
-  addList = (listName) => {
-    console.log(this.state.listCount);
-    this.setState((prevState) => ({
-      allLists: [...this.state.allLists, {name: listName, id: this.state.listCount}],
-      listCount: prevState.listCount++
-    }));
+  addListItem = (listName, index) => {
+      this.setState((prevState) => ({
+        allLists: [...this.state.allLists, {name: listName, id: index}]
+      }));
   }
 
   removeListItem = (id) => {
-    console.log(id);
-    const newList = this.state.allLists.filter (list => list.id !== id);
     this.setState({
-      allLists: newList
-    })
+       allLists: [...this.state.allLists.filter(list => list.id !== id)]
+    });
   }
-
-  renameListItem = () => {
-    //TO-DO
-  };
-
-  copyListItem = () => {
-    //TO-DO
-  };
-
-  duplicateListItem = () => {
-    //TO-DO
-  };
-
-  moveListItemInFolder = () => {
-    //TO-DO
-  };
-
-  printListItem = () => {
-    //TO-DO
-  };
-
 }
+  
 
 
   

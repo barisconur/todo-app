@@ -15,7 +15,7 @@ class List extends React.Component {
             <div className="list-container">
                 <img className="list-icon-img" src={listIcon} alt="list-icon"></img>
                 <h2 className="list-text"> {listItem.name}</h2>
-                <Button className="remove-btn" variant="danger" onClick= {this.removeItem}>
+                <Button className="remove-btn" variant="danger" onClick={this.removeItem}>
                     <img className="remove-icon-img" src={removeIcon} alt="remove-icon"></img>
                 </Button>
             </div>
@@ -24,6 +24,10 @@ class List extends React.Component {
 
     removeItem = () => {
         this.props.removeItem(this.props.id);
+    }
+
+    showItems = () => {
+
     }
 }
 
