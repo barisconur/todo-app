@@ -12,7 +12,7 @@ const SearchPanel = () => (
       aria-describedby="basic-addon2"
     />
     <InputGroup.Append>
-      <Button variant="outline-secondary">
+      <Button variant="outline-danger">
           <img className="search-icon-image" src={searchIcon} alt="search-icon"></img>
           </Button>
     </InputGroup.Append>

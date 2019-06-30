@@ -7,15 +7,17 @@ import { Button } from 'react-bootstrap';
 
 class List extends React.Component {
     state = {
-        allItems: []
+        allItems: ["test"]
     }
     render() {
         const { listItem } = this.props;
         return (
             <div className="list-container">
                 <img className="list-icon-img" src={listIcon} alt="list-icon"></img>
-                <h2 className="list-text"> {listItem.name}</h2>
-                <Button className="remove-btn" variant="danger" onClick={this.removeItem}>
+                <h2 className="list-text">
+                 <a onClick={this.showItems}>{listItem.name}</a>
+                </h2>
+                <Button className="remove-btn" variant="outline-danger" onClick={this.removeItem}>
                     <img className="remove-icon-img" src={removeIcon} alt="remove-icon"></img>
                 </Button>
             </div>
@@ -27,8 +29,8 @@ class List extends React.Component {
     }
 
     showItems = () => {
-
+        this.props.showItems(this.state.allItems);
     }
 }
 
-  export default List;
+export default List;

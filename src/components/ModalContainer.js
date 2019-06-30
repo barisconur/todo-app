@@ -43,7 +43,14 @@ class ModalContainer extends React.Component {
 
     register = () => {
         const inputInfo = this.state.input;
-        this.props.inputFromParent(inputInfo);
+        if (inputInfo.length !== 0) {
+            this.props.inputFromParent(inputInfo);
+            this.setState({
+                input: ""
+            });
+        } else {      
+            alert('Please enter a valid string'); 
+        }
     }
 
     setInput = () => {

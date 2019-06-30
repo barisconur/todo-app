@@ -6,13 +6,24 @@
 
 .main-container {
     display: flex;
-    height: 720px;  /*it must be updated for responsiveness of the page*/
+    height: 720px;
     position: relative; 
 }
 
+.left-panel {
+    border: 1px solid seagreen;
+    height: 100%;
+    background-color: rgba(189, 189, 190, 0.822);
+}
+
 #lists-cont {
+    width: 350px;
     margin-top: 50px;
     margin-left: 5px;
+}
+
+.elements-panel {
+    background-image: url(../assets/eiffel.jpg);
 }
 
 #create-panel-col {
@@ -27,7 +38,7 @@
 }
 
 .header-title-box {
-    background-color: darkgrey;
+    background-color: rgba(189, 189, 190, 0.822);
     border-radius: 1px;
 }
 

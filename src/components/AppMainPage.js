@@ -5,6 +5,7 @@ import ButtonPanel from './ButtonPanel';
 import {Container, Row, Col} from 'react-bootstrap';
 import '../styles/App.css';
 import List from './List';
+import ToDoItem from './ToDoItem';
 
 export default class AppMainPage extends React.Component {
   state = {
@@ -25,18 +26,21 @@ export default class AppMainPage extends React.Component {
           </Row>
 
           <Row className="main-container">
-            <Col sm={2} className="left-panel">
+            <Col sm={3} className="left-panel">
               <div id="lists-cont">
                 { this.state.allLists.map((list, index) => {
                   return <List listItem={ list } key={index} id={index}
-                  removeItem ={this.removeListItem}></List>;
+                  removeItem={this.removeListItem} showItems={this.showELements}></List>;
                 }) }
               </div>
               <div id="create-panel-col">
                 <CreatePanel registerItem={this.addListItem}/>
                 </div>
             </Col>
-            <Col sm={9} className="elements-panel">
+            <Col sm={8} className="elements-panel">
+                <ToDoItem>
+
+                </ToDoItem>
               <div id="elements-cont">
 
               </div>
@@ -49,7 +53,7 @@ export default class AppMainPage extends React.Component {
   };
 
   addListItem = (listName, index) => {
-      this.setState((prevState) => ({
+      this.setState(() => ({
         allLists: [...this.state.allLists, {name: listName, id: index}]
       }));
   }
@@ -58,6 +62,10 @@ export default class AppMainPage extends React.Component {
     this.setState({
        allLists: [...this.state.allLists.filter(list => list.id !== id)]
     });
+  }
+
+  showElements = (allTodoElements) => {
+    console.log(allTodoElements);
   }
 }
   
