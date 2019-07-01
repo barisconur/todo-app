@@ -5,26 +5,22 @@ import '../styles/ToDoItem.css';
 import { Button, Card } from 'react-bootstrap';
 
 class ToDoItem extends React.Component {
-    state = {
-        name: "",
-        description: ["test"]
 
-    }
     render() {
         return (
-            <Card>
-                <Card.Header>
-                    <Button className="checkbox-btn" variant="light" onClick={this.showDetails}>
-                        <img className="checkbox-icon-img" src={checkBoxIcon} alt="checkbox-icon"></img>
-                    </Button>
-                    <h2 className="todo-item-text">dglksajdlkj</h2>
-                </Card.Header>
-            </Card>
+                <Card>
+                    <Card.Header>
+                        <Button className="checkbox-btn" variant="light" onClick={this.removeItem}>
+                            <img className="checkbox-icon-img" src={checkBoxIcon} alt="checkbox-icon"></img>
+                        </Button>
+                        <h2 className="todo-item-text">{this.props.name}</h2>
+                    </Card.Header>
+               </Card>
         );
     }
 
-    showDetails = () => {
-
+    removeItem = () => {
+        this.props.removeItem();
     }
 }
 
