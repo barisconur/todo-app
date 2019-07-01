@@ -4,7 +4,7 @@ import '../styles/App.css';
 import searchIcon from '../assets/search-icon.svg';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
 
-const SearchPanel = () => (
+const SearchContainer = () => (
     <InputGroup className="mb-3">
     <FormControl
       placeholder="Search..."
@@ -19,4 +19,4 @@ const SearchPanel = () => (
   </InputGroup>
   );
 
-  export default SearchPanel;
+  export default SearchContainer;

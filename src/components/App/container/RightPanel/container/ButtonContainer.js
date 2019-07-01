@@ -5,7 +5,7 @@ import sortIcon from '../assets/sort-icon.svg';
 import moreIcon from '../assets/more-icon.svg';
 import {Button, ButtonToolbar} from 'react-bootstrap';
 
-const ButtonPanel = () => (
+const ButtonContainer = () => (
   <ButtonToolbar>
       <Button variant="outline-primary">
       <img className="sort-icon-image" src={sortIcon} alt="sort-icon"></img>
@@ -16,4 +16,4 @@ const ButtonPanel = () => (
   </ButtonToolbar>
   );
 
-  export default ButtonPanel;
+  export default ButtonContainer;
