@@ -1,27 +1,22 @@
 import React from 'react';
-import '../styles/App.css';
-import checkBoxIcon from '../assets/checkbox-icon.svg';
-import '../styles/ToDoItem.css';
-import { Button, Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import '../view/ToDoPanelView.css';
+import checkBoxIcon from '../../../../../assets/checkbox-icon.svg';
+import removeIcon from '../../../../../assets/remove-icon.svg';
 
 class ToDoItem extends React.Component {
-
-    render() {
-        return (
-                <Card>
-                    <Card.Header>
-                        <Button className="checkbox-btn" variant="light" onClick={this.removeItem}>
-                            <img className="checkbox-icon-img" src={checkBoxIcon} alt="checkbox-icon"></img>
-                        </Button>
-                        <h2 className="todo-item-text">{this.props.name}</h2>
-                    </Card.Header>
-               </Card>
-        );
-    }
-
-    removeItem = () => {
-        this.props.removeItem();
-    }
+  render() {
+    return (
+      <div className="todo-container">
+        <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
+        <h2 className="todo-item-text">Item</h2> 
+  
+        <Button className="remove-btn" variant="outline-danger">
+         <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
+        </Button>
+    </div>
+    );
+  }
 }
 
 export default ToDoItem;

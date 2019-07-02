@@ -1,63 +1,67 @@
 import React from 'react';
-import { Modal, Button, InputGroup, FormControl } from 'react-bootstrap';
-import '../styles/ModalContainer.css';
+import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
+import '../view/ListPanelView.css';
 
 class ModalContainer extends React.Component {
-    constructor(props){
-        super(props);
-        this.userInput = React.createRef();
+  constructor(props) {
+    super(props);
+    this.userInput = React.createRef();
+    this.state = {
+      input: ""
+    }
+  }
 
-        this.state = {
-            input: ""
-        }
-    }
-    render() {
-        return (
-            <Modal className="modal" show={this.props.isModalShown} onHide={this.props.closeModal}>
-            <Modal.Header closeButton>
-                <Modal.Title>Create New {this.props.modal}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-               <InputGroup className="mb-3">
-                    <FormControl
-                        ref= {this.userInput}
-                        type= "text"
-                        placeholder= "List Name" 
-                        aria-label="Folder-name"
-                        aria-describedby="basic-addon2"
-                        onChange={() => this.setInput()}
-                    />
-                </InputGroup>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}>
-                Close
-                </Button>
-                <Button className="modal-register-btn" variant="primary" onClick={this.register}>
-                Register
-                </Button>
-            </Modal.Footer>
-        </Modal>
-        );
-    }
+  render() {
+    return (
+      <Modal className="add-list-or-folder-modal" show={this.props.isModalShown} onHide={this.props.closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New {this.props.whichModal}</Modal.Title>
+        </Modal.Header>
 
-    register = () => {
-        const inputInfo = this.state.input;
-        if (inputInfo.length !== 0) {
-            this.props.inputFromParent(inputInfo);
-            this.setState({
-                input: ""
-            });
-        } else {      
-            alert('Please enter a valid string'); 
-        }
-    }
+        <Modal.Body>
+          <InputGroup className="mb-3">
+            <FormControl
+              ref= {this.userInput}
+              type= "text"
+              placeholder= {this.props.whichModal +" name"}
+              aria-label={this.props.whichModal +"-name"}
+              aria-describedby="basic-addon2"
+              onChange={() => this.setInputComingFromUser()}
+              />
+          </InputGroup>
+        </Modal.Body>
+      
+        <Modal.Footer>
+          <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}>
+          Close
+          </Button>
+          <Button className="modal-register-btn" variant="primary" onClick={this.sendInputToView}>
+          Register
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
-    setInput = () => {
-        this.setState({
-            input: this.userInput.current.value
-        })
-    }
+  handleToggle = () => {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
+  }
+
+  sendInputToView = () => {
+    const userInput = this.state.input;
+
+    this.setInputComingFromUser();
+    this.props.itemName(userInput);
+    this.props.closeModal();
+  }
+
+  setInputComingFromUser = () => {
+    this.setState({
+      input: this.userInput.current.value
+    })
+  }
 }
 
 export default ModalContainer;
