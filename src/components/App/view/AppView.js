@@ -1,13 +1,17 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './AppView.css';
-import ListPanelView from '../Container/ListPanel/view/ListPanelView';
-import ToDoPanelView from '../Container/ToDoPanel/view/ToDoPanelView';
+import ListPanelView from '../container/ListPanel/view/ListPanelView';
+import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
 // import MenuPanel from '../Container/MenuPanel/view/MenuPanel';
 
 export default class AppView extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      selectedList: undefined
+    }
   }
   
   render() {
@@ -15,12 +19,12 @@ export default class AppView extends React.Component {
       <div>
         <Container id="app-container">
           <Row>
-            <Col sm={3} className="panel-container">
-              <ListPanelView/>
+            <Col sm={2} className="panel-container">
+              <ListPanelView selectedList={this.setSelectedList}/>
             </Col>
 
-            <Col sm={9} className="todo-panel-container">
-              <ToDoPanelView/>
+            <Col sm={10} className="todo-panel-container">
+              <ToDoPanelView selectedList={this.sendSelectedListToDoPanel}/>
             </Col>
             
             {/* <Col sm={3} className="panel-container">
@@ -30,5 +34,21 @@ export default class AppView extends React.Component {
         </Container>
       </div>
     );
-  };
+  }
+
+  setSelectedList = (list) => {
+    this.setState({
+      selectedList: list
+    });
+  }
+
+  sendSelectedListToToDoPanel = () => {
+      const listName = this.state.selectedList;
+      console.log(listName);
+
+      if (listName !== '') {
+        return listName;
+      }
+      return undefined;
+  }
 }

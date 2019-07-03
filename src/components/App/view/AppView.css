@@ -1,18 +1,29 @@
-#app-container {
-  max-width: 1575px;
-  max-height: 1575px;
-  width: auto;
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
+#app-container {
+  padding: 0;
+  margin: 0;
+  max-width: 2000px;
+  max-height: 1600px;
+}
+
 .panel-container {
-  height: 750px;
+  width: 314.5px;
+  min-width: 314.5px;;
+  height: 880px;
   padding: 0px;
 }
 
-
 .todo-panel-container {
-  height: 800px;
+  position: absolute;
+  right: 0%;
+  width: 100%;
+  max-width: 2000px;
+  height: 880px;
+  max-height: 2000px;
   background-image: url(../../../assets/eiffel.jpg);
 }

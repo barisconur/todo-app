@@ -1,11 +1,43 @@
-.todo-container {
-  border: 1px solid black;
+.todo-panel-container {
+  display:inline-block;
   margin-bottom: -1px;
-  display: flex;
+  padding-right: 0;
+  padding-left: 0;
+  background-size: 100%;
+  background-repeat: no-repeat;
   background-color: rgba(245, 245, 245, 0.856);
-  width: 100%;
-  height: 55px;
   position: relative;
+}
+
+.navbar {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+}
+
+.navbar-selected-list {
+  vertical-align: middle;
+  font-size: 18px;
+  width: 80%;
+  color: #fff;
+}
+
+.add-todo-container {
+  display: flex;
+  position: absolute;
+  width: 98%;
+  top: 50px;
+  height: 35.75px;
+}
+
+.add-todo-field {
+  height: 40px;
+}
+
+.add-item-btn {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
 }
 
 .checkbox-icon {
@@ -14,20 +46,7 @@
 }
 
 .todo-item-text {
-  display: inline;
   font-size: 16px;
   font-weight: 500;
   padding-left: 20px;
-}
-
-.todo-panel-text {
-  color: #fff;
-}
-
-.add-todo-container {
-  display: flex;
-}
-
-.mb-3.input-group {
-  margin-bottom: 0px!important;
 }

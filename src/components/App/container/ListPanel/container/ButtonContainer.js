@@ -11,14 +11,14 @@ class ButtonContainer extends React.Component {
     return (
       <div className="create-buttons-container"> 
         <div className="create-list-container">
-          <Button className="create-btn" variant="outline-primary" onClick={this.handleListModal}>
+          <Button className="create-btn" variant="outline-secondary" onClick={this.handleListModal}>
           <img className="create-icon" src={createIcon} alt="create-list-icon"></img>
           </Button>
           <h3 className="create-text">Create list</h3>
         </div>
   
         <div className="create-folder-container">
-          <Button className="create-btn" variant="outline-primary" onClick={this.handleFolderModal}>
+          <Button className="create-btn" variant="outline-secondary" onClick={this.handleFolderModal}>
             <img className="create-icon" src={createIcon} alt="create-folder-icon"></img>
           </Button>
           <h3 className="create-text">Create folder</h3>

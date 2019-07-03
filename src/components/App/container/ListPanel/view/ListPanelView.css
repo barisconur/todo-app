@@ -1,11 +1,47 @@
+.lists-container {
+  width: 314.5px;
+  min-width: 314.5px;
+  height: 100%;
+}
+
+.search-container {
+  position: absolute;
+  left: 0%;
+  width: 314.5px;
+}
+
+.search-field {
+  height: 32.5px;
+  padding-left: 20px;
+  margin-left: 5px;
+  border-right-width: 2px;
+}
+
+
+.input-group > .custom-file, .input-group > 
+.custom-select, .input-group > .form-control, 
+.input-group > .form-control-plaintext {
+  box-shadow: none;
+}
+
+.search-btn {
+  background-color: #fff;
+  border-color: #fff;
+}
+
 .list-container {
-  border: 1px solid rgb(0, 0, 48);
-  margin-bottom: -1px;
   display: flex;
-  background-color: rgba(245, 245, 245, 0.856);
-  width: 100%;
-  height: 55px;
+  width: 75%;
+  height: 40px;
   position: relative;
+}
+
+.list-remove-btn {
+  display: inline-flex;
+}
+
+.list-items-container {
+  padding-top: 60px;
 }
 
 .list-icon {
@@ -13,37 +49,43 @@
 }
 
 .list-text {
-  font-size: 16px;
-  font-weight: 500;
-  padding-left: 20px;
-  margin-top: 15px;
+  color: #000 !important;
+  font-size: 14px;
+  font-weight: 200;
+  padding-left: 10px;
+  margin-top: 12px;
 }
 
-.remove-btn {
-  position: absolute;
-  right: 0%;
-  height: 100%;
+.link {
+  text-decoration: none;
 }
 
 .create-buttons-container {
   position: absolute;
-  bottom: 0%;
-  padding: 10px;
+  bottom: 2%;
+  padding-left: 20px;
+}
+
+.create-list-container {
+  margin-bottom: 10px;
+}
+
+.create-btn {
+  width: 40px;
+  height: 40px;
 }
 
 .create-text {
   display: inline;
   font-weight: normal;
   margin-left: 5px;
+  vertical-align: middle;
+  
 }
 
 .add-icon {
   background-color: lightgray;
   
-}
-
-.create-text {
-  margin-top: 5px;
 }
 
 .add-icon:hover,

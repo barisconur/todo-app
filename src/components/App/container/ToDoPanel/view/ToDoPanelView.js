@@ -2,6 +2,7 @@ import React from 'react';
 import '../view/ToDoPanelView';
 import AddToDo from '../container/AddToDo';
 import ToDoItem from '../container/ToDoItem';
+import Navbar from '../container/Navbar';
 
 class ToDoPanelView extends React.Component {
   constructor() {
@@ -17,7 +18,7 @@ class ToDoPanelView extends React.Component {
   render() {
     return (
       <div className="todo-panel-container">
-        <h3 className="todo-panel-text">Proptan gelen liste ismi</h3>
+        <Navbar/>
         <AddToDo toDoName={this.addToDoItem}/>
       </div>
     );

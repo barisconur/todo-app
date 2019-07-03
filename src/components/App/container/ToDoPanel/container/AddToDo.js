@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
+import createIcon from '../../../../../assets/create-icon.svg';
 import ToDoItem from '../container/ToDoItem';
 
 class ToDoPanelView extends React.Component {
@@ -15,9 +16,11 @@ class ToDoPanelView extends React.Component {
   render() {
     return (
       <div className="add-todo-container">
-        <Button className="add-item-btn" variant="info" onClick={this.sendInputToView}>+</Button>
+        <Button className="add-item-btn" variant="success" onClick={this.sendInputToView}>
+          <img src={createIcon} alt="add-todo-icon"></img>
+        </Button>
           <InputGroup className="mb-3">
-            <FormControl
+            <FormControl className="add-todo-field"
               ref= {this.userInput}
               type= "text"
               placeholder= "Add todo..." 

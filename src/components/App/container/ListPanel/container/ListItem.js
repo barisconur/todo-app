@@ -9,18 +9,23 @@ class ListItem extends React.Component {
   render() {
     return (
       <Router>
-        <NavLink to={'/#list/' + this.props.id}>
+        <NavLink className="link"to={'/#list/' + this.props.id} onClick={this.sendListToView}>
           <div className="list-container">
             <img className="list-icon" src={listIcon} alt="list-icon"></img>
             <h2 className="list-text">{this.props.listItem.name}</h2> 
       
-            <Button className="remove-btn" variant="outline-danger">
+            <Button className="list-remove-btn" variant="outline-danger">
               <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
             </Button>
           </div>
         </NavLink>
       </Router>
     );
+  }
+
+  sendListToView = () => {
+    console.log("ListItemdan giden listItem: ", this.props.listItem)
+    this.props.setSelectedList(this.props.listItem);
   }
 }
 
