@@ -6,6 +6,14 @@ import listIcon from '../../../../../assets/list-icon.svg';
 import removeIcon from '../../../../../assets/remove-icon.svg';
 
 class ListItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      toDoItems: []
+    };
+  }
+  
   render() {
     return (
       <Router>
@@ -24,7 +32,6 @@ class ListItem extends React.Component {
   }
 
   sendListToView = () => {
-    console.log("ListItemdan giden listItem: ", this.props.listItem)
     this.props.setSelectedList(this.props.listItem);
   }
 }

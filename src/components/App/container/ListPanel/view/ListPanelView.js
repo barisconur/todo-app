@@ -52,12 +52,12 @@ class ListPanelView extends React.Component {
 
     if (this.state.whichModal === 'list') {
       this.setState(prevState =>({
-        listItems:[...this.state.listItems, { id: this.state.listID, name:itemName, type:'list' }],
+        listItems:[...this.state.listItems, { id: this.state.listID, name: itemName, type:'list', toDoItems: [] }],
         listID: prevState.listID + 1
       }));
     } else {
       this.setState(prevState =>({
-        folderItems:[...this.state.folderItems, { id:this.state.folderID, name:itemName, type:'folder' }],
+        folderItems:[...this.state.folderItems, { id:this.state.folderID, name:itemName, type:'folder', folderItems: [] }],
         folderID: prevState.folderID + 1
       }));
     }

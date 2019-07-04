@@ -2,10 +2,27 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import '../view/ToDoPanelView';
 
-const Navbar = () => (
-    <div className="navbar">
-          <span className="navbar-selected-list">Inbox</span>
-    </div>
-);
+class Navbar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const listName = this.showListName();
+        return (
+            <div className="navbar">
+              <span className="navbar-selected-list">{listName}</span>
+           </div>
+        );
+    }
+
+    showListName = () => {
+        if (this.props.selected === undefined) {
+            return "Inbox"
+        } else {
+            return this.props.selected.name
+        }
+    }
+}
 
 export default Navbar;

@@ -4,12 +4,13 @@ import '../view/ToDoPanelView';
 import createIcon from '../../../../../assets/create-icon.svg';
 import ToDoItem from '../container/ToDoItem';
 
-class ToDoPanelView extends React.Component {
+class AddToDo extends React.Component {
   constructor(props) {
     super(props);
     this.userInput = React.createRef();
     this.state = {
-      input: ""
+      input: "",
+      toDoID: -1
     }
   }
 
@@ -37,9 +38,12 @@ class ToDoPanelView extends React.Component {
     const userInput = this.state.input;
 
     this.setInputComingFromUser();
-    this.props.toDoName(userInput);
+    this.setState(prevState =>({
+      toDoID: prevState.toDoID + 1
+    }), () => {
+      this.props.toDoName(userInput, this.state.toDoID);
+    });
   }
-
   setInputComingFromUser = () => {
     this.setState({
       input: this.userInput.current.value
@@ -47,4 +51,4 @@ class ToDoPanelView extends React.Component {
   }
 }
 
-export default ToDoPanelView;
+export default AddToDo;

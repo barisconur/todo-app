@@ -1,43 +1,41 @@
 import React from 'react';
 import '../view/ToDoPanelView';
 import AddToDo from '../container/AddToDo';
-import ToDoItem from '../container/ToDoItem';
 import Navbar from '../container/Navbar';
+import ToDoItem from '../container/ToDoItem';
 
 class ToDoPanelView extends React.Component {
-  constructor() {
-    super();
-    
-    this.state = {
-      toDoList: [],
-      toDoName: "",
-      toDoID: 0
-    }
+  constructor(props) {
+    super(props);
   }
 
   render() {
     return (
-      <div className="todo-panel-container">
-        <Navbar/>
+      <div className="todo-container">
+        <Navbar selected={this.props.selected}/>
         <AddToDo toDoName={this.addToDoItem}/>
+        <div className ="todo-items-container">
+          {this.renderToDoItems()}
+        </div>
       </div>
     );
   }
 
-  addToDoItem = (toDoItemName) => {
-    this.setItemName(toDoItemName);
-
-    this.setState(prevState =>({
-      toDoList:[...this.state.toDoList, { name: toDoItemName, id:this.state.toDoID }],
-      todoID: prevState.todoID + 1
-    }));
-    console.log(this.state.toDoList);
+  addToDoItem = (toDoItemName, toDoID) => { // Add todo... ya basıldığında buraya gir
+    this.props.addedItem(toDoItemName, toDoID);
   }
 
-  setItemName(toDoName) {
-    this.setState({
-      toDoName: toDoName
-    });
+  renderToDoItems = () => {
+    const selected = this.props.selected;
+    if (selected !== undefined) {
+      if (selected.toDoItems.length !== 0) {
+        return selected.toDoItems.map((toDoItem) => {
+          return <ToDoItem toDoItem={ toDoItem } key={ toDoItem.id } id={ toDoItem.id }/>
+        })
+      }
+    } else {
+      return null;
+    }
   }
 }
 
