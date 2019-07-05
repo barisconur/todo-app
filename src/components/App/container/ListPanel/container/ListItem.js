@@ -20,7 +20,7 @@ class ListItem extends React.Component {
         <NavLink className="link"to={'/#list/' + this.props.id} onClick={this.sendListToView}>
           <div className="list-container">
             <img className="list-icon" src={listIcon} alt="list-icon"></img>
-            <h2 className="list-text">{this.props.listItem.name}</h2> 
+            <h2 className="list-text">{this.props.listItem.listName}</h2> 
       
             <Button className="list-remove-btn" variant="outline-danger">
               <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>

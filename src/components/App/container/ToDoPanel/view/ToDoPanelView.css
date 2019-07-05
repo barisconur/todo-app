@@ -35,8 +35,9 @@
 }
 
 .todo-items-container {
+  display: inline-block;
   width: 98%;
-  height: 100%;
+  height: auto;
   position: absolute;
   top: 125px;
 }
@@ -61,4 +62,17 @@
 
 .remove-btn {
   display: inline;
+}
+
+.completed-items-container {
+  position: absolute;
+  top: 600px;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+
+}
+
+.show-completed-btn {
+
 }

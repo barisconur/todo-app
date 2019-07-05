@@ -4,6 +4,7 @@ import SearchContainer from '../container/SearchContainer';
 import ButtonContainer from '../container/ButtonContainer';
 import ModalContainer from '../container/ModalContainer';
 import ListItem from '../container/ListItem';
+import FolderItem from '../container/FolderItem';
 
 class ListPanelView extends React.Component {
   constructor() {
@@ -15,7 +16,6 @@ class ListPanelView extends React.Component {
       isModalShown: false,
       whichModal: "",
       itemName: "",
-      selectedList: "",
       listID: 0,
       folderID: 0
     }
@@ -25,10 +25,21 @@ class ListPanelView extends React.Component {
     return (
       <div className="lists-container">
         <SearchContainer/>
+
+        <div className="folder-items-container">
+        { this.state.folderItems.map((folder) => {
+          return <FolderItem folderItem={ folder } 
+                            key={ folder.folderID } id={ folder.folderID }/>
+        })}
+
+        </div>
         <div className="list-items-container">
         { this.state.listItems.map((list) => {
-          return <ListItem listItem={ list } key={ list.id } id={ list.id } setSelectedList={ this.sendToAppView }/>
+          return <ListItem listItem={ list } 
+                          key={ list.listID } id={ list.listID } 
+                          setSelectedList={ this.sendToAppView }/>
         })}
+
         </div>
         <ButtonContainer displayModal={this.openModalBox}/>
 
@@ -52,12 +63,17 @@ class ListPanelView extends React.Component {
 
     if (this.state.whichModal === 'list') {
       this.setState(prevState =>({
-        listItems:[...this.state.listItems, { id: this.state.listID, name: itemName, type:'list', toDoItems: [] }],
+        listItems:[...this.state.listItems, { listID: this.state.listID, 
+                                              listName: itemName, 
+                                              toDoItems: [],
+                                              completedItems: [] }],
         listID: prevState.listID + 1
       }));
     } else {
       this.setState(prevState =>({
-        folderItems:[...this.state.folderItems, { id:this.state.folderID, name:itemName, type:'folder', folderItems: [] }],
+        folderItems:[...this.state.folderItems, { folderID: this.state.folderID, 
+                                                  folderName: itemName, 
+                                                  listGroup: [] }],
         folderID: prevState.folderID + 1
       }));
     }

@@ -20,7 +20,7 @@ class Navbar extends React.Component {
         if (this.props.selected === undefined) {
             return "Inbox"
         } else {
-            return this.props.selected.name
+            return this.props.selected.listName
         }
     }
 }
