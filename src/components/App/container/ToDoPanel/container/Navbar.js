@@ -16,13 +16,7 @@ class Navbar extends React.Component {
         );
     }
 
-    showListName = () => {
-        if (this.props.selected === undefined) {
-            return "Inbox"
-        } else {
-            return this.props.selected.listName
-        }
-    }
+    showListName = () => this.props.selected.listName
 }
 
 export default Navbar;

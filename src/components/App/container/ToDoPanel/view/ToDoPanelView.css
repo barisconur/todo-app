@@ -73,6 +73,11 @@
 
 }
 
+.completed-item-text {
+  text-decoration: line-through;
+  color: #fff;
+}
+
 .show-completed-btn {
 
 }

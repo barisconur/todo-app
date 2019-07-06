@@ -4,24 +4,30 @@ import '../view/ToDoPanelView';
 import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
+import CompletedItem from '../container/CompletedItem';
 
+const shortid = require('shortid');
 class ToDoPanelView extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isCompletedShown: false
+    };
   }
 
   render() {
     return (
       <div className="todo-container">
         <Navbar selected={this.props.selected} />
-        <AddToDo toDoName={this.addToDoItem} />
+        <AddToDo toDoName={this.addToDo} />
 
         <div className="todo-items-container">
           {this.renderToDoItems()}
         </div>
 
         <div className="completed-items-container">
-        <Button className="show-completed-btn" variant="warning">
+        <Button className="show-completed-btn" variant="warning" onClick={this.toggleShowButton}>
           Show completed todos
         </Button>
         {this.renderCompletedItems()}
@@ -30,8 +36,8 @@ class ToDoPanelView extends React.Component {
     );
   }
 
-  addToDoItem = (toDoItemName, toDoID) => {
-    this.props.addedItem(toDoItemName, toDoID);
+  addToDo = (toDoItemName, toDoID) => {
+    this.props.itemWillBeRegistered(toDoItemName, toDoID);
   }
 
   removeToDo = (toDoItem, isRemoved) => {
@@ -39,8 +45,7 @@ class ToDoPanelView extends React.Component {
   }
 
   completeToDo = (toDoItem, isCompleted) => {
-    console.log("sonucu todopanel e geldi app e iletilecek", toDoItem);
-    this.props.itemWillBeCompleted(toDoItem, isCompleted);
+      this.props.itemWillBeCompleted(toDoItem, isCompleted);
   }
 
   renderToDoItems = () => {
@@ -58,17 +63,24 @@ class ToDoPanelView extends React.Component {
   }
 
   renderCompletedItems = () => {
+    if(!this.state.isCompletedShown) return;
     const selected = this.props.selected;
+
     if (selected !== undefined) {
-      if (selected.completedItems.length !== 0) {
+      if (selected.completedItems !== undefined) {
         return selected.completedItems.map((completedToDo) => {
-          return <ToDoItem toDoItem={completedToDo} key={completedToDo.toDoID} id={completedToDo.toDoID}
-            remove={this.removeToDo} complete={this.completeToDo} />
+          return <CompletedItem completedItem={completedToDo} key={shortid.generate()}/>
         })
     } else {
         return null;
       }
     }
+  }
+
+  toggleShowButton = () => {
+    this.setState({
+      isCompletedShown: !this.state.isCompletedShown
+    });
   }
 }
 

@@ -3,7 +3,6 @@ import { Button } from 'react-bootstrap';
 import '../view/ToDoPanelView.css';
 import checkBoxIcon from '../../../../../assets/checkbox-icon.svg';
 import removeIcon from '../../../../../assets/remove-icon.svg';
-import { AST_False } from 'terser';
 
 class ToDoItem extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class ToDoItem extends React.Component {
   }
 
   render() {
-    console.log(this.props.toDoItem.toDoName);
     return (
       <div className="todo-item-container">
         <button className="checkbox-btn" onClick={this.completeToDo}>
@@ -42,7 +40,6 @@ class ToDoItem extends React.Component {
   }
 
   completeToDo = () => {
-    console.log("Checkbox a basıldı");
     this.setState({
       isCompleted: true
     }, () => {

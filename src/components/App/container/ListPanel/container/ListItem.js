@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
-import listIcon from '../../../../../assets/list-icon.svg';
 import removeIcon from '../../../../../assets/remove-icon.svg';
+import listIcon from '../../../../../assets/list-icon.svg';
 
 class ListItem extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ListItem extends React.Component {
       <Router>
         <NavLink className="link"to={'/#list/' + this.props.id} onClick={this.sendListToView}>
           <div className="list-container">
-            <img className="list-icon" src={listIcon} alt="list-icon"></img>
+            <img className="list-icon" src={this.props.listItem.listIcon} alt="list-icon"></img>
             <h2 className="list-text">{this.props.listItem.listName}</h2> 
       
             <Button className="list-remove-btn" variant="outline-danger">
