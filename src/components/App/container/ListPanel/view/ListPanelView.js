@@ -26,10 +26,26 @@ class ListPanelView extends React.Component {
       folderID: 0
     }
   }
+  componentWillReceiveProps(nextProps) {
+    const listItems = this.state.listItems;
+    const updated = this.props.updatedList;
+
+    if (updated !== nextProps.updateList) {
+      for (let i = 0; i < listItems.length; i++) {
+        if (updated.listID === listItems[i].listID) {
+          const head = this.state.listItems.slice(0, i);
+          const rest = this.state.listItems.slice(i + 1, listItems.length);
+          let finalListItems = head.concat(updated, rest);
+
+          this.setState({
+            listItems: finalListItems
+          });
+        }
+      }
+    }
+  }
 
   render() {
-    console.log(this.props.updateList, "appview e gelen");
-    console.log("ListPanelViewdaki listeler",this.state.listItems);
     const addedLists = this.state.listItems.slice(4,this.state.listItems.length); 
     const timeLists = this.state.listItems.slice(2,4);
     return (
@@ -85,6 +101,7 @@ class ListPanelView extends React.Component {
 
   sendToAppView = (list) => {
       this.props.selectedList(list);
+      console.log("listeye item eklediğimde değişiyor mu propa giden?", list);
   }
 
   addItem = (itemName) => {
@@ -120,12 +137,8 @@ class ListPanelView extends React.Component {
   }
 
   removeList = (listWillBeRemoved) => {
-    console.log(listWillBeRemoved, "lispanelde silinecek liste");
-    console.log(this.state.listItems,"listpaneldeki itemler");
       this.setState({
         listItems: [...this.state.listItems.filter(list => list.listID !== listWillBeRemoved.listID)]
-      }, () => {
-        console.log(this.state.listItems, "silindikten sonra kalan liste");
       });
   }
   

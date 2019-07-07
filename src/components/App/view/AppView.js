@@ -26,7 +26,7 @@ export default class AppView extends Component {
             <Col sm={2} className="list-panel-container">
               <ListPanelView selectedList={this.setSelectedList} sendListNameToAppView={this.setListNames}
               sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}
-              updateList={this.state.selectedList}
+              updatedList={this.state.selectedList}
               />
             </Col>
 

@@ -5,18 +5,9 @@ import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 import renameIcon from '../../../../../assets/icons/rename-icon.svg';
 
 class ListItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      toDoItems: [],
-      completedItems: []
-    };
-  }
   
   render() {
     const list = this.props.listItem;
-    console.log(this.props.updatedList);
     return (
       <Router>
         <div className="list-container">
@@ -30,28 +21,9 @@ class ListItem extends React.Component {
     );
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   const updatedToDoList = nextProps.updatedList.toDoItems;
-  //   const updatedCompletedList = nextProps.updatedList.completedItems;
-
-  //   if(updatedToDoList !== this.state.toDoItems) {
-  //     this.setState({
-  //       toDoItems: updatedToDoList
-  //     },
-  //     () => {
-  //       this.sendListToView();
-  //     })
-  //   } else if (updatedCompletedList !== this.state.completedItems) {
-  //     this.setState({
-  //       completedItems: updatedCompletedList
-  //     }, () => {
-  //       this.sendListToView();
-  //     })
-  //   }
-  // }
-
   sendListToView = () => {
     const list = this.props.listItem;
+    console.log(list);
     // const updatedListItem = {listID: list.listID, listName: list.listName, listIcon: list.listIcon, 
     //                         toDoItems: this.state.toDoItems, completedItems: this.state.completedItems}
     this.props.setSelectedList(list);
