@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
-import createIcon from '../../../../../assets/icons/create-icon.svg';
+import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 
 class AddToDo extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class AddToDo extends React.Component {
     return (
       <div className="add-todo-container">
         <Button className="add-item-btn" variant="success" onClick={this.sendInputToView}>
-          <img src={createIcon} alt="add-todo-icon"></img>
+          <img src={plusIcon} alt="add-todo-icon"></img>
         </Button>
           <InputGroup className="mb-3">
             <FormControl className="add-todo-field"

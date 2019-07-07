@@ -1,29 +1,23 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
+html, body {
+  width: 100%;
   margin: 0;
 }
 
 #app-container {
-  padding: 0;
-  margin: 0;
-  max-width: 1600px;
-  max-height: 1600px;
+  height:100vh;
+  width: 100%; 
+  max-width: 3840px;
 }
 
-.panel-container {
-  width: 314.5px;
-  min-width: 314.5px;
-  height: 800px;
-  padding: 0px;
+.list-panel-container, .todo-panel-container {
+  padding-right: 0px;
+  padding-left: 0px;
+  height:100vh;
 }
 
 .todo-panel-container {
-  right: 0%;
-  width: 1275.5px;
-  height: 800px;
-  max-height: 2000px;
-  background-image: url(../../../assets/background-images/eiffel.jpg);
+  background-size: cover;
+  background-image: url(../../../assets/background-images/moda-sahil.jpeg);
 }
 
 

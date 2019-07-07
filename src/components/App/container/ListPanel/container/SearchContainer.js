@@ -1,10 +1,11 @@
 import React from 'react';
-import {InputGroup, FormControl, Button} from 'react-bootstrap';
+import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import {InputGroup, FormControl} from 'react-bootstrap';
 import '../view/ListPanelView';
 import searchIcon from '../../../../../assets/icons/search-icon.svg';
 
 const SearchContainer = () => (
-   <InputGroup className="mb-3" className="search-container">
+   <InputGroup className="search-container">
       <FormControl className="search-field"
       placeholder="Search..."
       aria-label="List-name"
@@ -12,9 +13,13 @@ const SearchContainer = () => (
       />
 
       <InputGroup.Append>
-         <Button className="search-btn" size="sm">
+      <Router>
+         <span className="search-btn-wrapper">
+            <NavLink className="search-link" to="/#search/">
             <img className="search-icon-image" src={searchIcon} alt="search-icon"></img>
-         </Button>
+            </NavLink>
+         </span>
+      </Router>
       </InputGroup.Append>
    </InputGroup>
 );

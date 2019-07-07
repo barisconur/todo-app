@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
 import folderIcon from '../../../../../assets/icons/folder-icon.svg';
 

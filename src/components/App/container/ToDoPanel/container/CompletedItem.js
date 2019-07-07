@@ -3,10 +3,7 @@ import '../view/ToDoPanelView.css';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 
 class CompletedItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
     const toDoName = this.props.completedToDo.toDoName;
     return (

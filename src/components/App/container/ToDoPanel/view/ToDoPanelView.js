@@ -21,7 +21,7 @@ class ToDoPanelView extends React.Component {
     return (
       <div className="todo-container">
         <Navbar selectedList={this.props.selectedList} />
-        <AddToDo sendNewToDoValues={this.addToDo} />
+        {this.renderAddToDoComponent()}
 
         <div className="todo-items-container">
           {this.renderToDoItems()}
@@ -35,6 +35,13 @@ class ToDoPanelView extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderAddToDoComponent = () => {
+    const selectedList = this.props.selectedList;
+    if (selectedList.listName === "Inbox" || selectedList.listID > 3) {
+      return <AddToDo sendNewToDoValues={this.addToDo}/>
+    }
   }
 
   addToDo = (toDo) => {

@@ -1,27 +1,36 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import '../view/ListPanelView.css';
-import createIcon from '../../../../../assets/icons/create-icon.svg';
+import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 
 class ButtonContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  
   render() {
     return (
       <div className="create-buttons-container"> 
+        <hr></hr>
         <div className="create-list-container">
-          <Button className="create-btn" variant="outline-secondary" onClick={this.handleListModal}>
-          <img className="create-icon" src={createIcon} alt="create-list-icon"></img>
-          </Button>
-          <h3 className="create-text">Create list</h3>
+          <Router>
+            <span className="create-list-wrapper">
+              <NavLink className="link" to="/#create/list/" onClick={this.handleListModal}>
+                <img className="create-icon" src={plusIcon} alt="create-list-icon"/>
+                <h3 className="create-text">Create list</h3>
+              </NavLink>
+            </span>
+          </Router>
+          
         </div>
   
         <div className="create-folder-container">
-          <Button className="create-btn" variant="outline-secondary" onClick={this.handleFolderModal}>
-            <img className="create-icon" src={createIcon} alt="create-folder-icon"></img>
-          </Button>
-          <h3 className="create-text">Create folder</h3>
+          <Router>
+            <span className="create-folder-wrapper">
+              <NavLink className="link" to="/#create/folder/" onClick={this.handleFolderModal}>
+                <img className="create-icon" src={plusIcon} alt="create-folder-icon"/>
+                <h3 className="create-text">Create folder</h3>
+              </NavLink>
+            </span>
+          </Router>
+          
         </div>
     </div>
     );

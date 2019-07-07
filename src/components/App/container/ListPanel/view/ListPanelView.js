@@ -6,7 +6,9 @@ import ModalContainer from '../container/ModalContainer';
 import ListItem from '../container/ListItem';
 import FolderItem from '../container/FolderItem';
 import StarredListItem from '../container/StarredListItem';
+import TimeListItem from '../container/TimeListItem';
 import listIcon from '../../../../../assets/icons/list-icon.svg';
+
 import { INBOX_LIST, STARRED_LIST, TODAY_LIST, WEEK_LIST } from '../../../../constants';
 
 class ListPanelView extends React.Component {
@@ -26,6 +28,8 @@ class ListPanelView extends React.Component {
   }
 
   render() {
+    console.log(this.props.updateList, "appview e gelen");
+    console.log("ListPanelViewdaki listeler",this.state.listItems);
     const addedLists = this.state.listItems.slice(4,this.state.listItems.length); 
     const timeLists = this.state.listItems.slice(2,4);
     return (
@@ -36,9 +40,9 @@ class ListPanelView extends React.Component {
           { this.renderInboxList() }
           { this.renderStarredList() }
           {timeLists.map((list) => {
-            return <StarredListItem listItem= { list }  key= {list.listID}
+            return <TimeListItem listItem= { list }  key= {list.listID}
                     setSelectedList={this.sendToAppView} />
-           })};
+           })}
         </div>
 
         <div className="folder-items-container">
@@ -50,10 +54,10 @@ class ListPanelView extends React.Component {
         <div className="list-items-container">
            {addedLists.map((list) => {
             return <ListItem listItem = { list } key= {list.listID}
-            setSelectedList={this.sendToAppView}/>
-           })};
+            setSelectedList={this.sendToAppView} listToRemove={this.removeList}
+            />
+           })}
         </div>
-
         <ButtonContainer displayModal={this.openModalBox}/>
 
         <ModalContainer isModalShown={this.state.isModalShown}
@@ -69,7 +73,8 @@ class ListPanelView extends React.Component {
   renderInboxList = () => {
     const list = this.state.listItems[0];
     return <ListItem listItem= { list } key= {list.listID} id={list.listID}
-                    setSelectedList={this.sendToAppView}/>
+                    setSelectedList={this.sendToAppView}
+                     />
   }
 
   renderStarredList = () => {
@@ -79,11 +84,8 @@ class ListPanelView extends React.Component {
   }
 
   sendToAppView = (list) => {
-    this.setState({
-      selectedList: list
-    });
-    this.props.selectedList(list);
-  } 
+      this.props.selectedList(list);
+  }
 
   addItem = (itemName) => {
     this.setItemName(itemName);
@@ -117,16 +119,14 @@ class ListPanelView extends React.Component {
     });
   }
 
-  removeItem = (item) => {
-    if (item.type === 'list') {
+  removeList = (listWillBeRemoved) => {
+    console.log(listWillBeRemoved, "lispanelde silinecek liste");
+    console.log(this.state.listItems,"listpaneldeki itemler");
       this.setState({
-        listItems: [...this.state.listItems.filter(list => list.id !== item.id)]
+        listItems: [...this.state.listItems.filter(list => list.listID !== listWillBeRemoved.listID)]
+      }, () => {
+        console.log(this.state.listItems, "silindikten sonra kalan liste");
       });
-    } else {
-      this.setState({
-        folderItems: [...this.state.folderItems.filter(folder => folder.id !== item.id)]
-      });
-    }
   }
   
   openModalBox = (modalName) => {

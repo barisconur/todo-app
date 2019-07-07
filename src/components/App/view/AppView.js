@@ -18,16 +18,19 @@ export default class AppView extends Component {
   }
 
   render() {
+    console.log("AppViewdaki selected List", this.state.selectedList);
     return (
       <div>
         <Container id="app-container">
           <Row>
-            <Col sm={2} className="panel-container">
+            <Col sm={2} className="list-panel-container">
               <ListPanelView selectedList={this.setSelectedList} sendListNameToAppView={this.setListNames}
-              sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}/>
+              sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}
+              updateList={this.state.selectedList}
+              />
             </Col>
 
-            <Col sm={9} className="todo-panel-container">
+            <Col sm={10} className="todo-panel-container">
               <ToDoPanelView selectedList={this.state.selectedList} itemToRegister={this.registerToDoItem}
               itemToRemove= {this.removeToDoItem} itemToComplete={this.completeToDoItem}/>
             </Col>
@@ -50,8 +53,6 @@ export default class AppView extends Component {
   setListNames = (listName) => {
     this.setState({
       listNames: [...this.state.listNames, listName]
-    }, () => {
-      console.log("appview a gelen liste", this.state.listNames);
     });
   }
 

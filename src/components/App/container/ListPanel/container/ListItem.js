@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { BrowserRouter as Router, NavLink, Link} from 'react-router-dom';
 import '../view/ListPanelView.css';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
+import renameIcon from '../../../../../assets/icons/rename-icon.svg';
 
 class ListItem extends React.Component {
   constructor(props) {
@@ -15,24 +15,72 @@ class ListItem extends React.Component {
   }
   
   render() {
+    const list = this.props.listItem;
+    console.log(this.props.updatedList);
     return (
       <Router>
-        <NavLink className="link"to={'/#list/' + this.props.id} onClick={this.sendListToView}>
-          <div className="list-container">
-            <img className="list-icon" src={this.props.listItem.listIcon} alt="list-icon"></img>
-            <h2 className="list-text">{this.props.listItem.listName}</h2> 
-      
-            <Button className="list-remove-btn" variant="outline-danger">
-              <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
-            </Button>
-          </div>
-        </NavLink>
+        <div className="list-container">
+          <NavLink className="list-link"to={'/#list/' + list.listID} onClick={this.sendListToView}>
+            <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
+            <h2 className="list-text">{list.listName}</h2> 
+          </NavLink>
+          {this.renderMotificationButtons()}
+        </div>
       </Router>
     );
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   const updatedToDoList = nextProps.updatedList.toDoItems;
+  //   const updatedCompletedList = nextProps.updatedList.completedItems;
+
+  //   if(updatedToDoList !== this.state.toDoItems) {
+  //     this.setState({
+  //       toDoItems: updatedToDoList
+  //     },
+  //     () => {
+  //       this.sendListToView();
+  //     })
+  //   } else if (updatedCompletedList !== this.state.completedItems) {
+  //     this.setState({
+  //       completedItems: updatedCompletedList
+  //     }, () => {
+  //       this.sendListToView();
+  //     })
+  //   }
+  // }
+
   sendListToView = () => {
-    this.props.setSelectedList(this.props.listItem);
+    const list = this.props.listItem;
+    // const updatedListItem = {listID: list.listID, listName: list.listName, listIcon: list.listIcon, 
+    //                         toDoItems: this.state.toDoItems, completedItems: this.state.completedItems}
+    this.props.setSelectedList(list);
+  }
+
+  renderMotificationButtons = () => {
+    const list = this.props.listItem;
+    if (list.listID === 0) return; // Inbox static list renaming and deleting is not allowed
+
+    return <span className="list-modification-wrapper">
+            <Link to="/" className="rename-btn">
+             <img className="rename-icon-image" src={renameIcon} alt="rename-icon" onClick={this.renameList}></img>
+            </Link>
+
+            <Link to="/" className="remove-btn">
+              <img className="remove-icon-image" src={removeIcon} alt="search-icon" onClick={this.removeList}></img>
+            </Link>
+          </span>
+  }
+
+  renameList = () => {
+  //TO-DO
+  console.log("henüz yapılmadı");
+  }
+
+  removeList = () => {
+    const list = this.props.listItem;
+    this.props.listToRemove(list);
+    
   }
 }
 
