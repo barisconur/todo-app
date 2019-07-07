@@ -28,9 +28,7 @@ class ToDoPanelView extends React.Component {
         </div>
 
         <div className="completed-items-container">
-        <Button className="show-completed-btn" variant="warning" onClick={this.toggleShowButton}>
-          Show completed todos
-        </Button>
+        {this.showCompletedButton()}
         {this.renderCompletedItems()}
         </div>
       </div>
@@ -85,7 +83,15 @@ class ToDoPanelView extends React.Component {
     }
   }
 
+  showCompletedButton = () => {
+    if(this.props.selectedList.completedItems.length === 0) return;
+    return <Button className="show-completed-btn" variant="dark" onClick={this.toggleShowButton}>
+              SHOW COMPLETED TO-DOS
+          </Button>
+  }
+
   toggleShowButton = () => {
+    
     this.setState({
       isCompletedShown: !this.state.isCompletedShown
     });

@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, NavLink, Link} from 'react-router-dom';
 import '../view/ListPanelView.css';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
-import renameIcon from '../../../../../assets/icons/rename-icon.svg';
 
 class ListItem extends React.Component {
   
@@ -23,9 +22,6 @@ class ListItem extends React.Component {
 
   sendListToView = () => {
     const list = this.props.listItem;
-    console.log(list);
-    // const updatedListItem = {listID: list.listID, listName: list.listName, listIcon: list.listIcon, 
-    //                         toDoItems: this.state.toDoItems, completedItems: this.state.completedItems}
     this.props.setSelectedList(list);
   }
 
@@ -34,11 +30,7 @@ class ListItem extends React.Component {
     if (list.listID === 0) return; // Inbox static list renaming and deleting is not allowed
 
     return <span className="list-modification-wrapper">
-            <Link to="/" className="rename-btn">
-             <img className="rename-icon-image" src={renameIcon} alt="rename-icon" onClick={this.renameList}></img>
-            </Link>
-
-            <Link to="/" className="remove-btn">
+            <Link to="/" className="remove-list-btn">
               <img className="remove-icon-image" src={removeIcon} alt="search-icon" onClick={this.removeList}></img>
             </Link>
           </span>
@@ -46,7 +38,7 @@ class ListItem extends React.Component {
 
   renameList = () => {
   //TO-DO
-  console.log("henüz yapılmadı");
+  console.log("henüz yapılmadı"); 
   }
 
   removeList = () => {

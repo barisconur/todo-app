@@ -4,8 +4,8 @@
 }
 
 .navbar {
-  position: absolute;
-  top: 0%;
+  background-color: #743a14d8;
+  top: 0%;  
   width: 100%;
 }
 
@@ -17,67 +17,99 @@
 }
 
 .add-todo-container {
+  background-color: #b18c6ada;
   display: flex;
-  position: absolute;
-  width: 98%;
-  top: 50px;
-  height: 35.75px;
+  position: relative;
+  margin-top: 20px;
+  width: 97%;
+  border-radius: 5px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+.add-item-wrapper {
+  padding-top: 12.5px;
+  padding-left: 2.5px;
 }
 
 .add-todo-field {
-  height: 40px;
+  height: 50px;
 }
 
-.add-item-btn {
-  width: 40px;
-  height: 40px;
-  margin-left: 10px;
+.add-icon, .add-icon:hover {
+  background-color: inherit;
 }
 
 .todo-items-container {
-  display: inline-block;
+  margin-top: 35px;
   width: 98%;
   height: auto;
-  position: absolute;
-  top: 125px;
+  position: relative;
 }
 
-.todo-item-container {
+.todo-item-wrapper {
+  background-color: #fff;
   display: flex;
-  width: 100%;
-  height: 40px;
+  width: 99%;
+  border-radius: 5px;
+  height: 50px;
+  margin-left: 20px;
+  margin-bottom: 5px;
 }
 
 .checkbox-btn {
-  display: inline;
-  position: absolute;
+  padding-top: 12px;
+  padding-left: 3px;
 }
 
 .todo-item-text {
-  font-size: 16px;
-  font-weight: 500;
-  padding-left: 40px;
-  color: #fff;
+  font-size: 14px;
+  font-weight: 200;
+  padding-left: 10px;
+  margin-top: 15px;
 }
 
-.remove-btn {
-  display: inline;
+.remove-todo-btn {
+  position: absolute;
+  right: 0%;
+  padding-top: 12px;
 }
 
 .completed-items-container {
-  position: absolute;
-  top: 600px;
-  display: inline-block;
-  width: 100%;
-  height: auto;
+  position: relative;
+  margin-top: 30px;
 
 }
 
-.completed-item-text {
-  text-decoration: line-through;
-  color: #fff;
+.completed-item-wrapper {
+  background-color: #fff;
+  display: flex;
+  width: 50%;
+  border-radius: 5px;
+  height: 50px;
+  margin-bottom: 5px;
 }
 
 .show-completed-btn {
-
+  margin-bottom: 30px;
+  margin-left: 22.5px;
 }
+
+.completed-item-wrapper {
+  background-color: rgba(255, 255, 255, 0.432);
+  display: flex;
+  border-radius: 5px;
+  height: 50px;
+  width: 97%;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.completed-item-text {
+  font-size: 14px;
+  font-weight: 200;
+  padding-left: 10px;
+  margin-top: 15px;
+  text-decoration: line-through;
+}
+

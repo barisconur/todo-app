@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Link} from 'react-router-dom';
 import '../view/ToDoPanelView.css';
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
@@ -16,16 +17,20 @@ class ToDoItem extends React.Component {
   render() {
     const toDoName = this.props.toDoItem.toDoName
     return (
-      <div className="todo-item-container">
-        <button className="checkbox-btn" onClick={this.completeToDo}>
-         <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
-        </button>
-        <h2 className="todo-item-text">{toDoName}</h2> 
-  
-        <button className="remove-btn" onClick={this.removeToDo}>
-         <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
-        </button>
-    </div>
+      <Router>
+         <span className="todo-item-wrapper">
+          <Link to="/" className="checkbox-btn">
+            <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon" onClick={this.completeToDo}></img>
+          </Link>
+
+          <h2 className="todo-item-text">{toDoName}</h2> 
+
+          <Link to="/" className="remove-todo-btn" onClick={this.removeToDo}>
+            <img className="remove-icon" src={removeIcon} alt="remove-icon" onClick={this.removeToDo}></img>
+          </Link>
+
+         </span>
+      </Router>
     );
   }
 

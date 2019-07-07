@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { BrowserRouter as Router, Link} from 'react-router-dom';
+import {InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 
@@ -16,10 +17,15 @@ class AddToDo extends React.Component {
 
   render() {
     return (
-      <div className="add-todo-container">
-        <Button className="add-item-btn" variant="success" onClick={this.sendInputToView}>
-          <img src={plusIcon} alt="add-todo-icon"></img>
-        </Button>
+        <div className="add-todo-container">
+          <Router>
+            <span className="add-item-wrapper">
+              <Link to="/" className="add-item-btn" onClick={this.sendInputToView}>
+               <img className="add-icon" src={plusIcon} alt="add-icon"/>
+              </Link>
+            </span>
+          </Router>
+
           <InputGroup className="mb-3">
             <FormControl className="add-todo-field"
               ref= {this.userInput}
@@ -30,7 +36,7 @@ class AddToDo extends React.Component {
               onChange={() => this.setInputComingFromUser()}
             />
           </InputGroup>
-    </div>
+        </div>
     );
   }
 
@@ -41,6 +47,10 @@ class AddToDo extends React.Component {
     this.setState(prevState =>({
       toDoID: prevState.toDoID + 1
     }), () => {
+      this.clearInputField();
+      this.setState ({
+        input: ""
+      });
       const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
       this.props.sendNewToDoValues(newToDo);
     });
@@ -50,6 +60,11 @@ class AddToDo extends React.Component {
     this.setState({
       input: this.userInput.current.value
     })
+  }
+
+  clearInputField = () => {
+    this.userInput.current.value = "";
+    this.userInput.current.placeholder = "Add todo...";
   }
 }
 
