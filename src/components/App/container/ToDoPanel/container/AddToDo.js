@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
-import createIcon from '../../../../../assets/create-icon.svg';
-import ToDoItem from '../container/ToDoItem';
+import createIcon from '../../../../../assets/icons/create-icon.svg';
 
 class AddToDo extends React.Component {
   constructor(props) {
     super(props);
     this.userInput = React.createRef();
+    
     this.state = {
       input: "",
       toDoID: -1
@@ -36,14 +36,16 @@ class AddToDo extends React.Component {
 
   sendInputToView = () => {
     const userInput = this.state.input;
-
     this.setInputComingFromUser();
+    
     this.setState(prevState =>({
       toDoID: prevState.toDoID + 1
     }), () => {
-      this.props.toDoName(userInput, this.state.toDoID);
+      const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
+      this.props.sendNewToDoValues(newToDo);
     });
   }
+
   setInputComingFromUser = () => {
     this.setState({
       input: this.userInput.current.value

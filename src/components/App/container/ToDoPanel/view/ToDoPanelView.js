@@ -7,6 +7,7 @@ import ToDoItem from '../container/ToDoItem';
 import CompletedItem from '../container/CompletedItem';
 
 const shortid = require('shortid');
+
 class ToDoPanelView extends React.Component {
   constructor(props) {
     super(props);
@@ -19,8 +20,8 @@ class ToDoPanelView extends React.Component {
   render() {
     return (
       <div className="todo-container">
-        <Navbar selected={this.props.selected} />
-        <AddToDo toDoName={this.addToDo} />
+        <Navbar selectedList={this.props.selectedList} />
+        <AddToDo sendNewToDoValues={this.addToDo} />
 
         <div className="todo-items-container">
           {this.renderToDoItems()}
@@ -36,25 +37,25 @@ class ToDoPanelView extends React.Component {
     );
   }
 
-  addToDo = (toDoItemName, toDoID) => {
-    this.props.itemWillBeRegistered(toDoItemName, toDoID);
+  addToDo = (toDo) => {
+    this.props.itemToRegister(toDo);
   }
 
-  removeToDo = (toDoItem, isRemoved) => {
-    this.props.itemWillBeRemoved(toDoItem, isRemoved);
+  removeToDo = (toDo, isRemoved) => {
+    this.props.itemToRemove(toDo, isRemoved);
   }
 
-  completeToDo = (toDoItem, isCompleted) => {
-      this.props.itemWillBeCompleted(toDoItem, isCompleted);
+  completeToDo = (toDo, isCompleted) => {
+      this.props.itemToComplete(toDo, isCompleted);
   }
 
   renderToDoItems = () => {
-    const selected = this.props.selected;
+    const selected = this.props.selectedList;
     if (selected !== undefined) {
       if (selected.toDoItems.length !== 0) {
         return selected.toDoItems.map((toDoItem) => {
           return <ToDoItem toDoItem={toDoItem} key={toDoItem.toDoID} id={toDoItem.toDoID}
-            remove={this.removeToDo} complete={this.completeToDo} />
+            itemToRemove={this.removeToDo} itemToComplete={this.completeToDo} />
         })
     } else {
         return null;
@@ -64,12 +65,12 @@ class ToDoPanelView extends React.Component {
 
   renderCompletedItems = () => {
     if(!this.state.isCompletedShown) return;
-    const selected = this.props.selected;
+    const selected = this.props.selectedList;
 
     if (selected !== undefined) {
       if (selected.completedItems !== undefined) {
         return selected.completedItems.map((completedToDo) => {
-          return <CompletedItem completedItem={completedToDo} key={shortid.generate()}/>
+          return <CompletedItem completedToDo={completedToDo} key={shortid.generate()}/>
         })
     } else {
         return null;

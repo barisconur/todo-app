@@ -3,16 +3,17 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './AppView.css';
 import ListPanelView from '../container/ListPanel/view/ListPanelView';
 import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
-import inboxIcon from '../../../assets/inbox-icon.svg';
-// import MenuPanel from '../Container/MenuPanel/view/MenuPanel';
-const INBOX_LIST   = {listID: 0, listName: "Inbox"  , listIcon: inboxIcon , toDoItems: [], completedItems: []};
+import { INBOX_LIST, INBOX_LIST_NAME, STARRED_LIST_NAME, TODAY_LIST_NAME, THIS_WEEK_NAME } from '../../constants';
+
 
 export default class AppView extends Component {
   constructor() {
     super();
 
     this.state = {
-      selectedList: INBOX_LIST
+      selectedList: INBOX_LIST,
+      listNames: [INBOX_LIST_NAME, STARRED_LIST_NAME, TODAY_LIST_NAME, THIS_WEEK_NAME],
+      folderNames: []
     };
   }
 
@@ -22,12 +23,13 @@ export default class AppView extends Component {
         <Container id="app-container">
           <Row>
             <Col sm={2} className="panel-container">
-              <ListPanelView selectedList={this.setSelectedList} />
+              <ListPanelView selectedList={this.setSelectedList} sendListNameToAppView={this.setListNames}
+              sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}/>
             </Col>
 
             <Col sm={9} className="todo-panel-container">
-              <ToDoPanelView selected={this.state.selectedList} itemWillBeRegistered={this.registerToDoItem}
-              itemWillBeRemoved= {this.removeToDoItem} itemWillBeCompleted={this.completeToDoItem}/>
+              <ToDoPanelView selectedList={this.state.selectedList} itemToRegister={this.registerToDoItem}
+              itemToRemove= {this.removeToDoItem} itemToComplete={this.completeToDoItem}/>
             </Col>
             
             {/* <Col sm={3} className="panel-container">
@@ -45,15 +47,27 @@ export default class AppView extends Component {
     });
   }
 
-  registerToDoItem = (name, id) => {
-    const newToDoItem = {toDoID: id, toDoName: name};
+  setListNames = (listName) => {
+    this.setState({
+      listNames: [...this.state.listNames, listName]
+    }, () => {
+      console.log("appview a gelen liste", this.state.listNames);
+    });
+  }
 
+  setFolderNames = (folderName) => {
+    this.setState({
+      listNames: [...this.state.folderNames, folderName]
+    });
+  }
+
+  registerToDoItem = (newToDo) => {
     this.setState({
       selectedList: { listID: this.state.selectedList.listID,
                       listName: this.state.selectedList.listName,  
-                      toDoItems: [...this.state.selectedList.toDoItems, newToDoItem],
+                      toDoItems: [...this.state.selectedList.toDoItems, newToDo],
                       completedItems: [...this.state.selectedList.completedItems] }
-                  });
+                    });
   }
 
   removeToDoItem = (toDoItem, isRemoved) => {
@@ -64,19 +78,19 @@ export default class AppView extends Component {
                       listName: this.state.selectedList.listName,
                       toDoItems: [...this.state.selectedList.toDoItems.filter(toDo => toDo.toDoID !== toDoItem.toDoID)],
                       completedItems: [...this.state.selectedList.completedItems] }
-                  });
+                    });
   }
 
   completeToDoItem = (toDoItem, isCompleted) => {
     if (isCompleted !== true) return;
-    const newCompletedItem = {completedItemName: toDoItem.toDoName} 
+    const newCompletedItem = {toDoName: toDoItem.toDoName} 
 
     this.setState({
       selectedList: { listID: this.state.selectedList.listID,
                       listName: this.state.selectedList.listName,
                       toDoItems: [...this.state.selectedList.toDoItems.filter(toDo => toDo.toDoID !== toDoItem.toDoID)],
                       completedItems: [...this.state.selectedList.completedItems, newCompletedItem] }
-                  });
+                   });
   }
 
 }

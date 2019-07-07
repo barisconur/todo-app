@@ -1,7 +1,7 @@
 import React from 'react';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
 import '../view/ListPanelView';
-import searchIcon from '../../../../../assets/search-icon.svg';
+import searchIcon from '../../../../../assets/icons/search-icon.svg';
 
 const SearchContainer = () => (
    <InputGroup className="mb-3" className="search-container">

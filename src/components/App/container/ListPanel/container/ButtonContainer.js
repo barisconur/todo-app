@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
-import createIcon from '../../../../../assets/create-icon.svg';
+import createIcon from '../../../../../assets/icons/create-icon.svg';
 
 class ButtonContainer extends React.Component {
   constructor(props) {

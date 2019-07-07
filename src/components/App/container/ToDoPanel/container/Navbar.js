@@ -8,15 +8,12 @@ class Navbar extends React.Component {
     }
 
     render() {
-        const listName = this.showListName();
         return (
             <div className="navbar">
-              <span className="navbar-selected-list">{listName}</span>
+              <span className="navbar-selected-list">{this.props.selectedList.listName}</span>
            </div>
         );
     }
-
-    showListName = () => this.props.selected.listName
 }
 
 export default Navbar;

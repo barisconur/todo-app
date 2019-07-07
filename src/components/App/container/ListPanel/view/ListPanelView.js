@@ -5,17 +5,9 @@ import ButtonContainer from '../container/ButtonContainer';
 import ModalContainer from '../container/ModalContainer';
 import ListItem from '../container/ListItem';
 import FolderItem from '../container/FolderItem';
-
-import inboxIcon from '../../../../../assets/inbox-icon.svg';
-import starIcon from '../../../../../assets/star-icon.svg';
-import todayIcon from '../../../../../assets/today-icon.svg';
-import weekIcon from '../../../../../assets/this-week-icon.svg';
-import listIcon from '../../../../../assets/list-icon.svg';
-
-const INBOX_LIST   = {listID: 0, listName: "Inbox"    , listIcon: inboxIcon , toDoItems: [], completedItems: []};
-const STARRED_LIST = {listID: 1, listName: "Starred"  , listIcon: starIcon  , toDoItems: [], completedItems: []};
-const TODAY_LIST   = {listID: 2, listName: "Today"    , listIcon: todayIcon , toDoItems: [], completedItems: []};
-const WEEK_LIST    = {listID: 3, listName: "This Week", listIcon: weekIcon  , toDoItems: [], completedItems: []}; 
+import StarredListItem from '../container/StarredListItem';
+import listIcon from '../../../../../assets/icons/list-icon.svg';
+import { INBOX_LIST, STARRED_LIST, TODAY_LIST, WEEK_LIST } from '../../../../constants';
 
 class ListPanelView extends React.Component {
 
@@ -23,7 +15,7 @@ class ListPanelView extends React.Component {
     super();
 
     this.state = {
-      listItems: [ INBOX_LIST, STARRED_LIST, TODAY_LIST, WEEK_LIST],
+      listItems: [INBOX_LIST, STARRED_LIST, TODAY_LIST, WEEK_LIST],
       folderItems: [],
       isModalShown: false,
       whichModal: "",
@@ -34,18 +26,18 @@ class ListPanelView extends React.Component {
   }
 
   render() {
-    const static_lists = this.state.listItems.slice(1, 4);
     const addedLists = this.state.listItems.slice(4,this.state.listItems.length); 
-    
+    const timeLists = this.state.listItems.slice(2,4);
     return (
       <div className="lists-container">
         <SearchContainer/>
 
         <div className="static-lists-container">
           { this.renderInboxList() }
-          {static_lists.map((list) => {
-            return <ListItem listItem = { list } key= {list.listID} id= {list.listID}
-            setSelectedList={this.sendToAppView}/>
+          { this.renderStarredList() }
+          {timeLists.map((list) => {
+            return <StarredListItem listItem= { list }  key= {list.listID}
+                    setSelectedList={this.sendToAppView} />
            })};
         </div>
 
@@ -57,7 +49,7 @@ class ListPanelView extends React.Component {
 
         <div className="list-items-container">
            {addedLists.map((list) => {
-            return <ListItem listItem = { list } key= {list.listID} id= {list.listID}
+            return <ListItem listItem = { list } key= {list.listID}
             setSelectedList={this.sendToAppView}/>
            })};
         </div>
@@ -67,22 +59,29 @@ class ListPanelView extends React.Component {
         <ModalContainer isModalShown={this.state.isModalShown}
                         closeModal={this.closeModal}
                         whichModal={this.state.whichModal}
-                        itemName={this.addItem}/>
+                        itemName={this.addItem}
+                        listNames={this.props.listNames}
+                        folderNames={this.props.folderNames}/>
       </div>
     );
   }
 
   renderInboxList = () => {
     const list = this.state.listItems[0];
-    return <ListItem listItem = { list } key= {list.listID} id={list.listID}
+    return <ListItem listItem= { list } key= {list.listID} id={list.listID}
                     setSelectedList={this.sendToAppView}/>
+  }
+
+  renderStarredList = () => {
+    const list = this.state.listItems[1];
+    return <StarredListItem listItem= { list }  key= {list.listID}
+                    setSelectedList={this.sendToAppView} />
   }
 
   sendToAppView = (list) => {
     this.setState({
       selectedList: list
     });
-
     this.props.selectedList(list);
   } 
 
@@ -97,14 +96,18 @@ class ListPanelView extends React.Component {
                                               toDoItems: [],
                                               completedItems: [] }],
            listID: prevState.listID + 1
-      }));
+      }), () => {
+        this.props.sendListNameToAppView(this.state.itemName)
+      });
     } else {
       this.setState(prevState =>({
         folderItems:[...this.state.folderItems, { folderID: this.state.folderID, 
                                                   folderName: itemName, 
                                                   listGroup: [] }],
            folderID: prevState.folderID + 1
-      }));
+      }), () => {
+        this.props.sendFolderNameToAppView(this.state.itemName);
+      });
     }
   }
   

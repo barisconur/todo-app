@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
-import folderIcon from '../../../../../assets/folder-icon.svg';
+import folderIcon from '../../../../../assets/icons/folder-icon.svg';
 
 
 class FolderItem extends React.Component {

@@ -51,16 +51,46 @@ class ModalContainer extends React.Component {
 
   sendInputToView = () => {
     const userInput = this.state.input;
-
     this.setInputComingFromUser();
+
+    if (this.isNotEmpty(this.state.input)) {
+      alert("Please enter not an empty text");
+      return; 
+    } else if (this.props.whichModal === 'list') {
+      for (let i = 0; i < this.props.listNames.length; i++) {
+        if (userInput === this.props.listNames[i]) {
+          alert("You have already had a list with this name");
+          return;
+        }
+      }
+    } else if (this.props.whichModal === 'folder') {
+      for (let i = 0; i < this.props.folderNames.length; i++) {
+        if (userInput === this.props.folderNames[i]) {
+          alert("You have already added a folder with this name");
+          return;
+        }
+      }
+    }
+
     this.props.itemName(userInput);
+    this.clearInput();
     this.props.closeModal();
   }
 
   setInputComingFromUser = () => {
     this.setState({
       input: this.userInput.current.value
-    })
+    });
+  }
+
+  isNotEmpty = (input) => {
+    return (input.length === 0) ? true : false;
+  }
+
+  clearInput = () => {
+    this.setState({
+      input: ""
+    });
   }
 }
 

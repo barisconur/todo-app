@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
-import removeIcon from '../../../../../assets/remove-icon.svg';
-import listIcon from '../../../../../assets/list-icon.svg';
+import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 
 class ListItem extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      toDoItems: []
+      toDoItems: [],
+      completedItems: []
     };
   }
   
