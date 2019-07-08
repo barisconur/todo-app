@@ -53,7 +53,6 @@ class ModalContainer extends React.Component {
   }
 
   addItemToItems = () => {
-    const userInput = this.state.input;
     this.setInputComingFromUser();
 
     if (this.isNotEmpty(this.state.input)) {
@@ -73,11 +72,6 @@ class ModalContainer extends React.Component {
     
     this.clearInput();
     this.props.closeModal();
-    console.log("listItems",appJson.listItems);
-    console.log("listNames",appJson.listNames);
-
-    console.log("folderItems",appJson.folderItems);
-    console.log("folderNames",appJson.folderNames);
   }
 
   setInputComingFromUser = () => {
@@ -103,21 +97,23 @@ class ModalContainer extends React.Component {
                        folderName: this.state.input,
                        listGroup: []
                       };
-    const jsonFormatFolder = JSON.stringify(newFolder);
 
     folderNames.push(this.state.input);
-    folderItems.push(jsonFormatFolder);
+    folderItems.push(newFolder);
   }
 
   registerNewListItemToJson = (listNames, listItems) => {
     const newList = { listID: shortid.generate(),
                       listName: this.state.input 
                     }
-    const jsonFormatList = JSON.stringify(newList);
+    const newSelected = { listID: newList.listID,
+                          listName: newList.listName,
+                          toDoItems: [],
+                          completedItems: []
+                        }
 
-    listNames.push(this.state.input);
-    listItems.push(jsonFormatList);
-
+    listItems.push(newSelected);
+    appJson.selectedList = newSelected;
   }
 
   clearInput = () => {

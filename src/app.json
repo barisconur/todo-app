@@ -2,7 +2,6 @@
 "selectedList" : {
     "listID" : 0,
     "listName" : "Inbox",
-    "listIcon" : ".svg",
     "toDoItems" : [],
     "completeItems" : []
   },
@@ -28,29 +27,27 @@
     {
       "listID" : 0,
       "listName" : "Inbox",
-      "listIcon" : ".svg",
       "toDoItems" : [],
       "completeItems" : []
     },
     {
       "listID" : 1,
       "listName" : "Starred",
-      "listIcon" : ".svg",
       "toDoItems" : []
     },
     {
       "listID" : 2,
       "listName" : "Today",
-      "listIcon" : ".svg",
       "toDoItems" : []
     },
     {
       "listID" : 3,
       "listName" : "This Week",
-      "listIcon" : ".svg",
       "toDoItems" : []
     }
   ],
 
-  "folderItems" : []
+  "folderItems" : [],
+
+  "toDoItems" : []
 }

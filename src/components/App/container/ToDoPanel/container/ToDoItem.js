@@ -33,11 +33,11 @@ class ToDoItem extends React.Component {
     );
   }
 
-  removeToDo = () => {
+  completeToDo = () => {
     //TO-DO
   }
 
-  completeToDo = () => {
+  removeToDo = () => {
     //TO-DO
   }
 }

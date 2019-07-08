@@ -1,24 +1,37 @@
 import React from 'react';
 import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import '../view/ListPanelView.css';
+import todayIcon from '../../../../../assets/icons/today-icon.svg';
+import weekIcon from '../../../../../assets/icons/this-week-icon.svg';
 
 class TimeListItem extends React.Component {
 
   render() {
+    const listName = this.props.listItem.listName;
+
     return (
       <Router>
-      <NavLink className="link"to={'/#list/' + 'burayaid gelcek'} onClick={this.setSelectedList}>
+      <NavLink className="link"to={'/#list/' + listName} onClick={this.setSelectedList}>
         <div className="list-container">
-          {/* <img className="list-icon" src={list.listIcon} alt="list-icon"></img> */}
-          <h2 className="list-text">Dummy data</h2> 
+          { this.showTodayOrWeekIcon() }
+          <h2 className="list-text">{listName}</h2> 
         </div>
       </NavLink>
     </Router>
     );
   }
+
+  showTodayOrWeekIcon = () => {
+    const listName = this.props.listItem.listName;
+
+    if (listName === "Today") {
+      return <img className="list-icon" src={todayIcon} alt="today-icon"></img>
+    }
+    return <img className="list-icon" src={weekIcon} alt="this-week-icon"></img>
+  }
   
   setSelectedList = () => {
-    //TO-DO
+    //TO-DO 
   }
 }
     

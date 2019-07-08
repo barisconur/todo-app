@@ -4,10 +4,11 @@ import appJson from '../../../../../app';
 
 class Navbar extends React.Component {
   render() {
-    const { selectedListName } = appJson.selectedList.listName;
+    console.log(appJson.selectedList);
+
       return (
         <div className="navbar">
-          <span className="navbar-selected-list">{selectedListName}</span>
+          <span className="navbar-selected-list">{appJson.selectedList.listName}</span>
         </div>
       );
   }
