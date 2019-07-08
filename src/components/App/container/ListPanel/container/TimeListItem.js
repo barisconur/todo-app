@@ -8,7 +8,7 @@ class TimeListItem extends React.Component {
     const list = this.props.listItem;
     return (
       <Router>
-      <NavLink className="link"to={'/#timeList/' + list.listName} onClick={this.sendListToView}>
+      <NavLink className="link"to={'/#list/' + list.listName} onClick={this.sendListToView}>
         <div className="list-container">
           <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
           <h2 className="list-text">{list.listName}</h2> 

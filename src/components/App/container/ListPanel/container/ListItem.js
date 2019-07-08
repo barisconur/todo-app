@@ -10,7 +10,7 @@ class ListItem extends React.Component {
     return (
       <Router>
         <div className="list-container">
-          <NavLink className="list-link"to={'/#list/' + list.listID} onClick={this.sendListToView}>
+          <NavLink className="list-link"to={'/#list/' + list.listName} onClick={this.sendListToView}>
             <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
             <h2 className="list-text">{list.listName}</h2> 
           </NavLink>

@@ -5,12 +5,13 @@ import '../view/ListPanelView.css';
 class StarredListItem extends React.Component {
 
   render() {
+    const list = this.props.listItem;
     return (
       <Router>
-      <NavLink className="link"to={'/#starredList/'} onClick={this.sendListToView}>
+      <NavLink className="link"to={'/#list/' + list.listName} onClick={this.sendListToView}>
         <div className="list-container">
-          <img className="list-icon" src={this.props.listItem.listIcon} alt="list-icon"></img>
-          <h2 className="list-text">{this.props.listItem.listName}</h2> 
+          <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
+          <h2 className="list-text">{list.listName}</h2> 
         </div>
       </NavLink>
     </Router>

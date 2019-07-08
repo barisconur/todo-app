@@ -37,6 +37,7 @@ class ListPanelView extends React.Component {
           const head = this.state.listItems.slice(0, i);
           const rest = this.state.listItems.slice(i + 1, listItems.length);
           let finalListItems = head.concat(updated, rest);
+          
           this.setState({
             listItems: finalListItems
           });
@@ -80,7 +81,6 @@ class ListPanelView extends React.Component {
                         closeModal={this.closeModal}
                         whichModal={this.state.whichModal}
                         itemName={this.addItem}
-                        listNames={this.props.listNames}
                         folderNames={this.props.folderNames}/>
       </div>
     );

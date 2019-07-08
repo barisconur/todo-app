@@ -1,23 +1,11 @@
 .search-field {
-  height: 32.5px;
-  border-right-width: 2px;
+  height: 43px;
 }
 
 .input-group > .custom-file, .input-group > 
 .custom-select, .input-group > .form-control, 
 .input-group > .form-control-plaintext {
   box-shadow: none;
-}
-
-.search-btn-wrapper {
-  background-color: #fff;
-  border-color: #fff;
-  width: 30px;
-}
-
-.search-icon-image {
-  padding-left: 4px;
-  padding-top: 4px;
 }
 
 .static-lists-container {

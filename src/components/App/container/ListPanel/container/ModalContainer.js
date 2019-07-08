@@ -78,9 +78,7 @@ class ModalContainer extends React.Component {
     });
   }
 
-  isNotEmpty = (input) => {
-    return (input.length === 0) ? true : false;
-  }
+  isNotEmpty = (input) => (input.length === 0) ? true : false;
 
   clearInput = () => {
     this.setState({

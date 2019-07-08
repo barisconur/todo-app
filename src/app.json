@@ -1,0 +1,60 @@
+{
+"selectedList" : {
+    "listID" : 0,
+    "listName" : "Inbox",
+    "listIcon" : ".svg",
+    "toDoItems" : [],
+    "completeItems" : []
+  },
+
+  "listNames" : [
+    {
+      "name": "Inbox"
+    }, 
+    {
+      "name": "Starred"
+    },
+    {
+      "name": "Today"
+    },
+    {
+      "name": "This Week"
+    }
+  ],
+
+  "listItems" : [
+    {
+      "listID" : 0,
+      "listName" : "Inbox",
+      "listIcon" : ".svg",
+      "toDoItems" : [],
+      "completeItems" : []
+    },
+    {
+      "listID" : 1,
+      "listName" : "Starred",
+      "listIcon" : ".svg",
+      "toDoItems" : []
+    },
+    {
+      "listID" : 2,
+      "listName" : "Today",
+      "listIcon" : ".svg",
+      "toDoItems" : []
+    },
+    {
+      "listID" : 3,
+      "listName" : "This Week",
+      "listIcon" : ".svg",
+      "toDoItems" : []
+    }
+  ],
+
+  "folderItems" : [
+    {
+      "folderID": null,
+      "folderName": null,
+      "listGroup" : []
+    }
+  ]
+}

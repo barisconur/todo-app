@@ -6,6 +6,7 @@ import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
 import listIcon from '../../../assets/icons/list-icon.svg';
 import inboxIcon from '../../../assets/icons/inbox-icon.svg';
 import { INBOX_LIST, INBOX_LIST_NAME, STARRED_LIST_NAME, TODAY_LIST_NAME, THIS_WEEK_NAME } from '../../constants';
+import appJson from '../../../app';
 
 export default class AppView extends Component {
   constructor() {
@@ -25,7 +26,7 @@ export default class AppView extends Component {
           <Row>
             <Col sm={2} className="list-panel-container">
               <ListPanelView selectedList={this.setSelectedList} sendListNameToAppView={this.setListNames}
-              sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}
+              sendFolderNameToAppView={this.setFolderNames} folderNames={this.state.folderNames}
               updatedList={this.state.selectedList} checkSelectedIsRemoved={this.updateSelectedIfRemoved}
               />
             </Col>
