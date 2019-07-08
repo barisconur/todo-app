@@ -138,6 +138,8 @@ class ListPanelView extends React.Component {
   removeList = (listWillBeRemoved) => {
       this.setState({
         listItems: [...this.state.listItems.filter(list => list.listID !== listWillBeRemoved.listID)]
+      }, () => {
+        this.props.checkSelectedIsRemoved(listWillBeRemoved);
       });
   }
   

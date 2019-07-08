@@ -19,7 +19,6 @@ export default class AppView extends Component {
   }
 
   render() {
-    console.log(this.state.selectedList);
     return (
       <div>
         <Container id="app-container">
@@ -27,7 +26,7 @@ export default class AppView extends Component {
             <Col sm={2} className="list-panel-container">
               <ListPanelView selectedList={this.setSelectedList} sendListNameToAppView={this.setListNames}
               sendFolderNameToAppView={this.setFolderNames} listNames={this.state.listNames} folderNames={this.state.folderNames}
-              updatedList={this.state.selectedList}
+              updatedList={this.state.selectedList} checkSelectedIsRemoved={this.updateSelectedIfRemoved}
               />
             </Col>
 
@@ -61,6 +60,15 @@ export default class AppView extends Component {
     this.setState({
       listNames: [...this.state.folderNames, folderName]
     });
+  }
+
+  updateSelectedIfRemoved = (removedList) => {
+    const selected = this.state.selectedList;
+    if (selected.listName === removedList.listName) {
+      this.setState({
+        selectedList: INBOX_LIST
+      });
+    }
   }
 
   registerToDoItem = (newToDo) => {
