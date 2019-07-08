@@ -6,7 +6,6 @@ import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg
 class CompletedItem extends React.Component {
   
   render() {
-    const toDoName = this.props.completedToDo.toDoName;
     return (
       <div className="completed-item-container">
         <Router>
@@ -15,11 +14,15 @@ class CompletedItem extends React.Component {
               <img className="checkbox-icon" src={checkBoxFilled} alt="checkbox-Filled-icon" onClick={this.completeToDo}></img>
             </Link>
 
-            <h2 className="completed-item-text">{toDoName}</h2> 
+            <h2 className="completed-item-text">Dummy data</h2> 
           </span>
         </Router>
     </div>
     );
+  }
+
+  completeToDo = () => {
+    //TO-DO
   }
 }
 

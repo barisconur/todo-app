@@ -22,6 +22,8 @@
     }
   ],
 
+  "folderNames" : [],
+
   "listItems" : [
     {
       "listID" : 0,
@@ -50,11 +52,5 @@
     }
   ],
 
-  "folderItems" : [
-    {
-      "folderID": null,
-      "folderName": null,
-      "listGroup" : []
-    }
-  ]
+  "folderItems" : []
 }

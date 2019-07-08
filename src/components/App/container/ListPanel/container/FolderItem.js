@@ -8,9 +8,6 @@ class FolderItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      listGroup: []
-    };
   }
   
   render() {
@@ -18,7 +15,7 @@ class FolderItem extends React.Component {
       <Router>
         <div className="folder-container">
           <img className="folder-icon" src={folderIcon} alt="folder-icon"></img>
-          <h2 className="folder-text">{this.props.folderItem.folderName}</h2>
+          <h2 className="folder-text">Dummy data</h2>
           <span className="folder-dropdown-wrapper">
             <Link to="/" className="dropdown-btn">
              <img className="rename-icon-image" src={dropDownIcon} alt="rename-icon"></img>

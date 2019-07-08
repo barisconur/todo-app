@@ -1,6 +1,9 @@
 import React from 'react';
 import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 import '../view/ListPanelView.css';
+import appJson from '../../../../../app';
+
+const shortid = require('shortid');
 
 class ModalContainer extends React.Component {
   constructor(props) {
@@ -35,7 +38,7 @@ class ModalContainer extends React.Component {
           <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}>
           Close
           </Button>
-          <Button className="modal-register-btn" variant="primary" onClick={this.sendInputToView}>
+          <Button className="modal-register-btn" variant="primary" onClick={this.addItemToItems}>
           Register
           </Button>
         </Modal.Footer>
@@ -49,7 +52,7 @@ class ModalContainer extends React.Component {
     });
   }
 
-  sendInputToView = () => {
+  addItemToItems = () => {
     const userInput = this.state.input;
     this.setInputComingFromUser();
 
@@ -57,19 +60,24 @@ class ModalContainer extends React.Component {
       alert("Please enter not an empty text");
       return; 
     } 
+    const folderNames = appJson.folderNames;
+    const listNames = appJson.listNames;
 
-    if (this.props.whichModal === 'folder') {
-      for (let i = 0; i < this.props.folderNames.length; i++) {
-        if (userInput === this.props.folderNames[i]) {
-          alert("You have already added a folder with this name");
-          return;
-        }
-      }          
+    if (this.props.whichModal === 'folder' && this.checkFolderNameIsUnique(folderNames)) {
+      const folderItems = appJson.folderItems; 
+      this.registerNewFolderItemToJson(folderNames, folderItems);
+    } else {
+      const listItems = appJson.listItems;
+      this.registerNewListItemToJson(listNames, listItems);
     }
     
-    this.props.itemName(userInput);
     this.clearInput();
     this.props.closeModal();
+    console.log("listItems",appJson.listItems);
+    console.log("listNames",appJson.listNames);
+
+    console.log("folderItems",appJson.folderItems);
+    console.log("folderNames",appJson.folderNames);
   }
 
   setInputComingFromUser = () => {
@@ -79,6 +87,38 @@ class ModalContainer extends React.Component {
   }
 
   isNotEmpty = (input) => (input.length === 0) ? true : false;
+
+  checkFolderNameIsUnique = (folderNames) => {
+    for (let i = 0; i < folderNames.length; i++) {
+      if (this.state.input === folderNames[i]) {
+        alert("You have already added a folder with this name");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  registerNewFolderItemToJson = (folderNames, folderItems) => {
+    const newFolder = { folderID: shortid.generate(),
+                       folderName: this.state.input,
+                       listGroup: []
+                      };
+    const jsonFormatFolder = JSON.stringify(newFolder);
+
+    folderNames.push(this.state.input);
+    folderItems.push(jsonFormatFolder);
+  }
+
+  registerNewListItemToJson = (listNames, listItems) => {
+    const newList = { listID: shortid.generate(),
+                      listName: this.state.input 
+                    }
+    const jsonFormatList = JSON.stringify(newList);
+
+    listNames.push(this.state.input);
+    listItems.push(jsonFormatList);
+
+  }
 
   clearInput = () => {
     this.setState({

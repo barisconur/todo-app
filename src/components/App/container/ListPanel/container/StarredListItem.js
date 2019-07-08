@@ -5,21 +5,20 @@ import '../view/ListPanelView.css';
 class StarredListItem extends React.Component {
 
   render() {
-    const list = this.props.listItem;
     return (
       <Router>
-      <NavLink className="link"to={'/#list/' + list.listName} onClick={this.sendListToView}>
+      <NavLink className="link"to={'/#list/' + 'burayaidgelcek'} onClick={this.setSelectedList}>
         <div className="list-container">
-          <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
-          <h2 className="list-text">{list.listName}</h2> 
+          {/* <img className="list-icon" src={list.listIcon} alt="list-icon"></img> */}
+          <h2 className="list-text">Dummy data</h2> 
         </div>
       </NavLink>
     </Router>
     );
   }
   
-  sendListToView = () => {
-    this.props.setSelectedList(this.props.listItem);
+  setSelectedList = () => {
+    //TO-DO jsona vercen 
   }
 }
     

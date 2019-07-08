@@ -4,15 +4,14 @@ import '../view/ListPanelView.css';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 
 class ListItem extends React.Component {
-  
+  // boş dönmemek için src a remove icon verdim oraya jsondan okunacak listIcon gelecek
   render() {
-    const list = this.props.listItem;
     return (
       <Router>
         <div className="list-container">
-          <NavLink className="list-link"to={'/#list/' + list.listName} onClick={this.sendListToView}>
-            <img className="list-icon" src={list.listIcon} alt="list-icon"></img>
-            <h2 className="list-text">{list.listName}</h2> 
+          <NavLink className="list-link"to={'/#list/' + "burayaidleri gelcek"} onClick={this.setSelectedList}>
+            <img className="list-icon" src={removeIcon} alt="list-icon"></img>
+            <h2 className="list-text">Dummy data</h2> 
           </NavLink>
           {this.renderMotificationButtons()}
         </div>
@@ -20,31 +19,20 @@ class ListItem extends React.Component {
     );
   }
 
-  sendListToView = () => {
-    const list = this.props.listItem;
-    this.props.setSelectedList(list);
+  setSelectedList = () => {
+    //TO-DO jsonda selectedList i tıklanan yap
   }
 
   renderMotificationButtons = () => {
-    const list = this.props.listItem;
-    if (list.listID === 0) return; // Inbox static list renaming and deleting is not allowed
-
-    return <span className="list-modification-wrapper">
-            <Link to="/" className="remove-list-btn">
-              <img className="remove-icon-image" src={removeIcon} alt="search-icon" onClick={this.removeList}></img>
-            </Link>
-          </span>
+    //TO-DO
   }
 
   renameList = () => {
   //TO-DO
-  console.log("henüz yapılmadı"); 
   }
 
   removeList = () => {
-    const list = this.props.listItem;
-    this.props.listToRemove(list);
-    
+    //TO-DO
   }
 }
 

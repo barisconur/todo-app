@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link} from 'react-router-dom';
 import {InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
+const shortid = require('shortid');
 
 class AddToDo extends React.Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class AddToDo extends React.Component {
     
     this.state = {
       input: "",
-      toDoID: -1
     }
   }
 
@@ -20,7 +20,7 @@ class AddToDo extends React.Component {
         <div className="add-todo-container">
           <Router>
             <span className="add-item-wrapper">
-              <Link to="/" className="add-item-btn" onClick={this.sendInputToView}>
+              <Link to="/" className="add-item-btn" onClick={this.addTodo}>
                <img className="add-icon" src={plusIcon} alt="add-icon"/>
               </Link>
             </span>
@@ -40,20 +40,19 @@ class AddToDo extends React.Component {
     );
   }
 
-  sendInputToView = () => {
+  addTodo = () => {
     const userInput = this.state.input;
     this.setInputComingFromUser();
     
-    this.setState(prevState =>({
-      toDoID: prevState.toDoID + 1
-    }), () => {
+    this.setState({
+      toDoID: shortid.generate(),
+      input: ""
+    }, () => {
       this.clearInputField();
-      this.setState ({
-        input: ""
-      });
       const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
-      this.props.sendNewToDoValues(newToDo);
+       // jsona kaydet burada
     });
+     
   }
 
   setInputComingFromUser = () => {
