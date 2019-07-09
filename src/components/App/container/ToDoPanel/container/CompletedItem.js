@@ -24,23 +24,22 @@ class CompletedItem extends React.Component {
   }
 
   undoCompletedToDo = () => {
-    console.log("buraya girmemeli!!!!!  ");
-    const listItems = appJson.listItems;
-    const currentList = this.props.selectedList;
-    const listIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
-    const completedItems = listItems[listIndex].completedItems;
+    const selectedList = this.props.selectedList;
+    const listItems = appJson.listItems; 
+    const currentListIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
+
+    const currentList = listItems[currentListIndex];
+    const completedItems = currentList.completedItems;
     const toDoItemToUndo = this.props.toDoItem;
     const toDoIndex = completedItems.findIndex(toDoItem => completedItems.toDoID === toDoItemToUndo.listID);
 
-    if (toDoIndex !== undefined) {
-      completedItems.splice(toDoIndex, 1);
-    }
-    console.log(completedItems, "completedItemlardan silinmiş hali");
-    listItems[listIndex].completedItems = completedItems;
-    listItems[listIndex].toDoItems.push(toDoItemToUndo);
-    console.log(listItems[listIndex], "toDoItem a geçirdiği hali");
-    this.props.updateToDoChanges(listItems[listIndex]);
+    if (toDoIndex !== undefined) completedItems.splice(toDoIndex, 1);
+    
+    currentList.completedItems = completedItems;
+    currentList.toDoItems.push(toDoItemToUndo);
+
+    this.props.updateToDoChanges(currentList);
   }
 }
 

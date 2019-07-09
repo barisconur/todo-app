@@ -15,18 +15,13 @@ import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
-class ListPanelView extends React.Component {
-
-  constructor() {
-    super();
-
-    this.state = {
+export default class ListPanelView extends React.Component {
+  state = {
       isModalShown: false,
       whichModal: "",
       itemName: "",
       listItems: [],
       folderItems: []
-    }
   }
 
   componentDidMount () {
@@ -125,6 +120,5 @@ class ListPanelView extends React.Component {
   sendSelectedListToView = (selectedList) => {
     this.props.setSelectedList(selectedList);
   }
+  
 }
-
-export default ListPanelView;

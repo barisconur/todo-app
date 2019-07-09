@@ -7,7 +7,7 @@ import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
-class AddToDo extends React.Component {
+export default class AddToDo extends React.Component {
   constructor(props) {
     super(props);
     this.userInput = React.createRef();
@@ -22,7 +22,7 @@ class AddToDo extends React.Component {
         <div className="add-todo-container">
           <Router>
             <span className="add-item-wrapper">
-              <Link to="/" className="add-item-btn" onClick={this.addTodo}>
+              <Link to="/" className="add-item-btn" onClick={this.addTodoItem}>
                <img className="add-icon" src={plusIcon} alt="add-icon"/>
               </Link>
             </span>
@@ -35,14 +35,13 @@ class AddToDo extends React.Component {
               placeholder= "Add todo..." 
               aria-label="Todo-name"
               aria-describedby="basic-addon2"
-              onChange={() => this.setInputComingFromUser()}
-            />
+              onChange={() => this.setInputComingFromUser()}/>
           </InputGroup>
         </div>
     );
   }
 
-  addTodo = () => {
+  addTodoItem = () => {
     const userInput = this.state.input;
     this.setInputComingFromUser();
     
@@ -51,15 +50,15 @@ class AddToDo extends React.Component {
       input: ""
     }, () => {
       this.clearInputField();
-
-      const selected = this.props.selectedList;
+      const selectedList = this.props.selectedList;
       const listItems = appJson.listItems;
-      const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
-      const modifiedIndex = appJson.listItems.findIndex(listItem => listItem.listID === selected.listID);
+      const newToDoItem = {toDoID: this.state.toDoID, toDoName: userInput};
 
-      listItems[modifiedIndex].toDoItems.push(newToDo);
-      appJson.selectedList = listItems[modifiedIndex];
-      this.props.updateToDoChanges(appJson.selectedList);
+      const currentListIndex = appJson.listItems.findIndex(listItem => listItem.listID === selectedList.listID);
+      const currentList = listItems[currentListIndex];
+
+      currentList.toDoItems.push(newToDoItem);
+      this.props.updateToDoChanges(currentList);
     });
   }
 
@@ -74,5 +73,3 @@ class AddToDo extends React.Component {
     this.userInput.current.placeholder = "Add todo...";
   }
 }
-
-export default AddToDo;
