@@ -3,6 +3,8 @@ import { BrowserRouter as Router, NavLink} from 'react-router-dom';
 import inboxIcon from '../../../../../assets/icons/inbox-icon.svg';
 import '../view/ListPanelView.css';
 
+import appJson from '../../../../../app';
+
 class InboxListItem extends React.Component {
 
   render() {
@@ -21,7 +23,9 @@ class InboxListItem extends React.Component {
   }
 
   setSelectedList = () => {
-    //TO-DO jsonda selectedList i tıklanan yap
+    const listItem = this.props.listItem;
+    appJson.selectedList = listItem;
+    this.props.sendSelectedToView(listItem);
   }
 }
 

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Link} from 'react-router-dom';
 import {InputGroup, FormControl } from 'react-bootstrap';
 import '../view/ToDoPanelView';
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
+import appJson from '../../../../../app';
+
 const shortid = require('shortid');
 
 class AddToDo extends React.Component {
@@ -49,10 +51,17 @@ class AddToDo extends React.Component {
       input: ""
     }, () => {
       this.clearInputField();
+
+      const selected = this.props.selectedList;
+      const listItems = appJson.listItems;
       const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
-       // jsona kaydet burada
+      const modifiedIndex = appJson.listItems.findIndex(listItem => listItem.listID === selected.listID);
+
+      appJson.toDoItems.push(newToDo);
+      listItems[modifiedIndex].toDoItems.push(newToDo);
+      appJson.selectedList = listItems[modifiedIndex];
+      this.props.updateToDoChanges(appJson.selectedList);
     });
-     
   }
 
   setInputComingFromUser = () => {

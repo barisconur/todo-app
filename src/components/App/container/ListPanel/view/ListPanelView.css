@@ -27,6 +27,14 @@
   margin-top: 12px;
 }
 
+.folder-modification-wrapper {
+  position: absolute;
+  right: 0%;
+  padding-left: 7px;
+  padding-top: 7.5px;
+  padding-right: 25px;
+}
+
 .dropdown-btn {
   position: absolute;
   right: 5%;

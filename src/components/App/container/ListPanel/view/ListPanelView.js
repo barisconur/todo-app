@@ -23,16 +23,26 @@ class ListPanelView extends React.Component {
     this.state = {
       isModalShown: false,
       whichModal: "",
-      itemName: ""
+      itemName: "",
+      listItems: [],
+      folderItems: []
     }
   }
 
-
+  componentDidMount () {
+    Promise.resolve(appJson).then(appJson => {
+      this.setState({
+        listItems: appJson.listItems,
+        folderItems: appJson.folderItems
+      });
+    })
+  }
 
   render() {
     const timeLists = appJson.listItems.slice(2, 4);
-    const addedFolders = appJson.folderItems;
-    const addedLists = appJson.listItems.slice(4, appJson.listItems.length);
+    let addedFolders = this.state.folderItems;
+    let addedLists = this.state.listItems.slice(4, this.state.listItems.length);
+
     return (
       <div className="lists-container">
         <SearchContainer/>
@@ -41,20 +51,22 @@ class ListPanelView extends React.Component {
           { this.renderInboxList() }
           { this.renderStarredList() }
           {timeLists.map((list) => {
-            return <TimeListItem listItem= { list }  key= {shortid.generate()}/>
+            return <TimeListItem listItem= { list }  key= {shortid.generate()} 
+            sendSelectedToView={this.sendSelectedListToView}/>
            })}
         </div>
 
         <div className="folder-items-container">
          {addedFolders.map((folder) => {
-            return <FolderItem folderItem= { folder } key={shortid.generate()} id={folder.folderID}/>
+          return <FolderItem folderItem= { folder } key= {shortid.generate()} updateFolder= {this.updateFolder}
+          sendSelectedToView= {this.sendSelectedListToView}/>
           })}
         </div>
 
         <div className="list-items-container">
          {addedLists.map((list) => {
-           console.log(list);
-            return <ListItem listItem = { list } key= {shortid.generate()}/>
+            return <ListItem listItem= { list } key= {shortid.generate()} updateList= {this.updateList}
+            sendSelectedToView= {this.sendSelectedListToView}/>
           })}
         </div>
 
@@ -63,19 +75,38 @@ class ListPanelView extends React.Component {
         <ModalContainer isModalShown={this.state.isModalShown}
                         closeModal={this.closeModal}
                         whichModal={this.state.whichModal}
-                        itemName={this.addItem}/>
+                        itemName={this.addItem}
+                        sendSelectedListToView={this.sendSelectedListToView}/>
       </div>
     );
   }
 
   renderInboxList = () => {
     const list = appJson.listItems[0];
-    return <InboxListItem listItem= { list } key= {shortid.generate()} id={list.listID}/>
+    return <InboxListItem listItem= { list } key= {shortid.generate()}
+    sendSelectedToView={this.sendSelectedListToView}/>
   }
 
   renderStarredList = () => {
     const list = appJson.listItems[1];
-    return <StarredListItem listItem= { list }  key= {shortid.generate()}/>
+    return <StarredListItem listItem= { list }  key= {shortid.generate()}
+    sendSelectedToView={this.sendSelectedListToView}/>
+  }
+
+  updateList = () => {
+    Promise.resolve(appJson.listItems).then(updatedList => {
+      this.setState({
+        listItems: updatedList
+      });
+    })
+  }
+
+  updateFolder = () => {
+    Promise.resolve(appJson.folderItems).then(updatedFolder => {
+      this.setState({
+        folderItems: updatedFolder
+      });
+    })
   }
   
   openModalBox = (modalName) => {
@@ -89,6 +120,10 @@ class ListPanelView extends React.Component {
     this.setState({
       isModalShown: false
     })
+  }
+
+  sendSelectedListToView = (selectedList) => {
+    this.props.setSelectedList(selectedList);
   }
 }
 

@@ -6,20 +6,30 @@ import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
 import appJson from '../../../app';
 
 export default class AppView extends Component {
+  state = {
+    selectedList: {}
+  }
+
+  componentDidMount () {
+    Promise.resolve(appJson.listItems[0]).then(inboxListItem => {
+      this.setState({
+        selectedList: inboxListItem
+      });
+    })
+  }
 
   render() {
-    console.log("AppView updates", appJson.selectedList);
-    console.log("ListItems", appJson.listItems);
     return (
       <div>
         <Container id="app-container">
           <Row>
             <Col sm={2} className="list-panel-container">
-              <ListPanelView />
+              <ListPanelView setSelectedList= {this.setSelectedList}/>
             </Col>
 
             <Col sm={10} className="todo-panel-container">
-              <ToDoPanelView/>
+              <ToDoPanelView renderThisSelectedList= {this.state.selectedList} 
+              updateThisSelectedList={this.setSelectedList}/>
             </Col>
             
             {/* <Col sm={3} className="panel-container">
@@ -30,4 +40,11 @@ export default class AppView extends Component {
       </div>
     );
   }
+
+  setSelectedList = (newSelected) => {
+    this.setState({
+      selectedList: newSelected
+    });
+  }
+  
 }

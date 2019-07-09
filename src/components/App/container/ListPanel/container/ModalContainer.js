@@ -114,6 +114,7 @@ class ModalContainer extends React.Component {
 
     listItems.push(newSelected);
     appJson.selectedList = newSelected;
+    this.props.sendSelectedListToView(newSelected);
   }
 
   clearInput = () => {

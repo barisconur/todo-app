@@ -3,6 +3,8 @@ import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import '../view/ListPanelView.css';
 import starIcon from '../../../../../assets/icons/star-icon.svg';
 
+import appJson from '../../../../../app';
+
 class StarredListItem extends React.Component {
 
   render() {
@@ -21,7 +23,9 @@ class StarredListItem extends React.Component {
   }
 
   setSelectedList = () => {
-    //TO-DO jsona vercen 
+    const listItem = this.props.listItem;
+    appJson.selectedList = listItem;
+    this.props.sendSelectedToView(listItem);
   }
 }
     

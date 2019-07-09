@@ -4,6 +4,8 @@ import '../view/ListPanelView.css';
 import todayIcon from '../../../../../assets/icons/today-icon.svg';
 import weekIcon from '../../../../../assets/icons/this-week-icon.svg';
 
+import appJson from '../../../../../app';
+
 class TimeListItem extends React.Component {
 
   render() {
@@ -31,7 +33,9 @@ class TimeListItem extends React.Component {
   }
   
   setSelectedList = () => {
-    //TO-DO 
+    const listItem = this.props.listItem;
+    appJson.selectedList = listItem;
+    this.props.sendSelectedToView(listItem);
   }
 }
     

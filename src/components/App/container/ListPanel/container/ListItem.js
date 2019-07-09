@@ -7,9 +7,10 @@ import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 import appJson from '../../../../../app';
 
 class ListItem extends React.Component {
-  // boş dönmemek için src a remove icon verdim oraya jsondan okunacak listIcon gelecek
+
   render() {
     const listItem = this.props.listItem;
+
     return (
       <Router>
         <div className="list-container">
@@ -23,9 +24,12 @@ class ListItem extends React.Component {
     );
   }
 
+
+
   setSelectedList = () => {
     const listItem = this.props.listItem;
     appJson.selectedList = listItem;
+    this.props.sendSelectedToView(listItem);
   }
 
   renderMotificationButtons = () => {
@@ -53,8 +57,11 @@ class ListItem extends React.Component {
     }
 
     if (currentList.listID === appJson.selectedList.listID) {
-      appJson.selectedList = listItems[0]; // Inbox
+      appJson.selectedList = listItems[0]; 
+      this.props.sendSelectedToView(listItems[0]);
     }
+    
+    this.props.updateList();
   }
 }
 

@@ -5,6 +5,7 @@ import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import CompletedItem from '../container/CompletedItem';
+import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
@@ -13,37 +14,84 @@ class ToDoPanelView extends React.Component {
     super(props);
 
     this.state = {
-      isCompletedShown: false
+      isCompletedShown: false,
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.renderThisSelectedList !== prevProps.renderThisSelectedList) {
+      this.setState({
+        isCompletedShown: false
+      });
+    }
+  }
+
   render() {
+    const selectedList = this.props.renderThisSelectedList;
+
     return (
       <div className="todo-container">
-        <Navbar/>
+        <Navbar newSelectedListName= {selectedList.listName}/>
+        { this.renderAddToDoComponent() }
         <div className="todo-items-container">
+          { this.renderToDoItems() }
         </div>
 
         <div className="completed-items-container">
+          { this.showCompletedButton() }
+          { this.renderCompletedItems() }
         </div>
       </div>
     );
   }
 
   renderAddToDoComponent = () => {
-    //TO-DO
+    const selectedList = this.props.renderThisSelectedList;
+    if (selectedList !== undefined) {
+      if (selectedList.listID !== 0 && typeof selectedList.listID !== "string") return;
+      return <AddToDo selectedList= {selectedList} updateToDoChanges={this.sendUpdatedSelectedToView}/>
+    }
+  }
+
+  sendUpdatedSelectedToView = (newSelected) => {
+    this.props.updateThisSelectedList(newSelected);
   }
 
   renderToDoItems = () => {
-   //TO-DO
+    const selectedList = this.props.renderThisSelectedList;
+
+    if (selectedList !== undefined) {
+      if (selectedList.toDoItems !== undefined) {
+        return selectedList.toDoItems.map((toDoItem) => {
+          return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+          updateToDoChanges={this.sendUpdatedSelectedToView}/>
+        })
+      }
+    }
   }
 
   renderCompletedItems = () => {
-    //TO-DO
+    if(!this.state.isCompletedShown) return;
+    const selectedList = this.props.renderThisSelectedList;
+
+    if (selectedList !== undefined) {
+      if (selectedList.completedItems !== undefined) {
+        return selectedList.completedItems.map((toDoItem) => {
+          return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+          updateToDoChanges={this.sendUpdatedSelectedToView}/>
+        })
+      }
+    }
   }
 
   showCompletedButton = () => {
-    //TO-DO
+    const selectedList = this.props.renderThisSelectedList;
+    if (selectedList.completedItems !== undefined) {
+      if(selectedList.completedItems.length === 0) return;
+        return <Button className="show-completed-btn" variant="dark" onClick={this.toggleShowButton}>
+                SHOW COMPLETED TO-DOS
+              </Button>
+    }
   }
 
   toggleShowButton = () => {

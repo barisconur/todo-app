@@ -1,16 +1,21 @@
 import React from 'react';
 import '../view/ToDoPanelView';
-import appJson from '../../../../../app';
 
 class Navbar extends React.Component {
-  render() {
-    console.log(appJson.selectedList);
 
+  render() {
       return (
         <div className="navbar">
-          <span className="navbar-selected-list">{appJson.selectedList.listName}</span>
+          <span className="navbar-selected-list">{this.displaySelectedListName()}</span>
         </div>
       );
+  }
+
+  displaySelectedListName = () => {
+    const selectedListName = this.props.newSelectedListName;
+    if (selectedListName === undefined) return "Inbox";
+
+    return selectedListName;
   }
 }
 

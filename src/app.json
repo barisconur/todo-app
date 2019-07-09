@@ -3,7 +3,7 @@
     "listID" : 0,
     "listName" : "Inbox",
     "toDoItems" : [],
-    "completeItems" : []
+    "completedItems" : []
   },
 
   "listNames" : [
@@ -28,7 +28,7 @@
       "listID" : 0,
       "listName" : "Inbox",
       "toDoItems" : [],
-      "completeItems" : []
+      "completedItems" : []
     },
     {
       "listID" : 1,
