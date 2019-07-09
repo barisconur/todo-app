@@ -1,32 +1,24 @@
 import React from 'react';
-import '../view/ListPanelView';
-
 import SearchContainer from '../container/SearchContainer';
 import ButtonContainer from '../container/ButtonContainer';
 import ModalContainer from '../container/ModalContainer';
-
 import ListItem from '../container/ListItem';
 import FolderItem from '../container/FolderItem';
 import StarredListItem from '../container/StarredListItem';
 import TimeListItem from '../container/TimeListItem';
 import InboxListItem from '../container/InboxListItem';
-
+import '../view/ListPanelView';
 import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
-class ListPanelView extends React.Component {
-
-  constructor() {
-    super();
-
-    this.state = {
-      isModalShown: false,
-      whichModal: "",
-      itemName: "",
-      listItems: [],
-      folderItems: []
-    }
+export default class ListPanelView extends React.Component {
+  state = {
+    isModalShown: false,
+    whichModal: "",
+    itemName: "",
+    listItems: [],
+    folderItems: []
   }
 
   componentDidMount () {
@@ -52,31 +44,31 @@ class ListPanelView extends React.Component {
           { this.renderStarredList() }
           {timeLists.map((list) => {
             return <TimeListItem listItem= { list }  key= {shortid.generate()} 
-            sendSelectedToView={this.sendSelectedListToView}/>
+            sendSelectedToView= {this.sendSelectedListToAppView}/>
            })}
         </div>
 
         <div className="folder-items-container">
          {addedFolders.map((folder) => {
           return <FolderItem folderItem= { folder } key= {shortid.generate()} updateFolder= {this.updateFolder}
-          sendSelectedToView= {this.sendSelectedListToView}/>
+          sendSelectedToView= {this.sendSelectedListToAppView}/>
           })}
         </div>
 
         <div className="list-items-container">
          {addedLists.map((list) => {
             return <ListItem listItem= { list } key= {shortid.generate()} updateList= {this.updateList}
-            sendSelectedToView= {this.sendSelectedListToView}/>
+            sendSelectedToView= {this.sendSelectedListToAppView}/>
           })}
         </div>
 
-        <ButtonContainer displayModal={this.openModalBox}/>
+        <ButtonContainer displayModal= {this.openModalBox}/>
 
-        <ModalContainer isModalShown={this.state.isModalShown}
-                        closeModal={this.closeModal}
-                        whichModal={this.state.whichModal}
-                        itemName={this.addItem}
-                        sendSelectedListToView={this.sendSelectedListToView}/>
+        <ModalContainer isModalShown= {this.state.isModalShown}
+                        closeModal= {this.closeModalBox}
+                        whichModal= {this.state.whichModal}
+                        itemName= {this.addItem}
+                        sendSelectedListToAppView= {this.sendSelectedListToAppView}/>
       </div>
     );
   }
@@ -84,13 +76,17 @@ class ListPanelView extends React.Component {
   renderInboxList = () => {
     const list = appJson.listItems[0];
     return <InboxListItem listItem= { list } key= {shortid.generate()}
-    sendSelectedToView={this.sendSelectedListToView}/>
+    sendSelectedToView={this.sendSelectedListToAppView}/>
   }
 
   renderStarredList = () => {
     const list = appJson.listItems[1];
     return <StarredListItem listItem= { list }  key= {shortid.generate()}
-    sendSelectedToView={this.sendSelectedListToView}/>
+    sendSelectedToView={this.sendSelectedListToAppView}/>
+  }
+
+  sendSelectedListToAppView = (selectedList) => {
+    this.props.setSelectedList(selectedList);
   }
 
   updateList = () => {
@@ -116,15 +112,9 @@ class ListPanelView extends React.Component {
     });
   }
 
-  closeModal = () => {
+  closeModalBox = () => {
     this.setState({
       isModalShown: false
     })
   }
-
-  sendSelectedListToView = (selectedList) => {
-    this.props.setSelectedList(selectedList);
-  }
 }
-
-export default ListPanelView;

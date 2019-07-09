@@ -5,10 +5,12 @@ import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
-class ModalContainer extends React.Component {
+export default class ModalContainer extends React.Component {
   constructor(props) {
     super(props);
+
     this.userInput = React.createRef();
+
     this.state = {
       input: ""
     }
@@ -29,8 +31,7 @@ class ModalContainer extends React.Component {
               placeholder= {this.props.whichModal +" name"}
               aria-label={this.props.whichModal +"-name"}
               aria-describedby="basic-addon2"
-              onChange={() => this.setInputComingFromUser()}
-              />
+              onChange={() => this.setInputComingFromUser()}/>
           </InputGroup>
         </Modal.Body>
       
@@ -54,20 +55,18 @@ class ModalContainer extends React.Component {
 
   addItemToItems = () => {
     this.setInputComingFromUser();
-
     if (this.isNotEmpty(this.state.input)) {
       alert("Please enter not an empty text");
       return; 
     } 
-    const folderItems = appJson.folderItems;
-    console.log(folderItems);
 
+    const folderItems = appJson.folderItems;
     if (this.props.whichModal === 'folder') {
       if (!this.checkFolderNameIsUnique(folderItems)) return;
-      this.registerNewFolderItemToJson(folderItems);
+      this.registerNewFolderItem(folderItems);
     } else {
       const listItems = appJson.listItems;
-      this.registerNewListItemToJson(listItems);
+      this.registerNewListItem(listItems);
     }
     
     this.clearInput();
@@ -92,27 +91,26 @@ class ModalContainer extends React.Component {
     return true;
   }
 
-  registerNewFolderItemToJson = (folderItems) => {
+  registerNewFolderItem = (folderItems) => {
     const newFolder = { folderID: shortid.generate(),
                        folderName: this.state.input,
                        listGroup: []
                       };
+
     folderItems.push(newFolder);
   }
 
-  registerNewListItemToJson = (listItems) => {
-    const newList = { listID: shortid.generate(),
-                      listName: this.state.input 
-                    }
-    const newSelected = { listID: newList.listID,
-                          listName: newList.listName,
+  registerNewListItem = (listItems) => {
+    const newSelectedList = { listID: shortid.generate(),
+                          listName: this.state.input,
                           toDoItems: [],
                           completedItems: []
                         }
 
-    listItems.push(newSelected);
-    appJson.selectedList = newSelected;
-    this.props.sendSelectedListToView(newSelected);
+    listItems.push(newSelectedList);
+    appJson.selectedList = newSelectedList;
+
+    this.props.sendSelectedListToAppView(newSelectedList);
   }
 
   clearInput = () => {
@@ -121,5 +119,3 @@ class ModalContainer extends React.Component {
     });
   }
 }
-
-export default ModalContainer;

@@ -1,13 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
-import '../view/ListPanelView.css';
 import folderIcon from '../../../../../assets/icons/folder-icon.svg';
 import dropDownIcon from '../../../../../assets/icons/dropdown-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
-
 import appJson from '../../../../../app';
+import '../view/ListPanelView.css';
 
-class FolderItem extends React.Component {
+export default class FolderItem extends React.Component {
   
   render() {
     const folderItem = this.props.folderItem;
@@ -40,12 +39,8 @@ class FolderItem extends React.Component {
     const currentFolder = this.props.folderItem;
     const removedIndex = folderItems.findIndex(folderItem => folderItem.listID === currentFolder.listID);
 
-    if (removedIndex !== undefined) {
-      folderItems.splice(removedIndex,1);
-    }
-
+    if (removedIndex !== undefined) folderItems.splice(removedIndex,1);
+    
     this.props.updateFolder();
   }
 }
-
-export default FolderItem;

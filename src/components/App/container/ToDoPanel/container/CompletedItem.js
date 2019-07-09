@@ -1,22 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
-import '../view/ToDoPanelView.css';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
-
 import appJson from '../../../../../app';
+import '../view/ToDoPanelView.css';
 
-class CompletedItem extends React.Component {
+export default class CompletedItem extends React.Component {
   
   render() {
+    const toDoItem = this.props.toDoItem;
     return (
       <div className="completed-item-container">
         <Router>
-          <span className="completed-item-wrapper">
+          <span className="completed-item-wrapper"> 
             <Link to="/" className="checkbox-btn" onClick={this.undoCompletedToDo}>
               <img className="checkbox-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
             </Link>
 
-            <h2 className="completed-item-text">{this.props.toDoItem.toDoName}</h2> 
+            <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
           </span>
         </Router>
     </div>
@@ -24,24 +24,20 @@ class CompletedItem extends React.Component {
   }
 
   undoCompletedToDo = () => {
-    console.log("buraya girmemeli!!!!!  ");
     const listItems = appJson.listItems;
-    const currentList = this.props.selectedList;
-    const listIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
+    const selectedList = this.props.selectedList;
 
+    const listIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
+    const currentList = listItems[listIndex];
     const completedItems = listItems[listIndex].completedItems;
-    const toDoItemToUndo = this.props.toDoItem;
-    const toDoIndex = completedItems.findIndex(toDoItem => completedItems.toDoID === toDoItemToUndo.listID);
 
-    if (toDoIndex !== undefined) {
-      completedItems.splice(toDoIndex, 1);
-    }
-    console.log(completedItems, "completedItemlardan silinmiş hali");
-    listItems[listIndex].completedItems = completedItems;
-    listItems[listIndex].toDoItems.push(toDoItemToUndo);
-    console.log(listItems[listIndex], "toDoItem a geçirdiği hali");
-    this.props.updateToDoChanges(listItems[listIndex]);
+    const currentToDoItem = this.props.toDoItem;
+    const currentToDoIndex = completedItems.findIndex(toDoItem => completedItems.toDoID === currentToDoItem.listID);
+    
+    if (currentToDoIndex !== undefined) completedItems.splice(currentToDoIndex, 1);
+     currentList.completedItems = completedItems;
+     currentList.toDoItems.push(currentToDoItem);
+
+    this.props.updateToDoChanges(currentList);
   }
 }
-
-export default CompletedItem;

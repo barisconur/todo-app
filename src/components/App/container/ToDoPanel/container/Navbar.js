@@ -1,7 +1,7 @@
 import React from 'react';
 import '../view/ToDoPanelView';
 
-class Navbar extends React.Component {
+export default class Navbar extends React.Component {
 
   render() {
       return (
@@ -18,5 +18,3 @@ class Navbar extends React.Component {
     return selectedListName;
   }
 }
-
-export default Navbar;

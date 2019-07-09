@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, NavLink, Link} from 'react-router-dom';
-import '../view/ListPanelView.css';
 import listIcon from '../../../../../assets/icons/list-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
-
 import appJson from '../../../../../app';
+import '../view/ListPanelView.css';
 
-class ListItem extends React.Component {
+export default class ListItem extends React.Component {
 
   render() {
     const listItem = this.props.listItem;
@@ -18,13 +17,11 @@ class ListItem extends React.Component {
             <img className="list-icon" src={listIcon} alt="list-icon"></img>
             <h2 className="list-text">{listItem.listName}</h2> 
           </NavLink>
-          {this.renderMotificationButtons()}
+          { this.renderMotificationButtons() }
         </div>
       </Router>
     );
   }
-
-
 
   setSelectedList = () => {
     const listItem = this.props.listItem;
@@ -43,26 +40,22 @@ class ListItem extends React.Component {
           </span>
   }
 
-  renameList = () => {
-  //TO-DO
-  }
-
   removeList = () => {
     const listItems = appJson.listItems;
     const currentList = this.props.listItem;
     const removedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
-    if (removedIndex !== undefined) {
-      listItems.splice(removedIndex,1);
-    }
+    if (removedIndex !== undefined) listItems.splice(removedIndex,1);
 
     if (currentList.listID === appJson.selectedList.listID) {
       appJson.selectedList = listItems[0]; 
       this.props.sendSelectedToView(listItems[0]);
     }
-    
     this.props.updateList();
   }
-}
 
-export default ListItem;
+  renameList = () => {
+  //TO-DO
+  }
+
+}

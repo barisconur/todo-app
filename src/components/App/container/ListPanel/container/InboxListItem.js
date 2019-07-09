@@ -1,11 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
 import inboxIcon from '../../../../../assets/icons/inbox-icon.svg';
+import appJson from '../../../../../app';
 import '../view/ListPanelView.css';
 
-import appJson from '../../../../../app';
-
-class InboxListItem extends React.Component {
+export default class InboxListItem extends React.Component {
 
   render() {
     const listName = this.props.listItem.listName
@@ -28,5 +27,3 @@ class InboxListItem extends React.Component {
     this.props.sendSelectedToView(listItem);
   }
 }
-
-export default InboxListItem;
