@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import appJson from '../../../app';
+import './AppView.css';
 import ListPanelView from '../container/ListPanel/view/ListPanelView';
 import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
-import './AppView.css';
+import appJson from '../../../app';
 
-export default class AppView extends React.Component {
+export default class AppView extends Component {
   state = {
     selectedList: {}
   }
@@ -23,7 +23,6 @@ export default class AppView extends React.Component {
       <div>
         <Container id="app-container">
           <Row>
-
             <Col sm={2} className="list-panel-container">
               <ListPanelView setSelectedList= {this.setSelectedList}/>
             </Col>
@@ -32,17 +31,20 @@ export default class AppView extends React.Component {
               <ToDoPanelView renderThisSelectedList= {this.state.selectedList} 
               updateThisSelectedList={this.setSelectedList}/>
             </Col>
-
+            
+            {/* <Col sm={3} className="panel-container">
+              <MenuPanel/>
+            </Col> */}
           </Row>
         </Container>
       </div>
     );
   }
 
-  setSelectedList = (newSelectedList) => {
+  setSelectedList = (newSelected) => {
     this.setState({
-      selectedList: newSelectedList
+      selectedList: newSelected
     });
   }
-
+  
 }
