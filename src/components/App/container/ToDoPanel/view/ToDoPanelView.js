@@ -5,6 +5,7 @@ import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import CompletedItem from '../container/CompletedItem';
 import '../view/ToDoPanelView';
+import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
@@ -14,38 +15,78 @@ export default class ToDoPanelView extends React.Component {
 
     this.state = {
       isCompletedShown: false,
+      allToDoItems: [],
+      allCompletedItems: []
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.renderThisSelectedList !== prevProps.renderThisSelectedList) {
       this.setState({
-        isCompletedShown: false
+        isCompletedShown: false,
       });
     }
   }
 
+  componentDidMount() {
+    this.setAllItems();
+  }
   render() {
-    const selectedList = this.props.renderThisSelectedList;
-
     return (
-      <div className="todo-container">
-        <Navbar newSelectedListName= {selectedList.listName}/>
-        { this.renderAddToDoComponent() }
-
-        <div className="todo-items-container">
-          { this.renderToDoItems() }
-        </div>
-
-        <div className="completed-items-container">
-          { this.showCompletedButton() }
-          { this.renderCompletedItems() }
-        </div>
-
+      <div className="todo-container"> 
+        { this.displayPanel ()}
       </div>
     );
   }
-  //
+
+  displayPanel = () => {
+    if (this.props.searchedWord.length !== 0) {
+      return <div>BURAYA SEARCH PANEL GELECEK</div>
+    } else {
+      const selectedList = this.props.renderThisSelectedList;
+
+      return ( 
+        <div className="render-todo-container">
+        <Navbar newSelectedListName= {selectedList.listName}/>
+       { this.renderAddToDoComponent() }
+
+       <div className="todo-items-container">
+         { this.renderToDoItems() }
+       </div>
+
+       <div className="completed-items-container">
+         { this.showCompletedButton() }
+         { this.renderCompletedItems() }
+       </div>
+     </div>
+      )
+    }
+  }
+
+  setAllItems = () => {
+    let todos = [];
+    let completedTodos = [];
+
+    appJson.listItems.forEach(listItem => {
+      listItem.toDoItems.forEach(toDoItem => {
+        todos.push(toDoItem);
+      }) 
+    });
+    
+    appJson.listItems.forEach(listItem => {
+      if (listItem.completedItems !== undefined) { // staticTimeLists does not have completedItems by default
+        listItem.completedItems.forEach(toDoItem => {
+          completedTodos.push(toDoItem);
+        })
+      }
+    });
+    this.setState({
+      allToDoItems: todos,
+      allCompletedItems: completedTodos
+    }, () => {
+      console.log(this.state);
+    });
+  }
 
   renderAddToDoComponent = () => {
     const selectedList = this.props.renderThisSelectedList;

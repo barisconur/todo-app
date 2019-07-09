@@ -37,7 +37,7 @@ export default class ListPanelView extends React.Component {
 
     return (
       <div className="lists-container">
-        <SearchContainer/>
+        <SearchContainer sendSearchedWordToAppView= {this.sendSearchedWordToAppView}/>
 
         <div className="static-lists-container">
           { this.renderInboxList() }
@@ -71,6 +71,10 @@ export default class ListPanelView extends React.Component {
                         sendSelectedListToAppView= {this.sendSelectedListToAppView}/>
       </div>
     );
+  }
+
+  sendSearchedWordToAppView = (searchedWord) => {
+    this.props.setSearchedWord(searchedWord);
   }
 
   renderInboxList = () => {

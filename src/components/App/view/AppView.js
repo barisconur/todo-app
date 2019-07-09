@@ -7,7 +7,8 @@ import appJson from '../../../app';
 
 export default class AppView extends Component {
   state = {
-    selectedList: {}
+    selectedList: {},
+    searchedWord: ""
   }
 
   componentDidMount () {
@@ -25,18 +26,24 @@ export default class AppView extends Component {
           <Row>
 
             <Col sm={2} className="list-panel-container">
-              <ListPanelView setSelectedList= {this.setSelectedList}/>
+              <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord}/>
             </Col>
 
             <Col sm={10} className="todo-panel-container">
               <ToDoPanelView renderThisSelectedList= {this.state.selectedList} 
-              updateThisSelectedList={this.setSelectedList}/>
+              updateThisSelectedList={this.setSelectedList} searchedWord= {this.state.searchedWord}/>
             </Col>
 
           </Row>
         </Container>
       </div>
     );
+  }
+
+  setSearchedWord = (searchedWord) => {
+    this.setState({
+      searchedWord: searchedWord
+    });
   }
 
   setSelectedList = (newSelectedList) => {
