@@ -59,15 +59,15 @@ class ModalContainer extends React.Component {
       alert("Please enter not an empty text");
       return; 
     } 
-    const folderNames = appJson.folderNames;
-    const listNames = appJson.listNames;
+    const folderItems = appJson.folderItems;
+    console.log(folderItems);
 
-    if (this.props.whichModal === 'folder' && this.checkFolderNameIsUnique(folderNames)) {
-      const folderItems = appJson.folderItems; 
-      this.registerNewFolderItemToJson(folderNames, folderItems);
+    if (this.props.whichModal === 'folder') {
+      if (!this.checkFolderNameIsUnique(folderItems)) return;
+      this.registerNewFolderItemToJson(folderItems);
     } else {
       const listItems = appJson.listItems;
-      this.registerNewListItemToJson(listNames, listItems);
+      this.registerNewListItemToJson(listItems);
     }
     
     this.clearInput();
@@ -82,9 +82,9 @@ class ModalContainer extends React.Component {
 
   isNotEmpty = (input) => (input.length === 0) ? true : false;
 
-  checkFolderNameIsUnique = (folderNames) => {
-    for (let i = 0; i < folderNames.length; i++) {
-      if (this.state.input === folderNames[i]) {
+  checkFolderNameIsUnique = (folderItems) => {
+    for (let i = 0; i < folderItems.length; i++) {
+      if (this.state.input === folderItems[i].folderName) {
         alert("You have already added a folder with this name");
         return false;
       }
@@ -92,17 +92,15 @@ class ModalContainer extends React.Component {
     return true;
   }
 
-  registerNewFolderItemToJson = (folderNames, folderItems) => {
+  registerNewFolderItemToJson = (folderItems) => {
     const newFolder = { folderID: shortid.generate(),
                        folderName: this.state.input,
                        listGroup: []
                       };
-
-    folderNames.push(this.state.input);
     folderItems.push(newFolder);
   }
 
-  registerNewListItemToJson = (listNames, listItems) => {
+  registerNewListItemToJson = (listItems) => {
     const newList = { listID: shortid.generate(),
                       listName: this.state.input 
                     }

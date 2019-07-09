@@ -5,7 +5,6 @@ import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import CompletedItem from '../container/CompletedItem';
-import appJson from '../../../../../app';
 
 const shortid = require('shortid');
 
@@ -44,6 +43,7 @@ class ToDoPanelView extends React.Component {
       </div>
     );
   }
+  //
 
   renderAddToDoComponent = () => {
     const selectedList = this.props.renderThisSelectedList;
@@ -88,7 +88,7 @@ class ToDoPanelView extends React.Component {
     const selectedList = this.props.renderThisSelectedList;
     if (selectedList.completedItems !== undefined) {
       if(selectedList.completedItems.length === 0) return;
-        return <Button className="show-completed-btn" variant="dark" onClick={this.toggleShowButton}>
+        return <Button className="show-completed-btn" variant="dark" size="sm" onClick={this.toggleShowButton}>
                 SHOW COMPLETED TO-DOS
               </Button>
     }

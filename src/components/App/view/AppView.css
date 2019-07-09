@@ -16,8 +16,10 @@ html, body {
 }
 
 .todo-panel-container {
+  background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(../../../assets/background-images/eiffel.jpg);
+  background-position: center;
+  background-image: url('../../../assets/background-images/eiffel.jpg');
 }
 
 

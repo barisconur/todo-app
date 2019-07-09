@@ -57,7 +57,6 @@ class AddToDo extends React.Component {
       const newToDo = {toDoID: this.state.toDoID, toDoName: userInput};
       const modifiedIndex = appJson.listItems.findIndex(listItem => listItem.listID === selected.listID);
 
-      appJson.toDoItems.push(newToDo);
       listItems[modifiedIndex].toDoItems.push(newToDo);
       appJson.selectedList = listItems[modifiedIndex];
       this.props.updateToDoChanges(appJson.selectedList);

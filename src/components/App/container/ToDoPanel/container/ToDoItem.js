@@ -54,11 +54,14 @@ class ToDoItem extends React.Component {
 
     const toDoItems = listItems[listIndex].toDoItems;
     const toDoItemToRemoved = this.props.toDoItem;
-    const toDoIndex = toDoItems.findIndex(toDoItem => toDoItems.toDoID === toDoItemToRemoved.listID);
-
+    const toDoIndex = toDoItems.findIndex(toDoItem => toDoItems.toDoID === toDoItemToRemoved.toDoID);
+    console.log("removedan önce list",toDoItems);
+    console.log("silinecekItem", toDoItemToRemoved);
+    console.log("silinecek item in indexi", toDoIndex);
     if (toDoIndex !== undefined) {
       toDoItems.splice(toDoIndex, 1);
     }
+    console.log("silindikten sonra liste", toDoItems);
 
     listItems[listIndex].toDoItems = toDoItems;
     this.props.updateToDoChanges(listItems[listIndex]);

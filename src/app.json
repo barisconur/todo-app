@@ -21,8 +21,6 @@
     }
   ],
 
-  "folderNames" : [],
-
   "listItems" : [
     {
       "listID" : 0,
@@ -47,7 +45,5 @@
     }
   ],
 
-  "folderItems" : [],
-
-  "toDoItems" : []
+  "folderItems" : []
 }
