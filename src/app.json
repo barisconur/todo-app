@@ -1,33 +1,12 @@
 {
-"selectedList" : {
+  "selectedList" : {
     "listID" : 0,
     "listName" : "Inbox",
     "toDoItems" : [],
     "completedItems" : []
   },
 
-  "listNames" : [
-    {
-      "name": "Inbox"
-    }, 
-    {
-      "name": "Starred"
-    },
-    {
-      "name": "Today"
-    },
-    {
-      "name": "This Week"
-    }
-  ],
-
-  "listItems" : [
-    {
-      "listID" : 0,
-      "listName" : "Inbox",
-      "toDoItems" : [],
-      "completedItems" : []
-    },
+  "staticLists" : [
     {
       "listID" : 1,
       "listName" : "Starred",
@@ -42,6 +21,15 @@
       "listID" : 3,
       "listName" : "This Week",
       "toDoItems" : []
+    }
+  ],
+
+  "listItems" : [
+    {
+      "listID" : 0,
+      "listName" : "Inbox",
+      "toDoItems" : [],
+      "completedItems" : []
     }
   ],
 

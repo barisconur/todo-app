@@ -55,13 +55,21 @@ export default class AddToDo extends React.Component {
       const selectedList = this.props.selectedList;
       const newToDoItem = {toDoID: this.state.toDoID, toDoName: userInput};
 
-      const currentIndex = appJson.listItems.findIndex(listItem => listItem.listID === selectedList.listID);
-      const currentList = listItems[currentIndex];
-
+      let currentIndex = appJson.listItems.findIndex(listItem => listItem.listID === selectedList.listID);
+      let currentList = listItems[currentIndex];
+      
+      if (1 <= selectedList.listID && selectedList.listID <= 3) {  
+        currentList = listItems[0];
+        const id = selectedList.listID;
+        const staticList = appJson.staticLists[id - 1];
+        
+        appJson.selectedList = staticList;
+        this.props.updateToDoChanges(staticList);
+      } else {
+        appJson.selectedList = currentList;
+        this.props.updateToDoChanges(currentList);
+      } 
       currentList.toDoItems.push(newToDoItem);
-      appJson.selectedList = currentList;
-
-      this.props.updateToDoChanges(currentList);
     });
   }
 

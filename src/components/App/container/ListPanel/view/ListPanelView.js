@@ -31,9 +31,9 @@ export default class ListPanelView extends React.Component {
   }
 
   render() {
-    const timeLists = appJson.listItems.slice(2, 4);
+    const timeLists = appJson.staticLists.slice(1, 3);
     let addedFolders = this.state.folderItems;
-    let addedLists = this.state.listItems.slice(4, this.state.listItems.length);
+    let addedLists = this.state.listItems.slice(1, this.state.listItems.length);
 
     return (
       <div className="lists-container">
@@ -84,7 +84,7 @@ export default class ListPanelView extends React.Component {
   }
 
   renderStarredList = () => {
-    const list = appJson.listItems[1];
+    const list = appJson.staticLists[0];
     return <StarredListItem listItem= { list }  key= {shortid.generate()}
     sendSelectedToView={this.sendSelectedListToAppView}/>
   }

@@ -14,9 +14,7 @@ export default class ToDoPanelView extends React.Component {
     super(props);
 
     this.state = {
-      isCompletedShown: false,
-      allToDoItems: [],
-      allCompletedItems: []
+      isCompletedShown: false
     };
   }
 
@@ -28,7 +26,6 @@ export default class ToDoPanelView extends React.Component {
     }
   }
 
-z
   render() {
     return (
       <div className="todo-container"> 
@@ -39,7 +36,7 @@ z
 
   displayPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <div>BURAYA SEARCH PANEL GELECEK</div>
+      return <SearchPanel searchedWord= {this.props.searchedWord}/>
     } else {
       const selectedList = this.props.renderThisSelectedList;
 
@@ -61,38 +58,10 @@ z
     }
   }
 
-  // setAllItems = () => {
-  //   let todos = [];
-  //   let completedTodos = [];
-
-  //   appJson.listItems.forEach(listItem => {
-  //     listItem.toDoItems.forEach(toDoItem => {
-  //       todos.push(toDoItem);
-  //     }) 
-  //   });
-    
-  //   appJson.listItems.forEach(listItem => {
-  //     if (listItem.completedItems !== undefined) { // staticTimeLists does not have completedItems by default
-  //       listItem.completedItems.forEach(toDoItem => {
-  //         completedTodos.push(toDoItem);
-  //       })
-  //     }
-  //   });
-  //   this.setState({
-  //     allToDoItems: todos,
-  //     allCompletedItems: completedTodos
-  //   }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
-
   renderAddToDoComponent = () => {
     const selectedList = this.props.renderThisSelectedList;
-
-    if (selectedList !== undefined) {
-      if (selectedList.listID !== 0 && typeof selectedList.listID !== "string") return;
-      return <AddToDo selectedList= {selectedList} updateToDoChanges={this.sendSelectedListToAppView}/>
-    }
+    return <AddToDo selectedList= {selectedList} updateToDoChanges={this.sendSelectedListToAppView}/>
+    
   }
 
   renderToDoItems = () => {
@@ -142,4 +111,63 @@ z
   sendSelectedListToAppView = (newSelectedList) => {
     this.props.updateThisSelectedList(newSelectedList);
   }
+}
+
+class SearchPanel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      foundedToDoItems: [],
+      foundedCompletedItems: []
+    }
+  }
+
+  componentDidMount() {
+    let todos = [];
+    let completedToDos = [];
+
+    this.setTodos(todos, completedToDos);
+    const foundedToDos = this.search(todos);
+    const foundedCompleted = this.search(completedToDos);
+
+    this.setState({
+      todos: [...foundedToDos],
+      completedToDos: [...foundedCompleted]
+    });
+
+  }
+
+  render() {
+    return (
+      <div className="search-panel-container">
+        <div className="todos-container">
+
+        </div>
+
+        <div className="completed-container">
+
+        </div>
+      </div>
+    );
+  }
+
+  setTodos = (todos, completedToDos) => {
+    appJson.listItems.forEach(listItem => {
+      listItem.toDoItems.forEach(toDoItem => {
+        toDoItem.listID = listItem.listID;
+        todos.push(toDoItem);
+      }) 
+    }); 
+
+    appJson.listItems.forEach(listItem => {
+      listItem.completedItems.forEach(toDoItem => {
+        toDoItem.listID = listItem.listID;
+        completedToDos.push(toDoItem);
+      })
+    });
+   }
+
+   search = (list) => list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(this.props.searchedWord.toLowerCase()));
+   
 }
