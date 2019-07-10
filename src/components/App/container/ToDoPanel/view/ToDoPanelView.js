@@ -28,9 +28,7 @@ export default class ToDoPanelView extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.setAllItems();
-  }
+z
   render() {
     return (
       <div className="todo-container"> 
@@ -63,30 +61,30 @@ export default class ToDoPanelView extends React.Component {
     }
   }
 
-  setAllItems = () => {
-    let todos = [];
-    let completedTodos = [];
+  // setAllItems = () => {
+  //   let todos = [];
+  //   let completedTodos = [];
 
-    appJson.listItems.forEach(listItem => {
-      listItem.toDoItems.forEach(toDoItem => {
-        todos.push(toDoItem);
-      }) 
-    });
+  //   appJson.listItems.forEach(listItem => {
+  //     listItem.toDoItems.forEach(toDoItem => {
+  //       todos.push(toDoItem);
+  //     }) 
+  //   });
     
-    appJson.listItems.forEach(listItem => {
-      if (listItem.completedItems !== undefined) { // staticTimeLists does not have completedItems by default
-        listItem.completedItems.forEach(toDoItem => {
-          completedTodos.push(toDoItem);
-        })
-      }
-    });
-    this.setState({
-      allToDoItems: todos,
-      allCompletedItems: completedTodos
-    }, () => {
-      console.log(this.state);
-    });
-  }
+  //   appJson.listItems.forEach(listItem => {
+  //     if (listItem.completedItems !== undefined) { // staticTimeLists does not have completedItems by default
+  //       listItem.completedItems.forEach(toDoItem => {
+  //         completedTodos.push(toDoItem);
+  //       })
+  //     }
+  //   });
+  //   this.setState({
+  //     allToDoItems: todos,
+  //     allCompletedItems: completedTodos
+  //   }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
 
   renderAddToDoComponent = () => {
     const selectedList = this.props.renderThisSelectedList;

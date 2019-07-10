@@ -36,8 +36,8 @@ export default class ToDoItem extends React.Component {
     const currentList = listItems[currentIndex];
     const toDoItems = currentList.toDoItems;
     const currentToDoItem = this.props.toDoItem;
-    const currentToDoIndex = toDoItems.findIndex(toDoItem => toDoItems.toDoID === currentToDoItem.toDoID);
-
+    const currentToDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === currentToDoItem.toDoID);
+  
     if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
 
     currentList.toDoItems = toDoItems;

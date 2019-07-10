@@ -32,7 +32,7 @@ export default class CompletedItem extends React.Component {
     const completedItems = listItems[listIndex].completedItems;
 
     const currentToDoItem = this.props.toDoItem;
-    const currentToDoIndex = completedItems.findIndex(toDoItem => completedItems.toDoID === currentToDoItem.listID);
+    const currentToDoIndex = completedItems.findIndex(toDoItem => toDoItem.toDoID === currentToDoItem.toDoID);
     
     if (currentToDoIndex !== undefined) completedItems.splice(currentToDoIndex, 1);
      currentList.completedItems = completedItems;
