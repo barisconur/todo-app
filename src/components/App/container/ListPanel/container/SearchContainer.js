@@ -12,6 +12,7 @@ export default class SearchContainer extends React.Component {
       searchedWord: ""
     }
   }
+
    render() {
       return (
         <InputGroup className="search-container">

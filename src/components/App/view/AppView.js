@@ -8,8 +8,11 @@ import appJson from '../../../app';
 export default class AppView extends Component {
   state = {
     selectedList: {},
-    searchedWord: ""
+    searchedWord: "",
+    isAnyListClicked: false
   }
+
+
 
   componentDidMount () {
     Promise.resolve(appJson.listItems[0]).then(inboxListItem => {
@@ -48,7 +51,8 @@ export default class AppView extends Component {
 
   setSelectedList = (newSelectedList) => {
     this.setState({
-      selectedList: newSelectedList
+      selectedList: newSelectedList,
+      searchedWord: "" 
     });
   }
 }

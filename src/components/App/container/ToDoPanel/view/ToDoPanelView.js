@@ -14,7 +14,8 @@ export default class ToDoPanelView extends React.Component {
     super(props);
 
     this.state = {
-      isCompletedShown: false
+      isCompletedShown: false,
+      searchedWord: this.props.searchedWord
     };
   }
 
@@ -24,19 +25,27 @@ export default class ToDoPanelView extends React.Component {
         isCompletedShown: false,
       });
     }
+
+    if (this.props.isClicked !== prevProps.isClicked) {
+      this.setState({
+        searchedWord: ""
+      });
+    }
   }
 
   render() {
+    console.log(this.props.isClicked);
     return (
       <div className="todo-container"> 
-        { this.displayPanel ()}
+        { this.displayPanel () }
       </div>
     );
   }
 
+
   displayPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <SearchPanel searchedWord= {this.props.searchedWord}/>
+      return <SearchPanel searchedWord= {this.state.searchedWord} updateThisSelectedList= {this.sendSelectedListToAppView}/>
     } else {
       const selectedList = this.props.renderThisSelectedList;
 
@@ -114,6 +123,7 @@ export default class ToDoPanelView extends React.Component {
 }
 
 class SearchPanel extends React.Component {
+  
   constructor(props) {
     super(props);
 
@@ -130,26 +140,89 @@ class SearchPanel extends React.Component {
     this.setTodos(todos, completedToDos);
     const foundedToDos = this.search(todos);
     const foundedCompleted = this.search(completedToDos);
+    
+    const groupToDos = this.groupBylistID(foundedToDos);
+    const groupCompleted = this.groupBylistID(foundedCompleted);
 
     this.setState({
-      todos: [...foundedToDos],
-      completedToDos: [...foundedCompleted]
+      groupToDos: [...groupToDos],
+      groupCompleted: [...groupCompleted]
     });
-
   }
 
   render() {
     return (
       <div className="search-panel-container">
         <div className="todos-container">
-
+          <div className="todo-groups-container">
+            { this.renderAllListGroups(this.state.groupToDos) }
+          </div>
         </div>
 
         <div className="completed-container">
+          <hr></hr>
+          <div className="completed-groups-container">
+            { this.renderAllListGroups(this.state.groupCompleted) }
+          </div>
 
         </div>
       </div>
     );
+  }
+
+  renderAllListGroups = (list) => {
+    const listGroups = list;
+    if (listGroups !== undefined) {
+      if (list === this.state.groupToDos) {
+        return listGroups.map((group) => {
+          return this.renderToDoListGroup(group);
+        })
+      } else {
+        return listGroups.map((group) => {
+          return this.renderCompletedListGroup(group);
+        })
+      }
+     
+    }
+  }
+
+  renderToDoListGroup = (listGroup) => {
+    const listItems = appJson.listItems;
+    const currentIndex = listItems.findIndex(listItem => listItem.listID === listGroup[0].listID);
+    const tag = listItems[currentIndex].listName;
+    const selectedList = listItems[currentIndex];
+
+    return <div className="todo-group-container">
+            <Button variant="success" className="list-group-tag">
+              <h1>{tag}</h1>
+            </Button> 
+            {listGroup.map(toDoItem => {
+              return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+              updateToDoChanges={this.sendSelectedListToAppView}/>
+            })}
+          </div>
+  }
+
+  renderCompletedListGroup = (listGroup) => {
+    const listItems = appJson.listItems;
+    const currentIndex = listItems.findIndex(listItem => listItem.listID === listGroup[0].listID);
+    const tag = listItems[currentIndex].listName;
+    const selectedList = listItems[currentIndex];
+
+    console.log(listGroup);
+    return <div className="todo-group-container">
+            <Button variant="success" className="list-group-tag">
+              <h1>{tag}</h1>
+            </Button> 
+            {listGroup.map(toDoItem => {
+              return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+              updateToDoChanges={this.sendSelectedListToAppView}/>
+            })}
+          </div>
+  }
+
+  sendSelectedListToAppView = (newSelectedList) => {
+    this.props.updateThisSelectedList(newSelectedList);
   }
 
   setTodos = (todos, completedToDos) => {
@@ -168,6 +241,27 @@ class SearchPanel extends React.Component {
     });
    }
 
-   search = (list) => list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(this.props.searchedWord.toLowerCase()));
-   
+  search = (list) => list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(this.props.searchedWord.toLowerCase()));
+  
+  groupBylistID = (list) => {
+    let remainingList = list;
+    let groupArr = [];
+    while (remainingList.length !== 0) {
+      let listGroup = [];
+      let firstToDo = remainingList[0];
+      remainingList.splice(0, 1); 
+      listGroup.push(firstToDo);
+
+      for (let i = 0; i < remainingList.length; i++) {
+        if (firstToDo.listID === remainingList[i].listID) {
+          listGroup.push(remainingList[i]);
+          remainingList.splice(i, 1);
+          i--;
+        }
+      }
+      groupArr.push(listGroup);
+      listGroup = [];
+    }
+    return groupArr;
+  }
 }

@@ -41,7 +41,7 @@ export default class ToDoItem extends React.Component {
     if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
 
     currentList.toDoItems = toDoItems;
-    if (event.target.className === "checkbox-icon") currentList.completedItems.push(currentToDoItem);
+    if (event.target.className === "checkbox-icon" || event.target.className === "checkbox-btn") currentList.completedItems.push(currentToDoItem);
 
     this.props.updateToDoChanges(currentList);
   }

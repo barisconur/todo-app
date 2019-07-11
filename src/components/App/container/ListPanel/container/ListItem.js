@@ -26,6 +26,7 @@ export default class ListItem extends React.Component {
   setSelectedList = () => {
     const listItem = this.props.listItem;
     appJson.selectedList = listItem;
+    
     this.props.sendSelectedToView(listItem);
   }
 
