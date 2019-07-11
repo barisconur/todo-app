@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 import appJson from '../../../../../app';
@@ -12,18 +12,21 @@ export default class ToDoItem extends React.Component {
 
     return (
       <Router>
-         <span className="todo-item-wrapper">
-          <Link to="/" className="checkbox-btn" onClick={this.handleToDoItem}>
-            <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
-          </Link>
+        <NavLink to={"/todo-description/" + toDoItem.toDoID} className="todo-link">
+          <span className="todo-item-wrapper">
+            <Link to="/" className="checkbox-btn" onClick={this.handleToDoItem}>
+              <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
+            </Link>
 
-          <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
+            <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
 
-          <Link to="/" className="remove-todo-btn" onClick={this.handleToDoItem}>
-            <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
-          </Link>
+            <Link to="/" className="remove-todo-btn" onClick={this.handleToDoItem}>
+              <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
+            </Link>
 
-         </span>
+          </span>
+        </NavLink>
+        
       </Router>
     );
   }
@@ -42,7 +45,9 @@ export default class ToDoItem extends React.Component {
 
     currentList.toDoItems = toDoItems;
     if (event.target.className === "checkbox-icon" || event.target.className === "checkbox-btn") currentList.completedItems.push(currentToDoItem);
-
+    if (this.props.isSearchRendering) {
+      return;
+    }
     this.props.updateToDoChanges(currentList);
   }
 }

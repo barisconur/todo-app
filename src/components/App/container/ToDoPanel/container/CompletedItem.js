@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 import appJson from '../../../../../app';
 import '../view/ToDoPanelView.css';
@@ -11,13 +11,15 @@ export default class CompletedItem extends React.Component {
     return (
       <div className="completed-item-container">
         <Router>
-          <span className="completed-item-wrapper"> 
-            <Link to="/" className="checkbox-btn" onClick={this.undoCompletedToDo}>
-              <img className="checkbox-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
-            </Link>
+          <NavLink to={"/todo-description/" + toDoItem.toDoID} className="todo-link">
+            <span className="completed-item-wrapper"> 
+              <Link to="/" className="checkbox-btn" onClick={this.undoCompletedToDo}>
+                <img className="checkbox-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
+              </Link>
 
-            <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
-          </span>
+              <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
+            </span>
+          </NavLink>
         </Router>
     </div>
     );
@@ -37,7 +39,10 @@ export default class CompletedItem extends React.Component {
     if (currentToDoIndex !== undefined) completedItems.splice(currentToDoIndex, 1);
      currentList.completedItems = completedItems;
      currentList.toDoItems.push(currentToDoItem);
-
+     
+    if (this.props.isSearchRendering) {
+      return;
+    }
     this.props.updateToDoChanges(currentList);
   }
 }

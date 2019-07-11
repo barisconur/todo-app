@@ -1,11 +1,4 @@
 {
-  "selectedList" : {
-    "listID" : 0,
-    "listName" : "Inbox",
-    "toDoItems" : [],
-    "completedItems" : []
-  },
-
   "staticLists" : [
     {
       "listID" : 1,

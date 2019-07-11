@@ -53,7 +53,7 @@ export default class ModalContainer extends React.Component {
     });
   }
 
-  addItemToItems = () => {
+  addItemToItems = (event) => {
     this.setInputComingFromUser();
     if (this.isNotEmpty(this.state.input)) {
       alert("Please enter not an empty text");

@@ -1,8 +1,8 @@
 import React from 'react';
-import './MenuPanel';
+import './ToDoContentPanel';
 import OptionsContainer from '../container/OptionsContainer';
 
-class MenuPanel extends React.Component {
+class ToDoContentPanel extends React.Component {
     render() {
         return (
             <OptionsContainer/>
@@ -10,4 +10,4 @@ class MenuPanel extends React.Component {
     }
 }
 
-export default MenuPanel;
+export default ToDoContentPanel;

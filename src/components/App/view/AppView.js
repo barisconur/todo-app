@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ListPanelView from '../container/ListPanel/view/ListPanelView';
 import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
 import './AppView.css';
 import appJson from '../../../app';
 
-export default class AppView extends Component {
+export default class AppView extends React.Component {
   state = {
-    selectedList: {},
-    searchedWord: "",
-    isAnyListClicked: false
+    selectedList: {
+      listID: 0,
+      listName : "Inbox",
+      toDoItems : [],
+      completedItems : []
+    },
+    searchedWord: ""
   }
-
-
 
   componentDidMount () {
     Promise.resolve(appJson.listItems[0]).then(inboxListItem => {
@@ -35,7 +37,8 @@ export default class AppView extends Component {
 
             <Col sm={10} className="todo-panel-container">
               <ToDoPanelView renderThisSelectedList= {this.state.selectedList} 
-              updateThisSelectedList={this.setSelectedList} searchedWord= {this.state.searchedWord}/>
+              updateThisSelectedList= {this.setSelectedList} searchedWord= {this.state.searchedWord}
+              alterSelected= {this.updateSelectedList}/>
             </Col>
 
           </Row>
@@ -44,23 +47,25 @@ export default class AppView extends Component {
     );
   }
 
-  setSearchedWord = (searchedWord) => {
-    this.setState({
-      searchedWord: searchedWord
-    });
-  }
-
-  isSearchFieldWritten = () => {
-    if (this.state.searchedWord.length !== 0) {
-      return true;
-    }
-    return false;
-  }
-
   setSelectedList = (newSelectedList) => {
     this.setState({
       selectedList: newSelectedList,
       searchedWord: "" 
     });
   }
+
+  setSearchedWord = (searchedWord) => {
+    this.setState({
+      searchedWord: searchedWord
+    });
+  }
+
+  updateSelectedList = (list) =>{
+    this.setState({
+      selectedList: list
+    });
+  }
+
+  isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
+
 }

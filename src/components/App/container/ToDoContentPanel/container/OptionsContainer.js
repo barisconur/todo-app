@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, ButtonToolbar} from 'react-bootstrap';
-import '../view/MenuPanel';
+import '../view/ToDoContentPanel';
 import sortIcon from '../../../../../assets/sort-icon.svg';
 import moreIcon from '../../../../../assets/more-icon.svg';
 
