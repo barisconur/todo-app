@@ -29,7 +29,8 @@ export default class AppView extends Component {
           <Row>
 
             <Col sm={2} className="list-panel-container">
-              <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord}/>
+              <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord}
+              updateSearchField={this.isSearchFieldWritten()}/>
             </Col>
 
             <Col sm={10} className="todo-panel-container">
@@ -47,6 +48,13 @@ export default class AppView extends Component {
     this.setState({
       searchedWord: searchedWord
     });
+  }
+
+  isSearchFieldWritten = () => {
+    if (this.state.searchedWord.length !== 0) {
+      return true;
+    }
+    return false;
   }
 
   setSelectedList = (newSelectedList) => {

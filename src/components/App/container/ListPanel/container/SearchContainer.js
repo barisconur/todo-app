@@ -13,6 +13,13 @@ export default class SearchContainer extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.updateSearchField !== prevProps.updateSearchField) {
+      if (prevProps.updateSearchField === false) return;
+      this.userInput.current.value = "";
+    }
+  }
+
    render() {
       return (
         <InputGroup className="search-container">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
@@ -34,7 +34,6 @@ export default class ToDoPanelView extends React.Component {
   }
 
   render() {
-    console.log(this.props.isClicked);
     return (
       <div className="todo-container"> 
         { this.displayPanel () }
@@ -128,8 +127,8 @@ class SearchPanel extends React.Component {
     super(props);
 
     this.state = {
-      foundedToDoItems: [],
-      foundedCompletedItems: []
+      groupToDos: [],
+      groupComple: []
     }
   }
 
@@ -162,7 +161,7 @@ class SearchPanel extends React.Component {
         <div className="completed-container">
           <hr></hr>
           <div className="completed-groups-container">
-            { this.renderAllListGroups(this.state.groupCompleted) }
+            {/* { this.renderAllListGroups(this.state.groupCompleted) } */}
           </div>
 
         </div>
@@ -182,7 +181,6 @@ class SearchPanel extends React.Component {
           return this.renderCompletedListGroup(group);
         })
       }
-     
     }
   }
 
@@ -192,15 +190,15 @@ class SearchPanel extends React.Component {
     const tag = listItems[currentIndex].listName;
     const selectedList = listItems[currentIndex];
 
-    return <div className="todo-group-container">
-            <Button variant="success" className="list-group-tag">
+    return <Fragment>
+              <Button variant="success" className="list-group-tag">
               <h1>{tag}</h1>
             </Button> 
             {listGroup.map(toDoItem => {
               return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
               updateToDoChanges={this.sendSelectedListToAppView}/>
             })}
-          </div>
+           </Fragment>
   }
 
   renderCompletedListGroup = (listGroup) => {
@@ -210,15 +208,15 @@ class SearchPanel extends React.Component {
     const selectedList = listItems[currentIndex];
 
     console.log(listGroup);
-    return <div className="todo-group-container">
+    return <Fragment>
             <Button variant="success" className="list-group-tag">
-              <h1>{tag}</h1>
-            </Button> 
-            {listGroup.map(toDoItem => {
-              return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateToDoChanges={this.sendSelectedListToAppView}/>
-            })}
-          </div>
+                    <h1>{tag}</h1>
+                  </Button> 
+                  {listGroup.map(toDoItem => {
+                    return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+                    updateToDoChanges={this.sendSelectedListToAppView}/>
+                  })}
+            </Fragment>
   }
 
   sendSelectedListToAppView = (newSelectedList) => {
