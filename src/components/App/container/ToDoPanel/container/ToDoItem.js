@@ -12,7 +12,7 @@ export default class ToDoItem extends React.Component {
 
     return (
       <Router>
-        <NavLink to={"/todo-description/" + toDoItem.toDoID} className="todo-link">
+        <NavLink to={"/todo-description/" + toDoItem.toDoID} className="todopanel-todo-link">
           <span className="todo-item-wrapper">
             <Link to="/" className="checkbox-btn" onClick={this.handleToDoItem}>
               <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>

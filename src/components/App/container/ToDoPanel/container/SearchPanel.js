@@ -11,7 +11,9 @@ export default class SearchPanel extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      listItems: appJson.listItems
+    };
   }
 
   componentWillMount() {
@@ -30,23 +32,24 @@ export default class SearchPanel extends React.Component {
       completedSet: [...completedSet]
     });
   }
+  
+  setTodos = (todos, completedToDos) => { 
+    const listItems = this.state.listItems;
+      listItems.forEach(listItem => {
+        listItem.toDoItems.forEach(toDoItem => {
+          toDoItem.listID = listItem.listID;
+          toDoItem.listName = listItem.listName;
+          todos.push(toDoItem);
+        }) 
+      }); 
 
-  setTodos = (todos, completedToDos) => {
-    appJson.listItems.forEach(listItem => {
-      listItem.toDoItems.forEach(toDoItem => {
-        toDoItem.listID = listItem.listID;
-        toDoItem.listName = listItem.listName;
-        todos.push(toDoItem);
-      }) 
-    }); 
-
-    appJson.listItems.forEach(listItem => {
-      listItem.completedItems.forEach(toDoItem => {
-        toDoItem.listID = listItem.listID;
-        toDoItem.listName = listItem.listName;
-        completedToDos.push(toDoItem);
-      })
-    });
+      listItems.forEach(listItem => {
+        listItem.completedItems.forEach(toDoItem => {
+          toDoItem.listID = listItem.listID;
+          toDoItem.listName = listItem.listName;
+          completedToDos.push(toDoItem);
+        })
+      });
   }
 
   search = (list) => list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(this.props.searchedWord.toLowerCase()));
@@ -74,6 +77,8 @@ export default class SearchPanel extends React.Component {
   }
 
   render() { 
+    console.log("appJsondaki listItems: ", appJson.listItems);
+    console.log("initial olarak state e verilen listItems:", this.state.listItems);
     return (
       <div className="search-panel-container"> 
         <div className="todo-group-container">
@@ -106,7 +111,7 @@ export default class SearchPanel extends React.Component {
     const selectedList = listItems[currentIndex];
     
     return toDoGroup.map((toDoItem) => {
-      return <div className="todo-item-wrapper">
+      return <div className="search-todo-item-wrapper">
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
               updateToDoChanges={this.props.updateThisSelectedList} isSearchRendering= {true} 
               updateToDoWithoutSelectList={this.updateSelectedList}/>

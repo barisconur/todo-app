@@ -6,7 +6,7 @@ import ToDoItem from '../container/ToDoItem';
 import CompletedItem from '../container/CompletedItem';
 import SearchPanel from '../container/SearchPanel';
 import '../view/ToDoPanelView.css';
-
+import appJson from '../../../../../app'
 const shortid = require('shortid');
 
 export default class ToDoPanelView extends React.Component {
@@ -27,6 +27,7 @@ export default class ToDoPanelView extends React.Component {
   }
 
   render() {
+    console.log("todopanelview da appJson: ", appJson.listItems);
     return (
       <div className="todo-container"> 
         { this.displayPanel () }

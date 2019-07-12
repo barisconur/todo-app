@@ -55,10 +55,24 @@
 }
 
 .todo-link, .todo-link:hover {
-  margin-left: -20px;
+  color: black;
+  text-decoration: none;
+}
+
+.todopanel-todo-link, .todopanel-todo-link:hover {
   width: 101%;
   color: black;
   text-decoration: none;
+}
+
+.search-todo-item-wrapper {
+  background-color: rgba(255, 255, 255, 0.432);
+  display: flex;
+  border-radius: 5px;
+  height: 50px;
+  width: 97%;
+  margin-left: 20px;
+  margin-bottom: 5px;
 }
 
 .add-todo-field {
