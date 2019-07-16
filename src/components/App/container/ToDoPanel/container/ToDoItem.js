@@ -9,20 +9,21 @@ export default class ToDoItem extends React.Component {
 
   render() {
     const toDoItem = this.props.toDoItem;
+    console.log("gelen todo item", toDoItem);
 
     return (
       <Router>
-        <NavLink to={"/todo-description/" + toDoItem.toDoID} className="todopanel-todo-link">
+        <NavLink to={"/todos/" + toDoItem.toDoID} className="todopanel-todo-link">
           <span className="todo-item-wrapper">
-            <Link to="/" className="checkbox-btn" onClick={this.handleToDoItem}>
+            <span className="checkbox-btn" onClick={this.handleToDoItem}>
               <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
-            </Link>
+            </span>
 
             <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
 
-            <Link to="/" className="remove-todo-btn" onClick={this.handleToDoItem}>
+            <span className="remove-todo-btn" onClick={this.handleToDoItem}>
               <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
-            </Link>
+            </span>
 
           </span>
         </NavLink>
@@ -31,23 +32,23 @@ export default class ToDoItem extends React.Component {
     );
   }
 
-  handleToDoItem = (event) => {
-    const listItems = appJson.listItems;
-    const selectedList = this.props.selectedList;
-    const currentIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
+  // handleToDoItem = (event) => {
+  //   const listItems = appJson.listItems;
+  //   const selectedList = this.props.selectedList;
+  //   const currentIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
 
-    const currentList = listItems[currentIndex];
-    const toDoItems = currentList.toDoItems;
-    const currentToDoItem = this.props.toDoItem;
-    const currentToDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === currentToDoItem.toDoID);
-  
-    if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
+  //   const currentList = listItems[currentIndex];
+  //   const toDoItems = currentList.toDoItems;
+  //   const currentToDoItem = this.props.toDoItem;
+  //   const currentToDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === currentToDoItem.toDoID);
 
-    currentList.toDoItems = toDoItems;
-    if (event.target.className === "checkbox-icon" || event.target.className === "checkbox-btn") currentList.completedItems.push(currentToDoItem);
-    if (this.props.isSearchRendering) {
-      return;
-    }
-    this.props.updateToDoChanges(currentList);
-  }
+  //   if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
+
+  //   currentList.toDoItems = toDoItems;
+  //   if (event.target.className === "checkbox-icon" || event.target.className === "checkbox-btn") currentList.completedItems.push(currentToDoItem);
+  //   if (this.props.isSearchRendering) {
+  //     return;
+  //   }
+  //   this.props.updateToDoChanges(currentList);
+  // }
 }

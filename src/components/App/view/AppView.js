@@ -1,47 +1,36 @@
 import React from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import ListPanelView from '../container/ListPanel/view/ListPanelView';
 import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';
-import './AppView.css';
 import appJson from '../../../app';
+import './AppView.css';
 
 export default class AppView extends React.Component {
   state = {
-    selectedList: {
-      listID: 0,
-      listName : "Inbox",
-      toDoItems : [],
-      completedItems : []
-    },
+    selectedList: appJson.selectedList,
     searchedWord: ""
-  }
-
-  componentDidMount () {
-    Promise.resolve(appJson.listItems[0]).then(inboxListItem => {
-      this.setState({
-        selectedList: inboxListItem
-      });
-    })
   }
 
   render() {
     return (
       <div>
         <Container id="app-container">
-          <Row>
+          <Router>
+            <Row>
+              <Route path="/home/lists/inbox" exact={true}/>
 
-            <Col sm={2} className="list-panel-container">
-              <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord}
-              updateSearchField={this.isSearchFieldWritten()}/>
-            </Col>
+              <Col sm={2} className="list-panel-container">
+                <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} />
+              </Col>
 
-            <Col sm={10} className="todo-panel-container">
-              <ToDoPanelView renderThisSelectedList= {this.state.selectedList} 
-              updateThisSelectedList= {this.setSelectedList} searchedWord= {this.state.searchedWord}
-              alterSelected= {this.updateSelectedList}/>
-            </Col>
+              <Col sm={10} className="todo-panel-container">
+                <ToDoPanelView renderThisSelectedList= {this.state.selectedList} searchedWord= {this.state.searchedWord}
+                updateThisSelectedList= {this.setSelectedList}/>
+              </Col>
 
-          </Row>
+            </Row>
+          </Router>
         </Container>
       </div>
     );
@@ -60,12 +49,12 @@ export default class AppView extends React.Component {
     });
   }
 
-  updateSelectedList = (list) =>{
-    this.setState({
-      selectedList: list
-    });
-  }
+  // updateSelectedList = (list) =>{
+  //   this.setState({
+  //     selectedList: list
+  //   });
+  // }
 
-  isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
+  // isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
 }

@@ -1,29 +1,11 @@
 {
-  "staticLists" : [
-    {
-      "listID" : 1,
-      "listName" : "Starred",
-      "toDoItems" : []
-    },
-    {
-      "listID" : 2,
-      "listName" : "Today",
-      "toDoItems" : []
-    },
-    {
-      "listID" : 3,
-      "listName" : "This Week",
-      "toDoItems" : []
-    }
-  ],
-
+  "selectedList" : { "listID": 0, "listName": "Inbox", "toDoItems": [] },
+  
   "listItems" : [
-    {
-      "listID" : 0,
-      "listName" : "Inbox",
-      "toDoItems" : [],
-      "completedItems" : []
-    }
+    { "listID": 0, "listName": "Inbox"     , "toDoItems": [] },
+    { "listID": 1, "listName": "Starred"   , "toDoItems": [] },
+    { "listID": 2, "listName": "Today"     , "toDoItems": [] },
+    { "listID": 3, "listName": "This Week" , "toDoItems": [] }
   ],
 
   "folderItems" : []

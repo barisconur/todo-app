@@ -13,13 +13,6 @@ export default class SearchContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.updateSearchField !== prevProps.updateSearchField) {
-      if (prevProps.updateSearchField === false) return;
-      this.userInput.current.value = "";
-    }
-  }
-
    render() {
       return (
         <InputGroup className="search-container">
@@ -37,7 +30,7 @@ export default class SearchContainer extends React.Component {
     this.setState({
       searchedWord: this.userInput.current.value
     }, () => {
-      this.props.sendSearchedWordToAppView(this.state.searchedWord);
+      this.props.sendSearchedWordToView(this.state.searchedWord);
     })
    }
 }

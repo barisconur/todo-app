@@ -18,7 +18,7 @@ export default class FolderItem extends React.Component {
           <h2 className="folder-text">{folderItem.folderName}</h2>
 
           <span className="folder-modification-wrapper">
-            <Link to="/" className="remove-list-btn">
+            <Link to={"/" + folderItem.folderID} className="remove-list-btn">
               <img className="remove-icon-image" src={removeIcon} alt="search-icon" onClick={this.removeFolder}></img>
             </Link>
           </span>
@@ -34,13 +34,13 @@ export default class FolderItem extends React.Component {
     );
   }
 
-  removeFolder = () => {
-    const folderItems = appJson.folderItems;
-    const currentFolder = this.props.folderItem;
-    const removedIndex = folderItems.findIndex(folderItem => folderItem.listID === currentFolder.listID);
+  // removeFolder = () => {
+  //   const folderItems = appJson.folderItems;
+  //   const currentFolder = this.props.folderItem;
+  //   const removedIndex = folderItems.findIndex(folderItem => folderItem.listID === currentFolder.listID);
 
-    if (removedIndex !== undefined) folderItems.splice(removedIndex,1);
+  //   if (removedIndex !== undefined) folderItems.splice(removedIndex,1);
     
-    this.props.updateFolder();
-  }
+  //   this.props.updateFolder();
+  // }
 }

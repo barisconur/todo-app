@@ -36,12 +36,8 @@ export default class ModalContainer extends React.Component {
         </Modal.Body>
       
         <Modal.Footer>
-          <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}>
-          Close
-          </Button>
-          <Button className="modal-register-btn" variant="primary" onClick={this.addItemToItems}>
-          Register
-          </Button>
+          <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}> Close </Button>
+          <Button className="modal-register-btn" variant="primary" onClick={this.addNewItem}> Register </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -53,14 +49,15 @@ export default class ModalContainer extends React.Component {
     });
   }
 
-  addItemToItems = (event) => {
+  addNewItem = (event) => {
     this.setInputComingFromUser();
     if (this.isNotEmpty(this.state.input)) {
       alert("Please enter not an empty text");
-      return; 
+      return;
     } 
 
     const folderItems = appJson.folderItems;
+
     if (this.props.whichModal === 'folder') {
       if (!this.checkFolderNameIsUnique(folderItems)) return;
       this.registerNewFolderItem(folderItems);
@@ -101,15 +98,14 @@ export default class ModalContainer extends React.Component {
   }
 
   registerNewListItem = (listItems) => {
-    const newSelectedList = { listID: shortid.generate(),
+    const newList = { listID: shortid.generate(),
                           listName: this.state.input,
-                          toDoItems: [],
-                          completedItems: []
-                        }
+                          toDoItems: []
+                        };
+    const newSelectedList = newList;
 
-    listItems.push(newSelectedList);
     appJson.selectedList = newSelectedList;
-
+    listItems.push(newSelectedList);
     this.props.sendSelectedListToAppView(newSelectedList);
   }
 

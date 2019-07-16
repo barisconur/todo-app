@@ -27,7 +27,6 @@ export default class ToDoPanelView extends React.Component {
   }
 
   render() {
-    console.log("todopanelview da appJson: ", appJson.listItems);
     return (
       <div className="todo-container"> 
         { this.displayPanel () }
@@ -37,27 +36,25 @@ export default class ToDoPanelView extends React.Component {
 
   displayPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <SearchPanel searchedWord= {this.props.searchedWord} updateThisSelectedList= {this.updateSelectedList}/>
+      return <SearchPanel searchedWord= {this.props.searchedWord}/>
     } else {
       return this.renderToDoPanel();
     }
   }
 
   renderToDoPanel = () => {
-    const selectedList = this.props.renderThisSelectedList;
-
     return ( 
       <div className="render-todo-container">
-      <Navbar newSelectedListName= {selectedList.listName}/>
-     { this.renderAddToDoComponent() }
+        <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
+        { this.renderAddToDoComponent() }
 
      <div className="todo-items-container">
        { this.renderToDoItems() }
      </div>
 
      <div className="completed-items-container">
-       { this.showCompletedButton() }
-       { this.renderCompletedItems() }
+       {/* { this.showCompletedButton() } */}
+       {/* { this.renderCompletedItems() } */}
      </div>
    </div>
     )
@@ -74,31 +71,26 @@ export default class ToDoPanelView extends React.Component {
 
   renderToDoItems = () => {
     const selectedList = this.props.renderThisSelectedList;
-
     if (selectedList !== undefined) {
       if (selectedList.toDoItems !== undefined) {
         return selectedList.toDoItems.map((toDoItem) => {
-          return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-          updateToDoChanges={this.sendSelectedListToAppView} updateToDoWithoutSelectList={this.updateSelectedList}/>
+          return <ToDoItem selectedList= {selectedList} toDoItem= {toDoItem} key={shortid.generate()}
+          updateToDoChanges= {this.sendSelectedListToAppView}/>
         })
       }
     }
-  }
+  } 
 
-  updateSelectedList = (list) => {
-    this.props.alterSelected(list);
-  }
+  // showCompletedButton = () => {
+  //   const selectedList = this.props.renderThisSelectedList;
 
-  showCompletedButton = () => {
-    const selectedList = this.props.renderThisSelectedList;
-
-    if (selectedList.completedItems !== undefined) {
-      if(selectedList.completedItems.length === 0) return;
-        return <Button className="show-completed-btn" variant="dark" size="sm" onClick={this.toggleShowButton}>
-                SHOW COMPLETED TO-DOS
-              </Button>
-    }
-  }
+  //   if (selectedList.completedItems !== undefined) {
+  //     if(selectedList.completedItems.length === 0) return;
+  //       return <Button className="show-completed-btn" variant="dark" size="sm" onClick={this.toggleShowButton}>
+  //               SHOW COMPLETED TO-DOS
+  //             </Button>
+  //   }
+  // }
 
   toggleShowButton = () => {
     this.setState({
@@ -106,18 +98,17 @@ export default class ToDoPanelView extends React.Component {
     });
   }
   
-  renderCompletedItems = () => {
-    if(!this.state.isCompletedShown) return;
-    const selectedList = this.props.renderThisSelectedList;
+  // renderCompletedItems = () => {
+  //   if(!this.state.isCompletedShown) return;
+  //   const selectedList = this.props.renderThisSelectedList;
 
-    if (selectedList !== undefined) {
-      if (selectedList.completedItems !== undefined) {
-        return selectedList.completedItems.map((toDoItem) => {
-          return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-          updateToDoChanges={this.sendSelectedListToAppView} updateToDoWithoutSelectList={this.updateSelectedList}/>
-        })
-      }
-    }
-  }
-
+  //   if (selectedList !== undefined) {
+  //     if (selectedList.completedItems !== undefined) {
+  //       return selectedList.completedItems.map((toDoItem) => {
+  //         return <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+  //         updateToDoChanges={this.sendSelectedListToAppView} updateToDoWithoutSelectList={this.updateSelectedList}/>
+  //       })
+  //     }
+  //   }
+  // }
 }

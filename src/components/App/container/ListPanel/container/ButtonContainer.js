@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 import '../view/ListPanelView.css';
 
@@ -11,12 +11,14 @@ export default class ButtonContainer extends React.Component {
         <hr></hr>
         <div className="create-list-container">
           <Router>
+            <Route path="/"></Route>
             <span className="create-list-wrapper">
 
               <NavLink className="link" to="/#create/list/" onClick={this.handleListModal}>
                 <img className="create-icon" src={plusIcon} alt="create-list-icon"/>
                 <h3 className="create-text">Create list</h3>
               </NavLink>
+              
 
             </span>
           </Router>
@@ -41,6 +43,7 @@ export default class ButtonContainer extends React.Component {
 
   handleListModal = () => {
     this.props.displayModal("list");
+    
   }
 
   handleFolderModal = () => {
