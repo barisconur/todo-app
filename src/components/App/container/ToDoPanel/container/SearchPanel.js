@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ToDoItem from '../container/ToDoItem';
-import CompletedItem from '../container/CompletedItem';
 import appJson from '../../../../../app';
 import '../view/ToDoPanelView.css';
 
@@ -12,51 +11,64 @@ export default class SearchPanel extends React.Component {
     super(props);
 
     this.state = {
-      listItems: appJson.listItems
+      listItems: appJson.listItems,
+      toDos: [],
+      toDoSet: [],
     };
   }
 
   componentWillMount() {
-    let todos = [];
-    let completedToDos = [];
+    this.setToDos();
+  }
 
-    this.setTodos(todos, completedToDos);
+  componentDidUpdate(prevProps) {
+    if (this.props.searchedWord !== prevProps.searchedWord) {
+      this.setToDos();
+    }
+  }
+  
+  setToDos = () => { 
+    const listItems = this.state.listItems;
+    let todos = [];
+
+    listItems.forEach(listItem => {
+      listItem.toDoItems.forEach(toDoItem => {
+        toDoItem.listID = listItem.listID;
+        toDoItem.listName = listItem.listName;
+
+        todos.push(toDoItem);
+      }) 
+    }); 
+    this.setState({
+      toDos: todos
+    }, () => {
+      this.searchInSet(this.state.toDos);
+    })
+  }
+
+  searchInSet = (todos) => { 
     const foundedToDos = this.search(todos);
-    const foundedCompleted = this.search(completedToDos);
-    
     const toDoSet = this.groupBylistID(foundedToDos);
-    const completedSet = this.groupBylistID(foundedCompleted);
+    const orderedToDoSet = this.orderToDoSet(toDoSet);
 
     this.setState({
-      toDoSet: [...toDoSet],
-      completedSet: [...completedSet]
+      toDoSet: orderedToDoSet
     });
   }
-  
-  setTodos = (todos, completedToDos) => { 
-    const listItems = this.state.listItems;
-      listItems.forEach(listItem => {
-        listItem.toDoItems.forEach(toDoItem => {
-          toDoItem.listID = listItem.listID;
-          toDoItem.listName = listItem.listName;
-          todos.push(toDoItem);
-        }) 
-      }); 
 
-      listItems.forEach(listItem => {
-        listItem.completedItems.forEach(toDoItem => {
-          toDoItem.listID = listItem.listID;
-          toDoItem.listName = listItem.listName;
-          completedToDos.push(toDoItem);
-        })
-      });
-  }
+  search = (list) => {
+    if (list === undefined) return;
 
-  search = (list) => list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(this.props.searchedWord.toLowerCase()));
+    const searchedWord = this.props.searchedWord;
+    return list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(searchedWord.toLowerCase()));
+  } 
   
   groupBylistID = (list) => {
+    if (list === undefined) return;
+
     let remainingList = list;
     let groupArr = [];
+
     while (remainingList.length !== 0) {
       let listGroup = [];
       let firstToDo = remainingList[0];
@@ -76,28 +88,57 @@ export default class SearchPanel extends React.Component {
     return groupArr;
   }
 
+  orderToDoSet = (toDoSet) => {
+    let newToDoSet = [];
+
+    toDoSet.forEach(toDoItems => {
+      let incompletedToDos = [];
+      let completedToDos = [];
+      let orderToDoArr  = [];
+
+      toDoItems.forEach((toDoItem) => {
+        if (!toDoItem.toDoStatus.isCompleted) {
+        incompletedToDos.push(toDoItem);
+        } else { 
+        completedToDos.push(toDoItem);
+        }
+      })
+      orderToDoArr = incompletedToDos.concat(completedToDos);
+      newToDoSet.push(orderToDoArr);
+    });
+
+    return newToDoSet;
+  }
+
   render() { 
-    console.log("appJsondaki listItems: ", appJson.listItems);
-    console.log("initial olarak state e verilen listItems:", this.state.listItems);
+    const toDoSet = this.state.toDoSet;    
     return (
-      <div className="search-panel-container"> 
-        <div className="todo-group-container">
-         { this.renderToDoSet() }
-        </div>
-         
-        <div className= "completed-group-container">
-          { this.renderCompletedSet() }
-        </div>
-      </div>
+      <div> { this.renderSearchPanel(toDoSet) } </div>
+     
     );
   }
 
+  renderSearchPanel = (toDoSet) => {
+    if (toDoSet === undefined) return;
+
+    if (toDoSet.length === 0) {
+      return <h1>BUraya notFOund panel gelecek</h1>
+    } else {
+      return  <div className="search-panel-container"> 
+      <div className="todo-group-container">
+      { this.renderToDoSet() }
+      </div>
+    </div>
+    }
+  }
+
   renderToDoSet = () => {
-    if (this.state.toDoSet !== undefined) {
-        return this.state.toDoSet.map((toDoGroup => {
+    const toDoSet = this.state.toDoSet;
+    if (toDoSet !== undefined) {
+        return toDoSet.map((toDoGroup => {
           return <div className="todo-item-container">
                    <Button variant="success" className="list-group-tag">
-                     {toDoGroup[0].listName}
+                     {toDoGroup[0].listName} 
                    </Button>
                    {this.renderToDoGroupItem(toDoGroup)}
                  </div>
@@ -113,40 +154,17 @@ export default class SearchPanel extends React.Component {
     return toDoGroup.map((toDoItem) => {
       return <div className="search-todo-item-wrapper">
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateToDoChanges={this.props.updateThisSelectedList} isSearchRendering= {true} 
-              updateToDoWithoutSelectList={this.updateSelectedList}/>
+              updateToDoChanges= {this.props.updateThisSelectedList} isSearchRendering= {true}
+              updateThisSearchPanel= {this.updateListItems} />
             </div>
     })
   }
 
-  renderCompletedSet = () => {
-    if (this.state.completedSet !== undefined) {
-        return this.state.completedSet.map((toDoGroup => {
-          return <div className="completed-item-container">
-                  <Button variant="danger" className="list-group-tag">
-                    {toDoGroup[0].listName}
-                  </Button>
-                  {this.renderCompletedGroupItem(toDoGroup)}
-                </div>
-        }))
-    }
+  updateListItems = (updatedListItems) => {
+    this.setState({
+      listItems: updatedListItems
+    }, () => {
+      this.setToDos();
+    });
   }
-
-  renderCompletedGroupItem = (toDoGroup) => {
-    const listItems = appJson.listItems;
-    const currentIndex = listItems.findIndex(listItem => listItem.listID === toDoGroup[0].listID);
-    const selectedList = listItems[currentIndex];
-
-    return toDoGroup.map((toDoItem) => {
-      return <div className="complete-item-wrapper">
-              <CompletedItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateToDoChanges={this.props.updateThisSelectedList} isSearchRendering= {true} 
-              updateToDoWithoutSelectList={this.updateSelectedList} />
-            </div>
-    })
-  }
-
-  updateToDoWithoutSelectList = (selectedList) => {
-    this.props.updateThisSelectedList(selectedList);
-  }
-}
+} 

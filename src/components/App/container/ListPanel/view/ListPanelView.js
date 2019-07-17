@@ -18,7 +18,8 @@ export default class ListPanelView extends React.Component {
   render() {
     return (
       <div className="lists-container">
-        <SearchContainer sendSearchedWordToView= {this.sendSearchedWordToAppView}/>
+        <SearchContainer sendSearchedWordToView= {this.sendSearchedWordToAppView}
+        updateSearchField = {this.props.updateSearchField} />
 
         <div className="static-lists-container">
           { this.renderStaticLists() }

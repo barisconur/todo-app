@@ -18,10 +18,10 @@ export default class AppView extends React.Component {
         <Container id="app-container">
           <Router>
             <Row>
-              <Route path="/home/lists/inbox" exact={true}/>
 
               <Col sm={2} className="list-panel-container">
-                <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} />
+                <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} 
+                updateSearchField= {this.isSearchFieldWritten()} />
               </Col>
 
               <Col sm={10} className="todo-panel-container">
@@ -49,12 +49,6 @@ export default class AppView extends React.Component {
     });
   }
 
-  // updateSelectedList = (list) =>{
-  //   this.setState({
-  //     selectedList: list
-  //   });
-  // }
-
-  // isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
+  isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
 }

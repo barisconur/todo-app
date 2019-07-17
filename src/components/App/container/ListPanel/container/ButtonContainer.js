@@ -11,7 +11,6 @@ export default class ButtonContainer extends React.Component {
         <hr></hr>
         <div className="create-list-container">
           <Router>
-            <Route path="/"></Route>
             <span className="create-list-wrapper">
 
               <NavLink className="link" to="/#create/list/" onClick={this.handleListModal}>
@@ -19,21 +18,20 @@ export default class ButtonContainer extends React.Component {
                 <h3 className="create-text">Create list</h3>
               </NavLink>
               
-
             </span>
           </Router>
         </div>
   
         <div className="create-folder-container">
           <Router>
-
             <span className="create-folder-wrapper"> 
+
               <NavLink className="link" to="/#create/folder/" onClick={this.handleFolderModal}>
                 <img className="create-icon" src={plusIcon} alt="create-folder-icon"/>
                 <h3 className="create-text">Create folder</h3>
               </NavLink>
+
             </span>
-            
           </Router>
           
         </div>

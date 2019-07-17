@@ -61,15 +61,17 @@ export default class AddToDo extends React.Component {
                                toDoNotes: "",
                                attachedFiles: []
                               };
+
       const newToDoStatus = { isStarred: false, 
                               isCompleted: false,
                               isDueTimeSet: false,
-                            }
-
-      const newToDoItem = {toDoID: this.state.toDoID, 
-                           toDoName: userInput, 
-                           toDoStatus: newToDoStatus,
-                           toDoDetails: newToDoDetails};
+                            };
+                            
+      const newToDoItem = { toDoID: this.state.toDoID, 
+                            toDoName: userInput, 
+                            toDoStatus: newToDoStatus,
+                            toDoDetails: newToDoDetails
+                          };
       
       let currentIndex = appJson.listItems.findIndex(listItem => listItem.listID === selectedList.listID);
       let currentList = listItems[currentIndex];
