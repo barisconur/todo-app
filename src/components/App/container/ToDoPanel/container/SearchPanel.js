@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ToDoItem from '../container/ToDoItem';
+import searchIcon from '../../../../../assets/icons/search-big-icon.svg';
 import appJson from '../../../../../app';
 import '../view/ToDoPanelView.css';
 
@@ -113,7 +114,7 @@ export default class SearchPanel extends React.Component {
   render() { 
     const toDoSet = this.state.toDoSet;    
     return (
-      <div> { this.renderSearchPanel(toDoSet) } </div>
+      <div className="search-panel-container"> { this.renderSearchPanel(toDoSet) } </div>
      
     );
   }
@@ -122,14 +123,17 @@ export default class SearchPanel extends React.Component {
     if (toDoSet === undefined) return;
 
     if (toDoSet.length === 0) {
-      return <h1>BUraya notFOund panel gelecek</h1>
+      return this.renderNotFoundPanel()
     } else {
-      return  <div className="search-panel-container"> 
-      <div className="todo-group-container">
-      { this.renderToDoSet() }
-      </div>
-    </div>
+      return <div className="todo-group-container"> { this.renderToDoSet() } </div>
     }
+  }
+
+  renderNotFoundPanel = () => {
+    return <div className="not-found-container">
+             <img className="search-img" src={searchIcon} alt="search-img"></img>
+             <h2 className="searched-word-text">{'"'+ this.props.searchedWord + '" is not found'}</h2>
+           </div>
   }
 
   renderToDoSet = () => {
