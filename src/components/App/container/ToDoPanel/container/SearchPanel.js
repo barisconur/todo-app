@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ToDoItem from '../container/ToDoItem';
-import searchIcon from '../../../../../assets/icons/search-big-icon.svg';
+import searchIcon from '../../../../../assets/background-images/search-big-icon.svg';
 import appJson from '../../../../../app';
 import '../view/ToDoPanelView.css';
 
@@ -140,9 +140,10 @@ export default class SearchPanel extends React.Component {
     const toDoSet = this.state.toDoSet;
     if (toDoSet !== undefined) {
         return toDoSet.map((toDoGroup => {
+          const listName = toDoGroup[0].listName;
           return <div className="todo-item-container">
-                   <Button variant="success" className="list-group-tag">
-                     {toDoGroup[0].listName} 
+                   <Button variant="success" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
+                     {listName} 
                    </Button>
                    {this.renderToDoGroupItem(toDoGroup)}
                  </div>
@@ -162,6 +163,14 @@ export default class SearchPanel extends React.Component {
               updateThisSearchPanel= {this.updateListItems} />
             </div>
     })
+  }
+
+  renderSelectedList = (listName) => {
+    console.log("buraya giriyor mu");
+    const listItems = appJson.listItems;
+    const currentIndex = listItems.findIndex(listItem => listItem.listName === listName);
+    const selectedList = listItems[currentIndex];
+    this.props.newSelectedList(selectedList);
   }
 
   updateListItems = (updatedListItems) => {

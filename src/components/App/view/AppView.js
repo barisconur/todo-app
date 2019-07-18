@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import ListPanelView from '../container/ListPanel/view/ListPanelView';
 import ToDoPanelView from '../container/ToDoPanel/view/ToDoPanelView';

@@ -34,11 +34,14 @@ export default class ListItem extends React.Component {
                 <h2 className="list-text">{listItem.listName}</h2>
              </NavLink>
     } else {
-      return <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
-              <img className="list-icon" src={listIcon} alt="list-icon"></img>
-              <h2 className="list-text">{listItem.listName}</h2>
-              { this.renderModificationButtons() }
-             </NavLink>
+      return <div className="list-item-container">
+               <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
+                <img className="list-icon" src={listIcon} alt="list-icon"></img>
+                <h2 className="list-text">{listItem.listName}</h2>
+               </NavLink>
+               { this.renderModificationButtons() }
+            </div>
+             
     }
   }
 
@@ -66,8 +69,6 @@ export default class ListItem extends React.Component {
     const removedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
     if (removedIndex !== undefined) listItems.splice(removedIndex,1);
-    console.log(currentList);
-    console.log(appJson.selectedList);
     if (currentList.listID === appJson.selectedList.listID) {
       appJson.selectedList = listItems[0]; 
       this.props.sendSelectedToView(listItems[0]);

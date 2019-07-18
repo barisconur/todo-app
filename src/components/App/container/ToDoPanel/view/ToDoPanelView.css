@@ -3,28 +3,36 @@
     height: 100%;
   }
 
+  .render-todo-container {
+    height: 100%;
+  }
+
   .search-panel-container {
     width: 100%;
     height: 100%;
   }
 
-  .not-found-container {
+  .not-found-container, .empty-todo-panel-container {
     position: absolute;
     border-radius: 15px;
-    width: 40%;
-    top: 10%;
+    width: 50%;
+    top: 100px;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(221, 214, 214, 0.479);
+    background-color: rgba(226, 204, 204, 0.37);
   }
 
-  .search-img {
+  .empty-todo-panel-container {
+    top: 250px;
+  }
+
+  .search-img, .empty-list-img {
     margin-left: auto;
     margin-right: auto;
     display: block;
   }
 
-  .searched-word-text {
+  .searched-word-text, .empty-list-text {
     color: #000;
     font-size: 24px;
     font-weight: 200;
@@ -36,6 +44,9 @@
     margin-top: 10px;
     margin-left: 20px;
     margin-bottom: 10px;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .todo-item-container, .completed-items-container {

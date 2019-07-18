@@ -1,10 +1,15 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+
+import inboxIcon from '../../../../../assets/background-images/inbox-big-icon.svg';
+import starIcon from '../../../../../assets/background-images/star-big-icon.svg';
+import todayIcon from '../../../../../assets/background-images/today-big-icon.svg';
+import weekIcon from '../../../../../assets/background-images/this-week-big-icon.svg';
+
 import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import SearchPanel from '../container/SearchPanel';
-import appJson from '../../../../../app'
 import '../view/ToDoPanelView.css';
 
 const shortid = require('shortid');
@@ -36,13 +41,19 @@ export default class ToDoPanelView extends React.Component {
 
   displayPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <SearchPanel searchedWord= {this.props.searchedWord}/>
+      return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendNewSelected}/>
     } else {
       return this.renderToDoPanel();
     }
   }
 
+  sendNewSelected = (listItem) => {
+    console.log(listItem);
+    this.props.updateThisSelectedList(listItem);
+  }
+
   renderToDoPanel = () => {
+    console.log(this.props.renderThisSelectedList);
     return ( 
       <div className="render-todo-container">
         <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
@@ -60,11 +71,48 @@ export default class ToDoPanelView extends React.Component {
 
   renderOpeningScene = () => {
     if (this.props.renderThisSelectedList.toDoItems.length === 0) {
-      return <h1>Please add some todos in this panel</h1>
+      return this.renderEmptyListPanel();
     } else {
       return  <div className="todo-items-container">
                 { this.renderToDoItems() }
               </div>        
+    }
+  }
+
+  renderEmptyListPanel = () => {
+    return <div className="empty-todo-panel-container">
+            { this.renderSpecificEmptyPanel() }
+          </div>
+    
+  }
+
+  renderSpecificEmptyPanel = () => {
+    const selectedList = this.props.renderThisSelectedList;
+
+    switch(selectedList.listName) {
+      case 'Inbox'    : return <div className="empty-todo-container"> 
+                                <img className="empty-list-img" src={inboxIcon} alt="inbox-img"></img>
+                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some todos'}</h2>
+                              </div>
+
+      case 'Starred'  : return <div className="empty-todo-container"> 
+                                <img className="empty-list-img" src={starIcon} alt="starred-img"></img>
+                                <h2 className="empty-list-text">{selectedList.listName + " You have no Starred todo"}</h2>
+                              </div>
+      
+      case 'Today'    : return <div className="empty-todo-container"> 
+                                <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
+                                <h2 className="empty-list-text">{selectedList.listName + " You have no todo due today "}</h2>
+                              </div>
+      case 'This Week': return <div className="empty-todo-container"> 
+                                <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
+                                <h2 className="empty-list-text">{selectedList.listName + " You have no todo due this week"}</h2>
+                              </div>
+
+      default         : return <div className="empty-todo-container"> 
+                                <img className="empty-list-img" src={inboxIcon} alt="list-img"></img>
+                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Plase add some todos'}</h2>
+                              </div>
     }
   }
 
@@ -120,6 +168,7 @@ export default class ToDoPanelView extends React.Component {
   
   renderCompletedItems = () => {
     if(!this.state.isCompletedShown) return;  
+
     const selectedList = this.props.renderThisSelectedList;
     let completedToDos = [];
 
