@@ -143,7 +143,7 @@ export default class SearchPanel extends React.Component {
     if (toDoSet !== undefined) {
         return toDoSet.map((toDoGroup => {
           const listName = toDoGroup[0].listName;
-          return <div className="todo-item-container">
+          return <div className="todo-items-container">
                    <Button variant="success" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
                      {listName} 
                    </Button>
