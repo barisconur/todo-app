@@ -1,26 +1,34 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, NavLink} from 'react-router-dom';
+import { BrowserRouter as Router, NavLink} from 'react-router-dom';
+
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
+
 import appJson from '../../../../../app';
-import '../view/ToDoPanelView.css';
+
+import '../view/ToDoPanelView.scss';
 
 export default class ToDoItem extends React.Component {
 
   render() {
-    const toDoItem = this.props.toDoItem;
     return (
       <Router>
-        <NavLink to={"/todos/" + toDoItem.toDoID} className="todopanel-todo-link">
+        <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
           { this.renderToDoItem() }
        </NavLink>
       </Router>
     );
   }
 
+  showToDoContentPanel = () => {
+    const toDoItem = this.props.toDoItem;
+    this.props.updateToDoContentPanel(toDoItem);
+  }
+
   renderToDoItem = () => {
     const toDoItem = this.props.toDoItem;
+
     if (!toDoItem.toDoStatus.isCompleted) {
       return <span className="todo-item-wrapper">
         <span className="checkbox-btn" onClick={this.handleToDoItem}>

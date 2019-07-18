@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
 import {InputGroup, FormControl } from 'react-bootstrap';
+
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 import appJson from '../../../../../app';
-import '../view/ToDoPanelView';
+
+import '../view/ToDoPanelView.scss';
 
 const shortid = require('shortid');
 

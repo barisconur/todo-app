@@ -1,5 +1,5 @@
 import React from 'react';
-import '../view/ToDoPanelView';
+import '../view/ToDoPanelView.scss';
 
 export default class Navbar extends React.Component {
 

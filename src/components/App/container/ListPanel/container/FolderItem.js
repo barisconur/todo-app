@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Link} from 'react-router-dom';
 import folderIcon from '../../../../../assets/icons/folder-icon.svg';
 import dropDownIcon from '../../../../../assets/icons/dropdown-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
-import appJson from '../../../../../app';
-import '../view/ListPanelView.css';
+
+// import appJson from '../../../../../app';
+import '../view/ListPanelView.scss';
 
 export default class FolderItem extends React.Component {
   

@@ -1,10 +1,11 @@
 import React from 'react';
 import {InputGroup, FormControl} from 'react-bootstrap';
-import '../view/ListPanelView.css';
+
+import '../view/ListPanelView.scss';
 
 export default class SearchContainer extends React.Component {
   constructor(props) {
-    super(props);
+    super(props); 
 
     this.userInput = React.createRef();
 

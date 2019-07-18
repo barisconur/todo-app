@@ -10,7 +10,7 @@ import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import SearchPanel from '../container/SearchPanel';
-import '../view/ToDoPanelView.css';
+import '../view/ToDoPanelView.scss';
 
 const shortid = require('shortid');
 
@@ -53,7 +53,6 @@ export default class ToDoPanelView extends React.Component {
   }
 
   renderToDoPanel = () => {
-    console.log(this.props.renderThisSelectedList);
     return ( 
       <div className="render-todo-container">
         <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
@@ -125,6 +124,10 @@ export default class ToDoPanelView extends React.Component {
     this.props.updateThisSelectedList(newSelectedList);
   }
 
+  sendToDoItemToAppView = (toDoItem) => {
+    this.props.updateSelectedToDoItem(toDoItem);
+  }
+
   renderToDoItems = () => {
     const selectedList = this.props.renderThisSelectedList;
     let incompletedToDos = [];
@@ -139,7 +142,7 @@ export default class ToDoPanelView extends React.Component {
     }
     return incompletedToDos.map((toDoItem) => {
       return <ToDoItem selectedList= {selectedList} toDoItem= {toDoItem} key={shortid.generate()}
-      updateToDoChanges= {this.sendSelectedListToAppView}/>
+      updateToDoChanges= {this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
     })
   } 
 

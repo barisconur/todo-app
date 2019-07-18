@@ -1,0 +1,122 @@
+
+.lists-container {
+
+  .search-container {
+
+    .search-field {
+      height: 43px;
+    }
+    
+    .input-group > .custom-file, .input-group > 
+    .custom-select, .input-group > .form-control, 
+    .input-group > .form-control-plaintext {
+      box-shadow: none;
+    }
+  }
+
+  .static-lists-container, .list-items-container {
+    padding-left: 5px;
+
+    .list-container {
+      &:hover {
+        background-color: rgba(211, 245, 253, 0.911);
+      }
+
+      .list-item-container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .list-link {
+          display: flex;
+          width: 80%;
+          text-decoration: none;
+  
+          .list-text {
+            color: #000 !important;
+            font-size: 14px;
+            font-weight: 200;
+            padding-left: 10px;
+            margin-top: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .list-modification-wrapper {
+          position: absolute;
+          right: 0%;
+          padding-left: 7px;
+          padding-top: 7.5px;
+          padding-right: 7px;
+        }
+      }
+    }
+  }
+
+  .folder-items-container {
+    padding-left: 5px;
+    
+    .folder-container {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      position: relative;
+  
+      &:hover {
+        background-color: rgba(211, 245, 253, 0.911);
+      }
+
+      .folder-text {
+        font-size: 14px;
+        font-weight: 200;
+        padding-left: 10px;
+        margin-top: 12px;
+      }
+
+      .folder-modification-wrapper {
+        position: absolute;
+        right: 0%;
+        padding-left: 7px;
+        padding-top: 7.5px;
+        padding-right: 25px;
+      }
+
+      .folder-dropdown-wrapper {
+        .dropdown-btn {
+          position: absolute;
+          right: 5%;
+          padding-top: 8.5px;
+        }
+      }
+    }
+  }
+
+  .create-buttons-container {
+    position: absolute;
+    bottom: 1.5%;
+    width: 100%;
+
+    .create-list-container, .create-folder-container {
+      margin-bottom: 10px;
+      padding-left: 10px;
+
+      .create-list-wrapper, .create-folder-wrapper {
+        width: 40px;
+        height: 40px;
+
+        .link, .link:hover {
+          text-decoration: none;
+        }
+
+        .create-text {
+          display: inline;
+          font-size: 14px;
+          font-weight: 200;
+          margin-left: 5px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

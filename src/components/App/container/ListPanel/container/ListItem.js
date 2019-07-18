@@ -7,9 +7,10 @@ import todayIcon from '../../../../../assets/icons/today-icon.svg';
 import weekIcon from '../../../../../assets/icons/this-week-icon.svg';
 import listIcon from '../../../../../assets/icons/list-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
+
 import appJson from '../../../../../app';
 
-import '../view/ListPanelView.css';
+import '../view/ListPanelView.scss';
 
 export default class ListItem extends React.Component {
 
@@ -29,10 +30,12 @@ export default class ListItem extends React.Component {
     const listID = listItem.listID;
 
     if (typeof listID === 'number') {
-      return <NavLink className="list-link" to={'/lists/' + listName} onClick={this.setSelectedList}>
+      return <div className="list-item-container">
+                <NavLink className="list-link" to={'/lists/' + listName} onClick={this.setSelectedList}>
                 { this.selectIconSource(listID) }
                 <h2 className="list-text">{listItem.listName}</h2>
-             </NavLink>
+                </NavLink>
+             </div>
     } else {
       return <div className="list-item-container">
                <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>

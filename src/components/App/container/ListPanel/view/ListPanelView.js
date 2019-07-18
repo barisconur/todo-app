@@ -1,11 +1,14 @@
 import React from 'react';
+
 import SearchContainer from '../container/SearchContainer';
 import ButtonContainer from '../container/ButtonContainer';
 import ModalContainer from '../container/ModalContainer';
 import ListItem from '../container/ListItem';
 import FolderItem from '../container/FolderItem';
+
 import appJson from '../../../../../app';
-import '../view/ListPanelView.css';
+
+import '../view/ListPanelView.scss';
 
 const shortid = require('shortid');
 

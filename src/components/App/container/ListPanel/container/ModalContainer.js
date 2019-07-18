@@ -1,7 +1,9 @@
 import React from 'react';
 import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
-import '../view/ListPanelView.css';
+
 import appJson from '../../../../../app';
+
+import '../view/ListPanelView.scss';
 
 const shortid = require('shortid');
 
@@ -37,7 +39,7 @@ export default class ModalContainer extends React.Component {
       
         <Modal.Footer>
           <Button className="modal-close-btn" variant="secondary" onClick={this.props.closeModal}> Close </Button>
-          <Button className="modal-register-btn" variant="primary" onClick={this.addNewItem}> Register </Button>
+          <Button className="modal-register-btn" variant="primary" onClick={this.addNewItem}> Save </Button>
         </Modal.Footer>
       </Modal>
     );

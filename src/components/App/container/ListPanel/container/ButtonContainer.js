@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
-import '../view/ListPanelView.css';
+import '../view/ListPanelView.scss';
 
 export default class ButtonContainer extends React.Component {
   
