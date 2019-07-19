@@ -1,0 +1,38 @@
+.todo-content-container {
+  margin-left: -15px;
+  margin-right: -15px;
+
+  .todo-header {
+    display: flex;
+    width: 100%;
+    height: auto;
+
+    .checkbox-btn { 
+      .checkbox-icon {
+        padding-left: 10px;
+        padding-top: 12px;
+      }
+    }
+
+    .todo-item-text {
+      font-size: 18px;
+      font-weight: 300;
+      padding-left: 10px;
+      height: fit-content;
+      margin-top: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break break-all;
+    }
+  }
+
+  .todo-date-container {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+
+    .due-date-btn, .reminder-date-btn {
+      margin-right: 10px;
+    }
+  }
+}

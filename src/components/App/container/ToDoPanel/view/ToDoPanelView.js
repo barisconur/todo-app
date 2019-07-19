@@ -10,6 +10,7 @@ import AddToDo from '../container/AddToDo';
 import Navbar from '../container/Navbar';
 import ToDoItem from '../container/ToDoItem';
 import SearchPanel from '../container/SearchPanel';
+
 import '../view/ToDoPanelView.scss';
 
 const shortid = require('shortid');
@@ -41,7 +42,8 @@ export default class ToDoPanelView extends React.Component {
 
   displayPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendNewSelected}/>
+      return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendNewSelected} 
+      updateToDoContentPanel= {this.sendToDoItemToAppView}/>
     } else {
       return this.renderToDoPanel();
     }
@@ -91,26 +93,26 @@ export default class ToDoPanelView extends React.Component {
     switch(selectedList.listName) {
       case 'Inbox'    : return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={inboxIcon} alt="inbox-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some todos'}</h2>
+                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some to-dos'}</h2>
                               </div>
 
       case 'Starred'  : return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={starIcon} alt="starred-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + " You have no Starred todo"}</h2>
+                                <h2 className="empty-list-text">You have no Starred to-do</h2>
                               </div>
       
       case 'Today'    : return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + " You have no todo due today "}</h2>
+                                <h2 className="empty-list-text">You have no to-do due today</h2>
                               </div>
       case 'This Week': return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + " You have no todo due this week"}</h2>
+                                <h2 className="empty-list-text">You have no to-do due this week</h2>
                               </div>
 
       default         : return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={inboxIcon} alt="list-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Plase add some todos'}</h2>
+                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Plase add some to-dos'}</h2>
                               </div>
     }
   }
@@ -184,7 +186,7 @@ export default class ToDoPanelView extends React.Component {
       }
         return completedToDos.map((toDoItem) => {
           return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-          updateToDoChanges={this.sendSelectedListToAppView}/>
+          updateToDoChanges={this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
         })
       
     }

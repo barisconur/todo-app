@@ -14,9 +14,7 @@ export default class ToDoItem extends React.Component {
   render() {
     return (
       <Router>
-        <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
-          { this.renderToDoItem() }
-       </NavLink>
+         { this.renderToDoItem() }
       </Router>
     );
   }
@@ -35,7 +33,9 @@ export default class ToDoItem extends React.Component {
           <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
         </span>
 
-        <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
+        <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
+         <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
+        </NavLink>
 
         <span className="remove-todo-btn" onClick={this.handleToDoItem}>
           <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
@@ -47,7 +47,9 @@ export default class ToDoItem extends React.Component {
           <img className="checkbox-filled-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
         </span>
 
-        <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
+        <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
+         <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
+        </NavLink> 
 
         <span className="remove-todo-btn" onClick={this.handleToDoItem}>
           <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
@@ -74,13 +76,13 @@ export default class ToDoItem extends React.Component {
     } else {
       if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
       currentList.toDoItems = toDoItems;
+      this.props.updateToDoContentPanel();
     } 
 
     if (this.props.isSearchRendering) {
       this.props.updateThisSearchPanel(listItems);
       return;
     }
-
     this.props.updateToDoChanges(currentList);
   }
 }

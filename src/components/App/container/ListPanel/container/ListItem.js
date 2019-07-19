@@ -76,6 +76,7 @@ export default class ListItem extends React.Component {
       appJson.selectedList = listItems[0]; 
       this.props.sendSelectedToView(listItems[0]);
     }
+    this.props.updateList();
   }
 
   // renameList = () => {

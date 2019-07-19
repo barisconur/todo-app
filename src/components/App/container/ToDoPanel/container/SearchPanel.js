@@ -24,8 +24,13 @@ export default class SearchPanel extends React.Component {
     this.setToDos();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevStates) {
     if (this.props.searchedWord !== prevProps.searchedWord) {
+      this.setToDos();
+    }
+
+    if (this.state.listItems !== prevStates.listItems) {
+      console.log("evet buraya girdi");
       this.setToDos();
     }
   }
@@ -162,13 +167,16 @@ export default class SearchPanel extends React.Component {
       return <div className="search-todo-item-wrapper">
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
               updateToDoChanges= {this.props.updateThisSelectedList} isSearchRendering= {true}
-              updateThisSearchPanel= {this.updateListItems} />
+              updateThisSearchPanel= {this.updateListItems} updateToDoContentPanel= {this.updateToDoContentPanel} />
             </div>
     })
   }
 
+  updateToDoContentPanel = (toDoItem) => {
+    this.props.updateToDoContentPanel(toDoItem);
+  }
+
   renderSelectedList = (listName) => {
-    console.log("buraya giriyor mu");
     const listItems = appJson.listItems;
     const currentIndex = listItems.findIndex(listItem => listItem.listName === listName);
     const selectedList = listItems[currentIndex];

@@ -63,7 +63,7 @@ export default class ListPanelView extends React.Component {
     const newListItems = appJson.listItems.slice(4, appJson.listItems.length);
     return newListItems.map((list) => {
       return <ListItem listItem= { list } key= {shortid.generate()} 
-      sendSelectedToView= {this.sendSelectedListToAppView}/>
+      sendSelectedToView= {this.sendSelectedListToAppView} updateList= {this.updateList}/>
     })
   }
 
@@ -73,6 +73,24 @@ export default class ListPanelView extends React.Component {
 
   sendSearchedWordToAppView = (searchedWord) => {
     this.props.setSearchedWord(searchedWord);
+  }
+
+  updateList = () => {
+    Promise.resolve(appJson.listItems).then(updatedList => {
+      this.setState({
+        listItems: updatedList
+      }, () => {
+        console.log("new listItems: ", this.state.listItems);
+      });
+    })
+  }
+
+  updateFolder = () => {
+    Promise.resolve(appJson.folderItems).then(updatedFolder => {
+      this.setState({
+        folderItems: updatedFolder
+      });
+    })
   }
   
   openModalBox = (modalName) => {

@@ -14,7 +14,8 @@ export default class AppView extends React.Component {
   state = {
     selectedList: appJson.selectedList,
     searchedWord: "",
-    selectedToDo: null,
+    selectedToDo: undefined,
+    isToDoContentPanelOpen: false,
     toDoPanelSize: 10
   }
 
@@ -25,20 +26,18 @@ export default class AppView extends React.Component {
         <Container id="app-container">
           <Router>
             <Row>
-
+              
               <Col sm={2} className="list-panel-container">
                 <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} 
                 updateSearchField= {this.isSearchFieldWritten()} />
               </Col>
-
+              
               <Col sm={toDoPanelSize} className="todo-panel-container">
                 <ToDoPanelView renderThisSelectedList= {this.state.selectedList} searchedWord= {this.state.searchedWord}
                 updateThisSelectedList= {this.setSelectedList} updateSelectedToDoItem= {this.setToDoItem}/>
               </Col>
 
-              <Col sm={10-toDoPanelSize} className="todo-content-panel-container">
-                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo}/>
-              </Col>
+              { this.openToDoContentPanel() }
             </Row>
           </Router>
         </Container>
@@ -46,7 +45,16 @@ export default class AppView extends React.Component {
     );
   }
 
+  openToDoContentPanel = () => {
+    if (this.state.isToDoContentPanelOpen) {
+      return   <Col sm={3} className="todo-content-panel-container">
+                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo}/>
+               </Col>
+    }
+  }
+
   setSelectedList = (newSelectedList) => {
+    console.log(newSelectedList);
     this.setState({
       selectedList: newSelectedList,
       searchedWord: "" 
@@ -60,21 +68,28 @@ export default class AppView extends React.Component {
   }
 
   setToDoItem = (toDoItem) => {
-    console.log("current selected toDo:", this.state.selectedToDo);
-    console.log("gelen todo: ", toDoItem);
-    
-    if (this.state.selectedToDo === toDoItem || this.state.selectedToDo === null) this.toggleToDoContentPanel();
+    const selectedToDo = this.state.selectedToDo;
+    if (selectedToDo === toDoItem || selectedToDo === undefined || toDoItem === undefined) {
+      if (toDoItem === undefined && !this.state.isToDoContentPanelOpen) {
+        return;
+      }
+      this.toggleToDoContentPanel();
+    }
+
     this.setState({
       selectedToDo: toDoItem,
     });
   }
 
   toggleToDoContentPanel = () => {
-    if (this.state.toDoPanelSize === 10) {
-      this.setState({ toDoPanelSize: 7 });
-    } else {
+    const isPanelOpen = this.state.isToDoContentPanelOpen;
+
+    if (isPanelOpen) {
       this.setState({ toDoPanelSize: 10 });
+    } else {
+      this.setState({ toDoPanelSize: 7 });
     }
+    this.setState({ isToDoContentPanelOpen: !isPanelOpen });
   }
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
