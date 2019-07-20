@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Button } from 'react-bootstrap';
 
 import AddDate from '../container/AddDate';
 import AddReminder from '../container/AddReminder';

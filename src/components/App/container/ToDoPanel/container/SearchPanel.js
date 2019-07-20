@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 
 import ToDoItem from '../container/ToDoItem';
@@ -132,14 +132,14 @@ export default class SearchPanel extends React.Component {
     if (toDoSet.length === 0) {
       return this.renderNotFoundPanel()
     } else {
-      return <div className="todo-group-container"> { this.renderToDoSet() } </div>
+      return <Fragment> { this.renderToDoSet() } </Fragment>
     }
   }
 
   renderNotFoundPanel = () => {
     return <div className="not-found-container">
              <img className="search-img" src={searchIcon} alt="search-img"></img>
-             <h2 className="searched-word-text">{'"'+ this.props.searchedWord + '" is not found'}</h2>
+             <h2 className="searched-word-text"><strong> "{this.props.searchedWord}"</strong> is not found</h2>
            </div>
   }
 
@@ -149,7 +149,7 @@ export default class SearchPanel extends React.Component {
         return toDoSet.map((toDoGroup => {
           const listName = toDoGroup[0].listName;
           return <div className="todo-items-container">
-                   <Button variant="success" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
+                   <Button variant="info" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
                      {listName} 
                    </Button>
                    {this.renderToDoGroupItem(toDoGroup)}

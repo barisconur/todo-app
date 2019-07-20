@@ -30,6 +30,7 @@ export default class ModalContainer extends React.Component {
             <FormControl
               ref= {this.userInput}
               type= "text"
+              maxLength= "200"
               placeholder= {this.props.whichModal +" name"}
               aria-label={this.props.whichModal +"-name"}
               aria-describedby="basic-addon2"
@@ -73,9 +74,7 @@ export default class ModalContainer extends React.Component {
   }
 
   setInputComingFromUser = () => {
-    this.setState({
-      input: this.userInput.current.value
-    });
+    this.setState({ input: this.userInput.current.value });
   }
 
   isNotEmpty = (input) => (input.length === 0) ? true : false;
@@ -102,7 +101,8 @@ export default class ModalContainer extends React.Component {
   registerNewListItem = (listItems) => {
     const newList = { listID: shortid.generate(),
                           listName: this.state.input,
-                          toDoItems: []
+                          toDoItems: [],
+                          numberOfIncompletedToDoCount: 0
                         };
     const newSelectedList = newList;
 

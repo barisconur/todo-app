@@ -1,205 +1,194 @@
-  .todo-container {
-    width: 100%;
-    height: 100%;
+@import '../../../sass/mixins.scss';
+@import '../../../sass/variables.scss';
 
-    .render-todo-container {
-      height: 100%;
+strong {
+  font-weight: 600;
+}
+.navbar-container {
+  background-color: $navbar-background-color;
+  top: 0%;  
+  height: 53px;
 
-      .navbar {
-        background-color: #743a14d8;
-        top: 0%;  
-        width: 100%;
-
-        .navbar-selected-list {
-          vertical-align: middle;
-          font-size: 18px;
-          width: 80%;
-          color: #fff;
-        }
-      }
-
-      .add-todo-container {
-        background-color: #b18c6ada;
-        display: flex;
-        position: relative;
-        margin-top: 20px;
-        border-radius: 5px;
-        height: 50px;
-        margin-right: 10px;
-        margin-left: 20px;
-
-        .add-item-wrapper {
-          padding-top: 12.5px;
-          padding-left: 2.5px;
-        }
-      }
-
-      .todo-items-container, .completed-items-container {
-        height: auto;
-        position: relative;
-        margin-top: 35px;
-        margin-right: 10px; 
-
-        .todo-item-wrapper, .completed-item-wrapper {
-          display: flex;
-          border-radius: 5px;
-          height: 50px;
-          margin-left: 20px;
-          margin-bottom: 5px;
-          
-          .todopanel-todo-link, .todopanel-todo-link:hover {
-            color: black;
-            text-decoration: none;
-            width: 90%;
-
-            .todo-item-text, .completed-item-text {
-              font-size: 14px;
-              font-weight: 200;
-              padding-left: 10px;
-              margin-top: 15px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
-          }
-
-          .checkbox-btn, .checkbox-filled-btn {
-            padding-top: 12px;
-            padding-left: 3px;
-          }
-
-          .completed-item-text {
-            text-decoration: line-through;
-          }
-          
-          .todo-item-wrapper:hover {
-            background-color: rgba(239, 255, 251, 0.911);
-          }
-
-          .remove-todo-btn {
-            position: absolute;
-            right: 0%;
-            padding-top: 12px;
-          }
-        }
-
-        .todo-item-wrapper {
-          background-color: #fff;
-        }
-
-        .completed-item-wrapper {
-          background-color: rgba(255, 255, 255, 0.432);
-        }
-      }
-    }
-  }
-
-  .todo-group-container {
-    .todo-items-container {
-      height: auto;
-      position: relative;
-      margin-right: 10px;
-      margin-top: 35px;
-        
-      .todo-item-wrapper, .completed-item-wrapper {
-        display: flex;
-        border-radius: 5px;
-        height: 50px;
-        margin-left: 20px;
-        margin-bottom: 5px;
-        
-        .todopanel-todo-link, .todopanel-todo-link:hover {
-          color: black;
-          text-decoration: none;
-          width: 90%;
-        }
-
-        .checkbox-btn, .checkbox-filled-btn {
-          padding-top: 12px;
-          padding-left: 3px;
-        }
-      
-        .todo-item-text, .completed-item-text {
-          font-size: 14px;
-          font-weight: 200;
-          padding-left: 10px;
-          margin-top: 15px;
-        }
-
-        .completed-item-text {
-          text-decoration: line-through;
-        }
-        
-        .todo-item-wrapper:hover {
-          background-color: rgba(239, 255, 251, 0.911);
-        }
-
-        .remove-todo-btn {
-          position: absolute;
-          right: 0%;
-          padding-top: 12px;
-        }
-      }
-
-      .todo-item-wrapper {
-        background-color: #fff;
-      }
-
-      .completed-item-wrapper {
-        background-color: rgba(255, 255, 255, 0.432);
-      }
-    }
-  }
-
-  .not-found-container, .empty-todo-panel-container {
-    position: absolute;
-    border-radius: 15px;
-    width: 50%;
-    top: 100px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(226, 204, 204, 0.37);
-  }
-
-  .empty-todo-panel-container {
-    top: 250px;
-  }
-
-  .search-img, .empty-list-img {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-
-  .searched-word-text, .empty-list-text {
-    color: #000;
-    font-size: 24px;
-    font-weight: 200;
+  .navbar-header {
+    @include hideTextWhenOverflow;
+    line-height: 53px;
     vertical-align: middle;
-    text-align: center;
+    padding-left: 15px;
+    font-size: $extra-large-font-size;
+    color: $navbar-text-color;
   }
+}
 
-  .list-group-tag {
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.add-todo-container {
+  background-color: $add-todo-background-color;
+  display: flex;
+  position: relative;
+  margin-top: 20px;
+  border-radius: 5px;
+  height: 50px;
+  margin-right: 10px;
+  margin-left: 20px;
+  
+  .add-item-btn {
+    line-height: 45px;
+    .add-icon {
+      vertical-align: middle;
+      margin: auto;
+      display: inline-block;
+    }
   }
+}
 
+.todo-items-container, .completed-items-container {
+  height: auto;
+  position: relative;
+  margin-top: 35px;
+  margin-right: 10px; 
 
-  .add-todo-field {
+  .todo-item-wrapper, .completed-item-wrapper {
+    display: flex;
+    border-radius: 5px;
     height: 50px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+    
+    .todopanel-todo-link {
+      color: black;
+      text-decoration: none;
+      width: 90%;
+
+      .todo-item-text, .completed-item-text {
+        @include hideTextWhenOverflow;
+        font-size: $middle-font-size;
+        line-height: 50px;
+        padding-left: 10px;
+      }
+    }
+
+    .checkbox-btn, .checkbox-filled-btn {
+      padding-top: 12px;
+      padding-left: 3px;
+    }
+
+    .completed-item-text {
+      text-decoration: line-through;
+    }
+    
+    .remove-todo-btn {
+      position: absolute;
+      right: 0%;
+      padding-top: 12px;
+    }
   }
 
-  .add-icon, .add-icon:hover {
-    background-color: inherit;
+  .todo-item-wrapper {
+    background-color: #fff;
   }
 
-  .show-completed-btn {
-    margin-bottom: 30px;
-    margin-left: 22.5px;
+  .completed-item-wrapper {
+    background-color: rgba(255, 255, 255, 0.432);
   }
+}
+
+.todo-group-container {
+  .todo-items-container {
+    height: auto;
+    position: relative;
+    margin-right: 10px;
+    margin-top: 35px;
+      
+    .todo-item-wrapper, .completed-item-wrapper {
+      display: flex;
+      border-radius: 5px;
+      height: 50px;
+      margin-left: 20px;
+      margin-bottom: 5px;
+      
+      .todopanel-todo-link {
+        color: black;
+        text-decoration: none;
+        width: 90%;
+      }
+
+      .checkbox-btn, .checkbox-filled-btn {
+        padding-top: 12px;
+        padding-left: 3px;
+      }
+    
+      .todo-item-text, .completed-item-text {
+        font-size: $middle-font-size;
+        padding-left: 10px;
+        margin-top: 15px;
+      }
+
+      .completed-item-text {
+        text-decoration: line-through;
+      }
+
+      .remove-todo-btn {
+        position: absolute;
+        right: 0%;
+        padding-top: 12px;
+      }
+    }
+
+    .todo-item-wrapper {
+      background-color: #fff;
+    }
+
+    .completed-item-wrapper {
+      background-color: rgba(255, 255, 255, 0.432);
+    }
+  }
+}
+
+.not-found-container, .empty-todo-panel-container {
+  @include locateDivAtCenter;
+  width: 40%;
+  top: 100px;
+  border-radius: 15px;
+  background-color: rgba(226, 204, 204, 0.37);
+}
+
+.empty-todo-panel-container {
+    top: 250px;
+}
+
+.search-img, .empty-list-img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.searched-word-text, .empty-list-text {
+  color: #000;
+  font-size: $large-font-size;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.list-group-tag {
+  @include hideTextWhenOverflow;
+  font-size: $middle-font-size;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  width: 100px;
+}
+
+
+.add-todo-field {
+  height: 50px;
+}
+
+.add-icon, .add-icon:hover {
+  background-color: inherit;
+}
+
+.show-completed-btn {
+  margin-bottom: 30px;
+  margin-left: 22.5px;
+}
 
  
 

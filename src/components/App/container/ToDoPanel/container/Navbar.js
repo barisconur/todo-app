@@ -5,8 +5,8 @@ export default class Navbar extends React.Component {
 
   render() {
       return (
-        <div className="navbar">
-          <span className="navbar-selected-list">{this.displaySelectedListName()}</span>
+        <div className="navbar-container">
+          <span className="navbar-header">{this.displaySelectedListName()}</span>
         </div>
       );
   }

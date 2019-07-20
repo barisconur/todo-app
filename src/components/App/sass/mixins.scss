@@ -1,0 +1,12 @@
+@import './variables.scss';
+
+@mixin hideTextWhenOverflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ @mixin locateDivAtCenter {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }

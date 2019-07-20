@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import SearchContainer from '../container/SearchContainer';
 import ButtonContainer from '../container/ButtonContainer';
@@ -18,31 +18,41 @@ export default class ListPanelView extends React.Component {
     whichModal: "",
   }
 
+  sendSelectedListToAppView = (selectedList) => {
+    this.props.setSelectedList(selectedList);
+  }
+
+  sendSearchedWordToAppView = (searchedWord) => {
+    this.props.setSearchedWord(searchedWord);
+  }
+
   render() {
     return (
-      <div className="lists-container">
+      <Fragment>
         <SearchContainer sendSearchedWordToView= {this.sendSearchedWordToAppView}
         updateSearchField = {this.props.updateSearchField} />
 
-        <div className="static-lists-container">
-          { this.renderStaticLists() }
-        </div>
+        <div className="lists-container">
+          <div className="static-lists-container">
+            { this.renderStaticLists() }
+          </div>
 
-        <div className="folder-items-container">
-          { this.renderFolderItems() }
-        </div>
+          <div className="folder-items-container">
+            { this.renderFolderItems() }
+          </div>
 
-        <div className="list-items-container">
-          { this.renderAddedLists() }
+          <div className="list-items-container">
+            { this.renderAddedLists() }
+          </div>
         </div>
 
         <ButtonContainer displayModal= {this.openModalBox}/>
 
         <ModalContainer isModalShown= {this.state.isModalShown}
-                        closeModal= {this.closeModalBox}
-                        whichModal= {this.state.whichModal}
-                        sendSelectedListToAppView= {this.sendSelectedListToAppView}/>
-      </div>
+                          closeModal= {this.closeModalBox}
+                          whichModal= {this.state.whichModal}
+                          sendSelectedListToAppView= {this.sendSelectedListToAppView}/>
+      </Fragment>
     );
   }
 
@@ -67,20 +77,10 @@ export default class ListPanelView extends React.Component {
     })
   }
 
-  sendSelectedListToAppView = (selectedList) => {
-    this.props.setSelectedList(selectedList);
-  }
-
-  sendSearchedWordToAppView = (searchedWord) => {
-    this.props.setSearchedWord(searchedWord);
-  }
-
   updateList = () => {
     Promise.resolve(appJson.listItems).then(updatedList => {
       this.setState({
         listItems: updatedList
-      }, () => {
-        console.log("new listItems: ", this.state.listItems);
       });
     })
   }

@@ -16,7 +16,7 @@ export default class AddToDo extends React.Component {
     this.userInput = React.createRef();
     
     this.state = {
-      input: "",
+      input: ""
     }
   }
 
@@ -25,7 +25,7 @@ export default class AddToDo extends React.Component {
         <div className="add-todo-container">
           <Router>
             <span className="add-item-wrapper">
-              <Link to="/" className="add-item-btn" onClick={this.addTodoItem}>
+              <Link to="/" className="add-item-btn" onClick= {this.addTodoItem}>
                <img className="add-icon" src={plusIcon} alt="add-icon"/>
               </Link>
             </span>
@@ -35,7 +35,8 @@ export default class AddToDo extends React.Component {
             <FormControl className="add-todo-field"
               ref= {this.userInput}
               type= "text"
-              placeholder= "Add todo..." 
+              maxLength= "200"
+              placeholder= "Add a todo..." 
               aria-label="Todo-name"
               aria-describedby="basic-addon2"
               onChange={() => this.setInputComingFromUser()}/>
@@ -46,8 +47,10 @@ export default class AddToDo extends React.Component {
 
   addTodoItem = () => {
     const userInput = this.state.input;
-    this.setInputComingFromUser();
-    
+    if (userInput === "") {
+      alert("You cannot add blank todo");
+      return;
+    }
     this.setState({
       toDoID: shortid.generate(),
       input: ""
@@ -97,6 +100,6 @@ export default class AddToDo extends React.Component {
 
   clearInputField = () => {
     this.userInput.current.value = "";
-    this.userInput.current.placeholder = "Add todo...";
+    this.userInput.current.placeholder = "Add a todo...";
   }
 }

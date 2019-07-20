@@ -39,6 +39,6 @@ export default class SearchContainer extends React.Component {
       searchedWord: this.userInput.current.value
     }, () => {
       this.props.sendSearchedWordToView(this.state.searchedWord);
-    })
+    });
    }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 
 import inboxIcon from '../../../../../assets/background-images/inbox-big-icon.svg';
@@ -34,13 +34,13 @@ export default class ToDoPanelView extends React.Component {
 
   render() {
     return (
-      <div className="todo-container"> 
-        { this.displayPanel () }
-      </div>
+      <Fragment>
+        { this.displayToDoPanel () }
+      </Fragment>
     );
   }
 
-  displayPanel = () => {
+  displayToDoPanel = () => {
     if (this.props.searchedWord.length !== 0) {
       return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendNewSelected} 
       updateToDoContentPanel= {this.sendToDoItemToAppView}/>
@@ -56,19 +56,17 @@ export default class ToDoPanelView extends React.Component {
 
   renderToDoPanel = () => {
     return ( 
-      <div className="render-todo-container">
-        <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
-        { this.renderAddToDoComponent() }
-        { this.renderOpeningScene() }
-
-     <div className="completed-items-container">
-       { this.showCompletedButton() }
-       { this.renderCompletedItems() }
-     </div>
-   </div>
+      <Fragment>
+         <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
+         { this.renderAddToDoComponent() }
+         { this.renderOpeningScene() }
+         <div className="completed-items-container">
+          { this.showCompletedButton() }
+          { this.renderCompletedItems() }
+        </div>
+      </Fragment>
     )
   }
-
 
   renderOpeningScene = () => {
     if (this.props.renderThisSelectedList.toDoItems.length === 0) {
@@ -105,6 +103,7 @@ export default class ToDoPanelView extends React.Component {
                                 <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
                                 <h2 className="empty-list-text">You have no to-do due today</h2>
                               </div>
+                              
       case 'This Week': return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
                                 <h2 className="empty-list-text">You have no to-do due this week</h2>
@@ -112,7 +111,7 @@ export default class ToDoPanelView extends React.Component {
 
       default         : return <div className="empty-todo-container"> 
                                 <img className="empty-list-img" src={inboxIcon} alt="list-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Plase add some to-dos'}</h2>
+                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some to-dos'}</h2>
                               </div>
     }
   }

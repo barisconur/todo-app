@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
+
+import { Menu, Item, MenuProvider } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.min.css';
 
 import inboxIcon from '../../../../../assets/icons/inbox-icon.svg';
 import starredIcon from '../../../../../assets/icons/star-icon.svg';
 import todayIcon from '../../../../../assets/icons/today-icon.svg';
 import weekIcon from '../../../../../assets/icons/this-week-icon.svg';
 import listIcon from '../../../../../assets/icons/list-icon.svg';
-import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 
 import appJson from '../../../../../app';
 
 import '../view/ListPanelView.scss';
+
+const shortid = require('shortid');
 
 export default class ListItem extends React.Component {
 
   render() {
     return (
       <Router>
-        <div className="list-container">
+        <Fragment>
           { this.renderList() }
-        </div>
+        </Fragment>
       </Router>
     );
   }
@@ -30,22 +34,45 @@ export default class ListItem extends React.Component {
     const listID = listItem.listID;
 
     if (typeof listID === 'number') {
-      return <div className="list-item-container">
+      return <div className="list-item-wrapper">
                 <NavLink className="list-link" to={'/lists/' + listName} onClick={this.setSelectedList}>
                 { this.selectIconSource(listID) }
                 <h2 className="list-text">{listItem.listName}</h2>
                 </NavLink>
              </div>
     } else {
-      return <div className="list-item-container">
-               <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
-                <img className="list-icon" src={listIcon} alt="list-icon"></img>
-                <h2 className="list-text">{listItem.listName}</h2>
-               </NavLink>
-               { this.renderModificationButtons() }
-            </div>
-             
+      const uniqueID = shortid.generate();
+      const listName = this.props.listItem.listName;
+
+      if (listName !== undefined) {
+        return <Fragment>
+                <MenuProvider id= {uniqueID}>
+                  <div className="list-item-wrapper">
+
+                    <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
+                      <img className="list-icon" src={listIcon} alt="list-icon"></img>
+                      <h2 className="list-text">{listItem.listName}</h2>
+                    </NavLink>
+                    { this.renderCountTexts() }
+
+                  </div>
+                </MenuProvider>
+                { this.renderMenu(uniqueID) }
+             </Fragment>
+      }
     }
+  }
+
+  renameList = () => {
+    const listItems = appJson.listItems;
+    const currentList = this.props.listItem;
+    const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
+
+    listItems[renamedIndex].listName = "";
+    currentList.listName = "";
+
+    this.props.sendSelectedToView(currentList);
+    this.props.updateList();
   }
 
   selectIconSource = (listID) => {
@@ -58,15 +85,43 @@ export default class ListItem extends React.Component {
     }
   }
 
-  setSelectedList = () => { this.props.sendSelectedToView(this.props.listItem); }
+  setSelectedList = () => { 
+    this.props.sendSelectedToView(this.props.listItem); 
+  }
 
-  renderModificationButtons = () => {
-    return <span className="list-modification-wrapper">
-              <img className="remove-icon-image" src={removeIcon} alt="search-icon" onClick={this.removeList}></img>
+  renderCountTexts = () => {
+    const listItems = appJson.listItems;
+    const currentList = this.props.listItem;
+    const index = listItems.findIndex(listItem => listItem.listID === currentList.listID);
+
+    let incompletedToDoCount = 0;
+    let overDueToDoCount = 0;
+
+    currentList.toDoItems.forEach(toDoItem => {
+      if (!toDoItem.toDoStatus.isCompleted) incompletedToDoCount++;
+    });
+
+    listItems[index].numberOfIncompletedToDoCount = incompletedToDoCount;
+
+    return <span className="list-counts-wrapper">
+              { this.showCount(overDueToDoCount) } 
+              { this.showCount(incompletedToDoCount) }
           </span>
   }
 
+  showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
+
+  renderMenu = (uniqueID) => {
+    return <Menu id= {uniqueID} theme= 'dark'>
+            <Item onClick= {this.renameList}>Rename list</Item>
+            <Item onClick= {this.removeList}>Remove list</Item>
+           </Menu>
+  }
+
   removeList = () => {
+    const answer = window.confirm("Are you sure remove this list?");
+    if (!answer) return;
+
     const listItems = appJson.listItems;
     const currentList = this.props.listItem;
     const removedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
@@ -78,9 +133,4 @@ export default class ListItem extends React.Component {
     }
     this.props.updateList();
   }
-
-  // renameList = () => {
-  // //TO-DO
-  // }
-
 }

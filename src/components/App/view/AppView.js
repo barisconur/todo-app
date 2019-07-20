@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -22,11 +22,11 @@ export default class AppView extends React.Component {
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
     return (
-      <div>
+      <Fragment>
         <Container id="app-container">
           <Router>
             <Row>
-              
+    
               <Col sm={2} className="list-panel-container">
                 <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} 
                 updateSearchField= {this.isSearchFieldWritten()} />
@@ -36,25 +36,17 @@ export default class AppView extends React.Component {
                 <ToDoPanelView renderThisSelectedList= {this.state.selectedList} searchedWord= {this.state.searchedWord}
                 updateThisSelectedList= {this.setSelectedList} updateSelectedToDoItem= {this.setToDoItem}/>
               </Col>
-
+              
               { this.openToDoContentPanel() }
+
             </Row>
           </Router>
         </Container>
-      </div>
+      </Fragment>
     );
   }
 
-  openToDoContentPanel = () => {
-    if (this.state.isToDoContentPanelOpen) {
-      return   <Col sm={3} className="todo-content-panel-container">
-                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo}/>
-               </Col>
-    }
-  }
-
   setSelectedList = (newSelectedList) => {
-    console.log(newSelectedList);
     this.setState({
       selectedList: newSelectedList,
       searchedWord: "" 
@@ -66,6 +58,8 @@ export default class AppView extends React.Component {
       searchedWord: searchedWord
     });
   }
+
+  isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
   setToDoItem = (toDoItem) => {
     const selectedToDo = this.state.selectedToDo;
@@ -82,7 +76,7 @@ export default class AppView extends React.Component {
   }
 
   toggleToDoContentPanel = () => {
-    const isPanelOpen = this.state.isToDoContentPanelOpen;
+    const isPanelOpen = this.state.isToDoContentPanetoggleToDoContentPanellOpen;
 
     if (isPanelOpen) {
       this.setState({ toDoPanelSize: 10 });
@@ -92,6 +86,11 @@ export default class AppView extends React.Component {
     this.setState({ isToDoContentPanelOpen: !isPanelOpen });
   }
 
-  isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
-
+  openToDoContentPanel = () => {
+    if (this.state.isToDoContentPanelOpen) {
+      return   <Col sm={3} className="todo-content-panel-container">
+                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo}/>
+               </Col>
+    }
+  }
 }
