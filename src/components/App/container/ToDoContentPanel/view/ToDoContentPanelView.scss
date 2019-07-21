@@ -1,38 +1,75 @@
-.todo-content-container {
-  margin-left: -15px;
-  margin-right: -15px;
+@import '../../../sass/mixins.scss';
+@import '../../../sass/variables.scss';
 
-  .todo-header {
-    display: flex;
-    width: 100%;
-    height: auto;
+#todo-header-first-line {
+  margin-top: 0;
+}
 
-    .checkbox-btn { 
-      .checkbox-icon {
-        padding-left: 10px;
-        padding-top: 12px;
-      }
-    }
+.todo-header {
+  display: flex;
+  height: 53px;
 
-    .todo-item-text {
-      font-size: 18px;
-      font-weight: 300;
-      padding-left: 10px;
-      height: fit-content;
-      margin-top: 13px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: break break-all;
-    }
+  .checkbox-btn { 
+    line-height: 53px;
   }
 
-  .todo-date-container {
-    display: inline-block;
-    width: 100%;
-    height: auto;
+  .todo-item-text {
+    @include hideTextWhenOverflow;
+    font-size: $middle-font-size;
+    padding-left: 10px;
+    line-height: 53px;
+    height: fit-content;
+  }
+}
 
-    .due-date-btn, .reminder-date-btn {
+.todo-main-container {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  
+  .set-date-container, .set-reminder-container {
+    padding-bottom: 5px;
+
+    .due-date-btn {
       margin-right: 10px;
+    }
+
+    .reminder-date-btn {
+      margin-right: 14px;
+      padding-left: 2px;
+    }
+  }
+}
+
+.todo-description-container {
+  display: flex;
+  width: 100%;
+  .todo-icon-wrapper {
+    padding-left: 2px;
+    padding-right: 11px;
+  }
+  .todo-description-field {
+    resize: none;
+  }
+}
+
+.add-subtask-container {
+  display: flex;
+  margin-bottom: 15px;
+
+  .plus-icon-wrapper {
+    line-height: 35px;
+  }
+}
+
+.subtask-items-container {
+  .subtask-wrapper {
+    display: flex;
+    .subtask-text {
+      @include hideTextWhenOverflow;
+      font-size: $small-font-size;
+      line-height: 25px;
+      padding-left: 10px;
     }
   }
 }

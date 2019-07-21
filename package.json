@@ -13,6 +13,7 @@
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-text-inline-edit": "^1.1.0",
     "shortid": "^2.2.14"
   },
   "scripts": {

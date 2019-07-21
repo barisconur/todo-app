@@ -6,9 +6,9 @@ import dateIcon from '../../../../../assets/icons/date-icon.svg';
 import '../view/ToDoContentPanelView.scss';
 
 export default class AddDate extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

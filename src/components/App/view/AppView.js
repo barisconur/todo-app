@@ -63,7 +63,11 @@ export default class AppView extends React.Component {
 
   setToDoItem = (toDoItem) => {
     const selectedToDo = this.state.selectedToDo;
-    if (selectedToDo === toDoItem || selectedToDo === undefined || toDoItem === undefined) {
+    console.log("selectedTodo: ", selectedToDo);
+    console.log("toDoItem", toDoItem);
+    console.log("isContentPAnelOPen", this.state.isToDoContentPanelOpen);
+
+    if (selectedToDo === toDoItem || selectedToDo === undefined || selectedToDo !== undefined || toDoItem === undefined) {
       if (toDoItem === undefined && !this.state.isToDoContentPanelOpen) {
         return;
       }
@@ -76,7 +80,7 @@ export default class AppView extends React.Component {
   }
 
   toggleToDoContentPanel = () => {
-    const isPanelOpen = this.state.isToDoContentPanetoggleToDoContentPanellOpen;
+    const isPanelOpen = this.state.isToDoContentPanelOpen;
 
     if (isPanelOpen) {
       this.setState({ toDoPanelSize: 10 });
@@ -89,8 +93,26 @@ export default class AppView extends React.Component {
   openToDoContentPanel = () => {
     if (this.state.isToDoContentPanelOpen) {
       return   <Col sm={3} className="todo-content-panel-container">
-                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo}/>
+                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo} updateSelectedList= {this.updateSelectedList} />
                </Col>
     }
+  }
+
+  updateSelectedList = (toDo, toDoDescription) => {
+    const listItems = appJson.listItems;
+    const index = listItems.findIndex(listItem => listItem.listID === toDo.listID);
+    const currentList = listItems[index];
+
+    const toDoItems = currentList.toDoItems;
+    const toDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === toDo.toDoID);
+    const selectedToDo = toDoItems[toDoIndex];
+
+    selectedToDo.toDoDetails.toDoDescription = toDoDescription;
+    this.setState({ 
+      selectedList: currentList,
+      selectedToDo: selectedToDo
+    }, () => {
+      console.log(this.state.selectedToDo);
+    });
   }
 }

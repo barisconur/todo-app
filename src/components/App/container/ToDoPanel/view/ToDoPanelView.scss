@@ -17,6 +17,12 @@ strong {
     font-size: $extra-large-font-size;
     color: $navbar-text-color;
   }
+
+  .navbar-menu-wrapper {
+    float: right;
+    line-height: 53px;
+    padding-right: 15px;
+  }
 }
 
 .add-todo-container {
@@ -55,7 +61,7 @@ strong {
     .todopanel-todo-link {
       color: black;
       text-decoration: none;
-      width: 90%;
+      width: 100%;
 
       .todo-item-text, .completed-item-text {
         @include hideTextWhenOverflow;
@@ -178,7 +184,7 @@ strong {
 
 
 .add-todo-field {
-  height: 50px;
+  height: 50px !important;
 }
 
 .add-icon, .add-icon:hover {

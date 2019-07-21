@@ -5,6 +5,11 @@
     text-overflow: ellipsis;
 }
 
+@mixin passNextLineWhenOverflow {
+    text-overflow: ellipsis;
+    word-break: break break-all;
+}
+
  @mixin locateDivAtCenter {
     position: absolute;
     left: 50%;

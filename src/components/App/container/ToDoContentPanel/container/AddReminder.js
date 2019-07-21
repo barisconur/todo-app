@@ -6,9 +6,9 @@ import reminderIcon from '../../../../../assets/icons/reminder-icon.svg';
 import '../view/ToDoContentPanelView.scss';
 
 export default class AddReminder extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

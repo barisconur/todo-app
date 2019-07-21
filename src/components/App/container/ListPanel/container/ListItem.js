@@ -57,22 +57,26 @@ export default class ListItem extends React.Component {
 
                   </div>
                 </MenuProvider>
-                { this.renderMenu(uniqueID) }
+                { this.renderListMenu(uniqueID) }
              </Fragment>
       }
     }
   }
 
-  renameList = () => {
-    const listItems = appJson.listItems;
-    const currentList = this.props.listItem;
-    const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
+  // renameList = () => {
+  //   const listItems = appJson.listItems;
+  //   const currentList = this.props.listItem;
+  //   const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
-    listItems[renamedIndex].listName = "";
-    currentList.listName = "";
+  //   listItems[renamedIndex].listName = "";
+  //   currentList.listName = "";
 
-    this.props.sendSelectedToView(currentList);
-    this.props.updateList();
+  //   this.props.sendSelectedToView(currentList);
+  //   this.props.updateList();
+  // }
+  
+  setSelectedList = () => { 
+    this.props.sendSelectedToView(this.props.listItem); 
   }
 
   selectIconSource = (listID) => {
@@ -83,10 +87,6 @@ export default class ListItem extends React.Component {
       case 3: return <img className="week-icon" src={weekIcon} alt="week-icon"></img>
       default: return null;
     }
-  }
-
-  setSelectedList = () => { 
-    this.props.sendSelectedToView(this.props.listItem); 
   }
 
   renderCountTexts = () => {
@@ -109,14 +109,14 @@ export default class ListItem extends React.Component {
           </span>
   }
 
-  showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
-
-  renderMenu = (uniqueID) => {
-    return <Menu id= {uniqueID} theme= 'dark'>
+  renderListMenu = (uniqueID) => {
+    return <Menu id= {uniqueID}>
             <Item onClick= {this.renameList}>Rename list</Item>
             <Item onClick= {this.removeList}>Remove list</Item>
            </Menu>
   }
+
+  showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
 
   removeList = () => {
     const answer = window.confirm("Are you sure remove this list?");

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link} from 'react-router-dom';
 import {InputGroup, FormControl } from 'react-bootstrap';
 
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
+
 import appJson from '../../../../../app';
 
 import '../view/ToDoPanelView.scss';
@@ -31,7 +32,7 @@ export default class AddToDo extends React.Component {
             </span>
           </Router>
 
-          <InputGroup className="mb-3">
+          <InputGroup className="mb-3" onKeyPress={this.eventHandlerForEnterKey}>
             <FormControl className="add-todo-field"
               ref= {this.userInput}
               type= "text"
@@ -43,6 +44,12 @@ export default class AddToDo extends React.Component {
           </InputGroup>
         </div>
     );
+  }
+
+  eventHandlerForEnterKey = (event) => {
+    if (event.key === 'Enter') {
+      this.addTodoItem();
+    }
   }
 
   addTodoItem = () => {
@@ -58,12 +65,12 @@ export default class AddToDo extends React.Component {
       this.clearInputField();
       const listItems = appJson.listItems;
       const selectedList = this.props.selectedList;
-
+      
       const newToDoDetails = { dueDate: "", 
                                reminderDate: "", 
                                reminderHour: "", 
                                subTaskList: [],
-                               toDoNotes: "",
+                               toDoDescription: "",
                                attachedFiles: []
                               };
 
@@ -72,7 +79,8 @@ export default class AddToDo extends React.Component {
                               isDueTimeSet: false,
                             };
                             
-      const newToDoItem = { toDoID: this.state.toDoID, 
+      const newToDoItem = { listID: selectedList.listID,
+                            toDoID: this.state.toDoID, 
                             toDoName: userInput, 
                             toDoStatus: newToDoStatus,
                             toDoDetails: newToDoDetails
@@ -93,9 +101,7 @@ export default class AddToDo extends React.Component {
   }
 
   setInputComingFromUser = () => {
-    this.setState({
-      input: this.userInput.current.value
-    })
+    this.setState({ input: this.userInput.current.value });
   }
 
   clearInputField = () => {
