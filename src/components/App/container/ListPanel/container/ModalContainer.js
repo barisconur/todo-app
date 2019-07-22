@@ -26,7 +26,7 @@ export default class ModalContainer extends React.Component {
         </Modal.Header>
 
         <Modal.Body>
-          <InputGroup className="mb-3">
+          <InputGroup className="mb-3" onKeyPress={this.handleEnterKey}>
             <FormControl
               ref= {this.userInput}
               type= "text"
@@ -46,13 +46,13 @@ export default class ModalContainer extends React.Component {
     );
   }
 
-  handleToggle = () => {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    });
+  handleEnterKey = (event) => {
+    if (event.key === 'Enter') { 
+      this.addNewItem();
+    }
   }
 
-  addNewItem = (event) => {
+  addNewItem = () => {
     this.setInputComingFromUser();
     if (this.isNotEmpty(this.state.input)) {
       alert("Please enter not an empty text");
@@ -71,6 +71,12 @@ export default class ModalContainer extends React.Component {
     
     this.clearInput();
     this.props.closeModal();
+  }
+
+  handleToggle = () => {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
   }
 
   setInputComingFromUser = () => {

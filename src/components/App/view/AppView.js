@@ -21,6 +21,7 @@ export default class AppView extends React.Component {
 
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
+    console.log(this.state.selectedList);
     return (
       <Fragment>
         <Container id="app-container">

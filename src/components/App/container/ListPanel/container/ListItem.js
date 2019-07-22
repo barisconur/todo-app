@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
 
 import { Menu, Item, MenuProvider } from 'react-contexify';
@@ -17,6 +18,17 @@ import '../view/ListPanelView.scss';
 const shortid = require('shortid');
 
 export default class ListItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.userInput = React.createRef();
+
+    this.state = {
+      isRenameModalOpen: false,
+      newListName: ""
+    };
+
+  }
 
   render() {
     return (
@@ -58,22 +70,50 @@ export default class ListItem extends React.Component {
                   </div>
                 </MenuProvider>
                 { this.renderListMenu(uniqueID) }
+
+                <Modal size="sm" show={this.state.isRenameModalOpen}
+              // onhide yazmayı unutma
+                aria-labelledby="example-modal-sizes-title-sm">
+                  <Modal.Body>
+                    <InputGroup className="mb-3" onKeyPress={this.handleEnterKey}>
+                      <FormControl
+                        ref= {this.userInput}
+                        type= "text"
+                        maxLength= "200"
+                        placeholder= "New list name..."
+                        aria-label="rename-list"
+                        aria-describedby="basic-addon2"
+                        onChange={() => this.setInputComingFromUser()}/>
+                    </InputGroup>
+                  </Modal.Body>
+                    
+                  <Modal.Footer>
+                    <Button className="modal-register-btn" variant="primary" onClick={this.renameList}> Save </Button>
+                  </Modal.Footer>
+                </Modal>
              </Fragment>
       }
     }
   }
 
-  // renameList = () => {
-  //   const listItems = appJson.listItems;
-  //   const currentList = this.props.listItem;
-  //   const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
+  handleEnterKey = (event) => {
+    if (event.key === 'Enter') { 
+      this.renameList();
+    }
+  }
 
-  //   listItems[renamedIndex].listName = "";
-  //   currentList.listName = "";
+  renameList = () => {
+    const listItems = appJson.listItems;
+    const currentList = this.props.listItem;
+    const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
-  //   this.props.sendSelectedToView(currentList);
-  //   this.props.updateList();
-  // }
+    let newListName = this.state.newListName;
+    listItems[renamedIndex].listName = newListName;
+    currentList.listName = newListName;
+
+    this.props.sendSelectedToView(currentList);
+    this.props.updateList();
+  }
   
   setSelectedList = () => { 
     this.props.sendSelectedToView(this.props.listItem); 
@@ -111,9 +151,19 @@ export default class ListItem extends React.Component {
 
   renderListMenu = (uniqueID) => {
     return <Menu id= {uniqueID}>
-            <Item onClick= {this.renameList}>Rename list</Item>
+            <Item onClick= {this.openRenameModalBox}>Rename list</Item>
             <Item onClick= {this.removeList}>Remove list</Item>
            </Menu>
+  }
+
+  openRenameModalBox = () => {
+    this.setState({ isRenameModalOpen: true });
+  }
+
+  setInputComingFromUser = () => {
+    this.setState({
+      newListName: this.userInput.current.value 
+    })
   }
 
   showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
@@ -127,7 +177,10 @@ export default class ListItem extends React.Component {
     const removedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
 
     if (removedIndex !== undefined) listItems.splice(removedIndex,1);
+    console.log(currentList.listID);
+    console.log(appJson.seel.listID);
     if (currentList.listID === appJson.selectedList.listID) {
+      console.log("buraya giriyomu evet");
       appJson.selectedList = listItems[0]; 
       this.props.sendSelectedToView(listItems[0]);
     }
