@@ -178,7 +178,7 @@ export default class ListItem extends React.Component {
 
     if (removedIndex !== undefined) listItems.splice(removedIndex,1);
     console.log(currentList.listID);
-    console.log(appJson.seel.listID);
+    console.log(appJson.selectedList.listID);
     if (currentList.listID === appJson.selectedList.listID) {
       console.log("buraya giriyomu evet");
       appJson.selectedList = listItems[0]; 

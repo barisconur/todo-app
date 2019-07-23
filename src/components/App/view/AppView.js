@@ -10,6 +10,8 @@ import appJson from '../../../app';
 
 import './AppView.scss';
 
+const fs = require('fs');
+
 export default class AppView extends React.Component {
   state = {
     selectedList: appJson.selectedList,
@@ -19,9 +21,36 @@ export default class AppView extends React.Component {
     toDoPanelSize: 10
   }
 
+  // componentWillMount () {
+  //   const test = localStorage.getItem('localUser');
+  //   let updatedJson = JSON.parse(test);
+  //   this.updateAppJsonFile(updatedJson);
+  // }
+
+  // updateAppJsonFile = (newJson) => {
+  //   fs.writeFile('app.json', newJson, (err) => {
+  //     if (err) throw err;
+  //     console.log("The updated json overwrited to app.json");
+  //   })
+  // }
+
+  // componentDidMount () {
+  //   this.setupBeforeUnloadListener();
+  // }
+
+  // setupBeforeUnloadListener = () => {
+  //   window.addEventListener("beforeunload", (event) => {
+  //     event.preventDefault();
+  //     return this.updateChangesInLocalStorage();
+  //   })
+  // }
+
+  // updateChangesInLocalStorage = () => {
+  //   localStorage.setItem('localUser', JSON.stringify(appJson));
+  // }
+
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
-    console.log(this.state.selectedList);
     return (
       <Fragment>
         <Container id="app-container">
