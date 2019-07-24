@@ -21,34 +21,6 @@ export default class AppView extends React.Component {
     toDoPanelSize: 10
   }
 
-  // componentWillMount () {
-  //   const test = localStorage.getItem('localUser');
-  //   let updatedJson = JSON.parse(test);
-  //   this.updateAppJsonFile(updatedJson);
-  // }
-
-  // updateAppJsonFile = (newJson) => {
-  //   fs.writeFile('app.json', newJson, (err) => {
-  //     if (err) throw err;
-  //     console.log("The updated json overwrited to app.json");
-  //   })
-  // }
-
-  // componentDidMount () {
-  //   this.setupBeforeUnloadListener();
-  // }
-
-  // setupBeforeUnloadListener = () => {
-  //   window.addEventListener("beforeunload", (event) => {
-  //     event.preventDefault();
-  //     return this.updateChangesInLocalStorage();
-  //   })
-  // }
-
-  // updateChangesInLocalStorage = () => {
-  //   localStorage.setItem('localUser', JSON.stringify(appJson));
-  // }
-
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
     return (
@@ -93,9 +65,9 @@ export default class AppView extends React.Component {
 
   setToDoItem = (toDoItem) => {
     const selectedToDo = this.state.selectedToDo;
-    console.log("selectedTodo: ", selectedToDo);
-    console.log("toDoItem", toDoItem);
-    console.log("isContentPAnelOPen", this.state.isToDoContentPanelOpen);
+    // console.log("selectedTodo: ", selectedToDo);
+    // console.log("toDoItem", toDoItem);
+    // console.log("isContentPAnelOPen", this.state.isToDoContentPanelOpen);
 
     if (selectedToDo === toDoItem || selectedToDo === undefined || selectedToDo !== undefined || toDoItem === undefined) {
       if (toDoItem === undefined && !this.state.isToDoContentPanelOpen) {
@@ -138,11 +110,10 @@ export default class AppView extends React.Component {
     const selectedToDo = toDoItems[toDoIndex];
 
     selectedToDo.toDoDetails.toDoDescription = toDoDescription;
+    
     this.setState({ 
       selectedList: currentList,
       selectedToDo: selectedToDo
-    }, () => {
-      console.log(this.state.selectedToDo);
     });
   }
 }
