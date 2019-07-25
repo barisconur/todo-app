@@ -17,7 +17,6 @@ export default class AddDescription extends React.Component {
 
    render() {
      const toDoDescription = this.props.selectedToDo.toDoDetails.toDoDescription;
-     console.log(toDoDescription);
       return (
         <Fragment>
             <span className="todo-icon-wrapper">
@@ -48,9 +47,5 @@ export default class AddDescription extends React.Component {
       });
    }
 
-   handleChange = (event) => {
-    if (event.key === 'Enter') {      
-        this.props.updateToDoDescription(this.userInput.current.value);
-    };
-  }
+   handleChange = () => { this.props.updateToDoDescription(this.userInput.current.value); }
 }

@@ -21,59 +21,117 @@ export default class ToDoContentPanelView extends React.Component {
     super(props);
     this.state = {
       toDoName: "",
-      toDoDescription: ""
+      toDoDescription: "",
+      isCompleted: false
     }
   }
 
   render() {
     return (
       <Fragment>
-        { this.displayToDoName() }
-
-        <div className="todo-main-container">
-          <div className="set-date-container"> <AddDate/> </div>
-          <div className="set-reminder-container"> <AddReminder/> </div>
-          <div className="set-tag-container"></div>
-          <div className="set-star-level-container"></div>
-        </div>
-        <hr/>
-        <div className="todo-description-container"> 
-          <AddDescription updateToDoDescription= {this.setToDoDescription} selectedToDo={this.props.selectedToDo}/> 
-        </div>
-
-        <hr/>
-        <div className="add-subtask-container"> <AddSubTask/> </div>
-
-        <div className="subtask-items-container">
-         { this.renderSubtasks() }
-        </div>
-        <hr/>
-        <div className="attach-file-container"> </div>
+        { this.displayPanel() }
       </Fragment>
-    );
+    )
+  }
+
+  displayPanel = () => {
+    if (!this.state.isCompleted) {
+      return (
+        <Fragment>
+          { this.displayToDoName() }
+  
+          <div className="todo-main-container">
+            <div className="set-date-container"> <AddDate sendDateToToDoItem= {this.sendDateToToDoItem}/> </div>
+            <div className="set-reminder-container"> <AddReminder/> </div>
+            <div className="set-tag-container"></div>
+            <div className="set-star-level-container"></div>
+          </div>
+          <hr/>
+          <div className="todo-description-container"> 
+            <AddDescription updateToDoDescription= {this.setToDoDescription} selectedToDo= {this.props.selectedToDo}/> 
+          </div>
+  
+          <hr/>
+          <div className="add-subtask-container"> <AddSubTask selectedToDo= {this.props.selectedToDo} updateSelectedList= {this.sendAddedSubToAppView}/> </div>
+  
+          <div className="subtask-items-container">
+           { this.renderSubtasks() }
+          </div>
+          <hr className="subtasks-bottom-line"/>
+          <div className="attach-file-container"> </div>
+        </Fragment>
+        );
+    } else {
+      return (
+        <Fragment>
+          { this.displayToDoName() }
+  
+          <div className="todo-main-container">
+            <div className="set-date-container"> <AddDate sendDateToToDoItem={this.sendDateToToDoItem}/> </div>
+            <div className="set-reminder-container"> <AddReminder/> </div>
+            <div className="set-tag-container"></div>
+            <div className="set-star-level-container"></div>
+          </div>
+          <hr/>
+          <div className="todo-description-container"> 
+            <AddDescription updateToDoDescription= {this.setToDoDescription} selectedToDo= {this.props.selectedToDo}/> 
+          </div>
+  
+          <hr/>
+          <div className="add-subtask-container"> 
+          <AddSubTask selectedToDo= {this.props.selectedToDo} updateSelectedList= {this.sendAddedSubToAppView}/> 
+          </div>
+  
+          <div className="subtask-items-container">
+            { this.renderSubtasks() }
+          </div>
+          <hr className="subtasks-bottom-line"/>
+          <div className="attach-file-container"> </div>
+        </Fragment>
+      );
+    }
+  }
+
+  sendDateToToDoItem = (date) => {
+    this.props.selectedDate(date);
   }
 
   displayToDoName = () => {
     const selectedToDo = this.props.selectedToDo;
 
     if (selectedToDo !== undefined) {
-      return <Fragment>
-              <div className="todo-header">
-                <span className="checkbox-btn">
-                  <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
-                </span>
+      if (!this.state.isCompleted) {
+        return <Fragment>
+        <div className="todo-header">
+          <span className="checkbox-btn">
+            <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
+          </span>
 
-                <InlineEdit className="todo-item-text"
-                validate={this.customValidateText}
-                activeClassName="editing"
-                text={this.props.selectedToDo.toDoName}
-                paramName="text"
-                change={this.renameToDoItem}/>
+          <InlineEdit className="todo-item-text"
+          validate={this.customValidateText}
+          activeClassName="editing"
+          text={this.props.selectedToDo.toDoName}
+          paramName="text"
+          change={this.renameToDoItem}/>
 
-              </div>
-              <hr id="todo-header-first-line"/>
-            </Fragment>
+        </div>
+        <hr id="todo-header-first-line"/>
+      </Fragment>
+      } else {
+        //TO-DO
+      }
+     
     }
+  }
+
+  sendAddedSubToAppView = (selectedToDo) => {
+    //for added subtask
+    this.props.updateSelectedList(selectedToDo);
+  }
+
+  sendUpdateToAppView2 = (subTaskList) => {
+    // subtask remove and complete functions
+    this.props.updateSelectedList2(subTaskList);
   }
 
   renameToDoItem = (data) => {
@@ -96,11 +154,10 @@ export default class ToDoContentPanelView extends React.Component {
   
   renderSubtasks = () => {
     const selectedToDo = this.props.selectedToDo;
-    selectedToDo.subTaskList = [{subTaskID: "olalala", subTaskName:"a"},
-  {subTaskID: "SU", subTaskName: "sdkljfgsakdjadhjks"}];
-    return selectedToDo.subTaskList.map((subTask) => {
+    console.log(selectedToDo);
+    return selectedToDo.toDoDetails.subTaskList.map((subTask) => {
       return <SubTask selectedToDo= {selectedToDo} subTask= {subTask} 
-      key= {subTask.subTaskID} /> 
+       key= {subTask.subTaskID} updateSelectedList= {this.sendUpdateToAppView2}/> 
     })
   }
 }

@@ -38,7 +38,8 @@ export default class ToDoItem extends React.Component {
                     </span>
 
                     <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
-                      <h2 className="todo-item-text">{toDoItem.toDoName}</h2> 
+                      <h2 className="todo-item-text">{toDoItem.toDoName}</h2>
+                      { this.showDueDate() }
                     </NavLink>
                   </span>
                 </MenuProvider>
@@ -56,6 +57,57 @@ export default class ToDoItem extends React.Component {
 
             </span>
     }
+  }
+
+  showDueDate = () => {
+    const date = this.props.selectedDate;
+    console.log(date);
+    if (this.props.selectedDate !== undefined) {
+      if (date !== null) {
+        const currentDate = new Date().toDateString();
+        const selectedDate = date.toDateString();
+        const currentDateSplitted = currentDate.split(" ");
+        const selectedDateSplitted = selectedDate.split(" ");
+  
+        let dateMessage = "";
+        let selectedMonthAsNumber = "";
+      
+        if ((currentDateSplitted[1] === selectedDateSplitted[1]) && currentDateSplitted[3] === selectedDateSplitted[3]) {
+          if (currentDateSplitted[2] === selectedDateSplitted[2]) {
+            dateMessage = "Today";
+          } else if (currentDateSplitted[2] - selectedDateSplitted[2] === -1) {
+            dateMessage = "Tomorrow"
+          } else {
+            selectedMonthAsNumber = this.convertMonthToNumber(selectedDateSplitted);
+            dateMessage = selectedDateSplitted[2] + "." + selectedMonthAsNumber + "." + selectedDateSplitted[3];  
+          }
+        } else {
+          selectedMonthAsNumber = this.convertMonthToNumber(selectedDateSplitted);
+          dateMessage = selectedDateSplitted[2] + "." + selectedMonthAsNumber + "." + selectedDateSplitted[3];  
+        }
+        return <h2 className="todo-item-date">{dateMessage}</h2>
+      }
+    }
+  }
+
+  convertMonthToNumber = (selectedDateSplitted) => {
+    let month = "";
+
+    switch(selectedDateSplitted[1]) {
+      case 'Jan': month = "01"; break;
+      case 'Feb': month = "02"; break;
+      case 'Mar': month = "03"; break;
+      case 'Apr': month = "04"; break;
+      case 'May': month = "05"; break;
+      case 'Jun': month = "06"; break;
+      case 'Jul': month = "07"; break;
+      case 'Aug': month = "08"; break;
+      case 'Sep': month = "09"; break;
+      case 'Oct': month = "10"; break;
+      case 'Nov': month = "11"; break;
+      case 'Dec': month = "12"; break;
+    }
+    return month;
   }
 
   renderToDoMenu = (uniqueID) => {

@@ -62,12 +62,21 @@ strong {
       color: black;
       text-decoration: none;
       width: 100%;
+      display: flex;
 
       .todo-item-text, .completed-item-text {
+        width: 80%;
+
         @include hideTextWhenOverflow;
         font-size: $middle-font-size;
         line-height: 50px;
         padding-left: 10px;
+      }
+
+      .todo-item-date {
+        width: 10%;
+        font-size: $extra-small-font-size;
+        line-height: 50px;
       }
     }
 

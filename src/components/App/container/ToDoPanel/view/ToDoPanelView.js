@@ -143,7 +143,8 @@ export default class ToDoPanelView extends React.Component {
     }
     return incompletedToDos.map((toDoItem) => {
       return <ToDoItem selectedList= {selectedList} toDoItem= {toDoItem} key={shortid.generate()}
-      updateToDoChanges= {this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
+      updateToDoChanges= {this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}
+      selectedDate= {this.props.selectedDate} />
     })
   } 
 
@@ -185,7 +186,8 @@ export default class ToDoPanelView extends React.Component {
       }
         return completedToDos.map((toDoItem) => {
           return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-          updateToDoChanges={this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
+          updateToDoChanges={this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView} 
+          selectedDate= {this.props.selectedDate}/>
         })
       
     }

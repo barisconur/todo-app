@@ -1,6 +1,9 @@
 @import '../../../sass/mixins.scss';
 @import '../../../sass/variables.scss';
 
+.subtasks-bottom-line {
+  margin-top: 0.25rem;
+}
 #todo-header-first-line {
   margin-top: 0;
 }
@@ -65,11 +68,20 @@
 .subtask-items-container {
   .subtask-wrapper {
     display: flex;
+    align-items: center;
+    height: 40px;
+
     .subtask-text {
       @include hideTextWhenOverflow;
       font-size: $small-font-size;
-      line-height: 25px;
       padding-left: 10px;
+      padding-top: 8px;
     }
+
+    .remove-btn {
+      position: absolute;
+      right: 5%;
+    }
+
   }
 }
