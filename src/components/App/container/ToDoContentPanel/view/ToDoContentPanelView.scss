@@ -1,9 +1,6 @@
 @import '../../../sass/mixins.scss';
 @import '../../../sass/variables.scss';
 
-.subtasks-bottom-line {
-  margin-top: 0.25rem;
-}
 #todo-header-first-line {
   margin-top: 0;
 }
@@ -53,6 +50,13 @@
   }
   .todo-description-field {
     resize: none;
+  }
+}
+
+.set-star-level-container {
+  .star-level-input {
+    display: flex;
+    align-items: center;
   }
 }
 

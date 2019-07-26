@@ -10,8 +10,6 @@ import appJson from '../../../app';
 
 import './AppView.scss';
 
-const fs = require('fs');
-
 export default class AppView extends React.Component {
   state = {
     selectedList: appJson.selectedList,
@@ -139,8 +137,6 @@ export default class AppView extends React.Component {
     const index = listItems.findIndex(listItem => listItem.listID === toDo.listID);
     const currentList = listItems[index];
 
-    const toDoItems = currentList.toDoItems;
-    const toDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === toDo.toDoID);
     const selectedToDo = toDo; /// update here
     
     this.setState({ 

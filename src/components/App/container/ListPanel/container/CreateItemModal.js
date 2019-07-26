@@ -3,11 +3,13 @@ import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 import appJson from '../../../../../app';
 
+import { isEmptyString, isEnterKeyPressed } from '../../../../../utils';
+
 import '../view/ListPanelView.scss';
 
 const shortid = require('shortid');
 
-export default class ModalContainer extends React.Component {
+export default class CreateItemModal extends React.Component {
   constructor(props) {
     super(props);
 
@@ -46,24 +48,23 @@ export default class ModalContainer extends React.Component {
     );
   }
 
-  handleEnterKey = (event) => {
-    if (event.key === 'Enter') { 
-      this.addNewItem();
-    }
-  }
+  handleEnterKey = (e) => { if (isEnterKeyPressed(e)) this.addNewItem(); } 
+
+  setInputComingFromUser = () => { this.setState({ input: this.userInput.current.value }); }
 
   addNewItem = () => {
-    this.setInputComingFromUser();
-    if (this.isNotEmpty(this.state.input)) {
+    let input = this.state.input;
+    if (isEmptyString(input)) {
       alert("Please enter not an empty text");
       return;
     } 
+    this.setInputComingFromUser();
 
     const folderItems = appJson.folderItems;
 
     if (this.props.whichModal === 'folder') {
       if (!this.checkFolderNameIsUnique(folderItems)) return;
-      this.registerNewFolderItem(folderItems);
+      this.registerNewFolderItem(folderItems);  
     } else {
       const listItems = appJson.listItems;
       this.registerNewListItem(listItems);
@@ -72,19 +73,7 @@ export default class ModalContainer extends React.Component {
     this.clearInput();
     this.props.closeModal();
   }
-
-  handleToggle = () => {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    });
-  }
-
-  setInputComingFromUser = () => {
-    this.setState({ input: this.userInput.current.value });
-  }
-
-  isNotEmpty = (input) => (input.length === 0) ? true : false;
-
+  
   checkFolderNameIsUnique = (folderItems) => {
     for (let i = 0; i < folderItems.length; i++) {
       if (this.state.input === folderItems[i].folderName) {
@@ -110,6 +99,7 @@ export default class ModalContainer extends React.Component {
                           toDoItems: [],
                           numberOfIncompletedToDoCount: 0
                         };
+
     const newSelectedList = newList;
 
     appJson.selectedList = newSelectedList;
@@ -117,9 +107,6 @@ export default class ModalContainer extends React.Component {
     this.props.sendSelectedListToAppView(newSelectedList);
   }
 
-  clearInput = () => {
-    this.setState({
-      input: ""
-    });
+  clearInput = () => { this.setState({ input: "" });
   }
 }

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
-
-import { Menu, Item, MenuProvider } from 'react-contexify';
+import { MenuProvider, Menu, Item } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.min.css';
+
+import ListModificationModal from './ListModificationModal';
 
 import inboxIcon from '../../../../../assets/icons/inbox-icon.svg';
 import starredIcon from '../../../../../assets/icons/star-icon.svg';
@@ -21,14 +21,12 @@ export default class ListItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.userInput = React.createRef();
-
     this.state = {
-      isRenameModalOpen: false,
-      newListName: ""
+      isRenameModalOpen: false
     };
-
   }
+
+  sendSelectedListToAppView = (selectedList) => { this.props.sendSelectedToView(selectedList); }
 
   render() {
     return (
@@ -44,75 +42,42 @@ export default class ListItem extends React.Component {
     const listItem = this.props.listItem;
     const listName = listItem.listName.toLowerCase();
     const listID = listItem.listID;
-
+    const uniqueID = shortid.generate();
+    
     if (typeof listID === 'number') {
       return <div className="list-item-wrapper">
-                <NavLink className="list-link" to={'/lists/' + listName} onClick={this.setSelectedList}>
+
+                <NavLink className="list-link" to={'/lists/' + listName} onClick= {this.setSelectedList}>
                 { this.selectIconSource(listID) }
                 <h2 className="list-text">{listItem.listName}</h2>
                 </NavLink>
+
              </div>
     } else {
-      const uniqueID = shortid.generate();
-      const listName = this.props.listItem.listName;
+      
+      const listName = listItem.listName;
 
       if (listName !== undefined) {
+        console.log(uniqueID);
         return <Fragment>
                 <MenuProvider id= {uniqueID}>
                   <div className="list-item-wrapper">
 
                     <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
                       <img className="list-icon" src={listIcon} alt="list-icon"></img>
-                      <h2 className="list-text">{listItem.listName}</h2>
+                      <h2 className="list-text">{listName}</h2>
                     </NavLink>
                     { this.renderCountTexts() }
-
                   </div>
                 </MenuProvider>
+
                 { this.renderListMenu(uniqueID) }
 
-                <Modal size="sm" show={this.state.isRenameModalOpen}
-              // onhide yazmayı unutma
-                aria-labelledby="example-modal-sizes-title-sm">
-                  <Modal.Body>
-                    <InputGroup className="mb-3" onKeyPress={this.handleEnterKey}>
-                      <FormControl
-                        ref= {this.userInput}
-                        type= "text"
-                        maxLength= "200"
-                        placeholder= "New list name..."
-                        aria-label="rename-list"
-                        aria-describedby="basic-addon2"
-                        onChange={() => this.setInputComingFromUser()}/>
-                    </InputGroup>
-                  </Modal.Body>
-                    
-                  <Modal.Footer>
-                    <Button className="modal-register-btn" variant="primary" onClick={this.renameList}> Save </Button>
-                  </Modal.Footer>
-                </Modal>
+                <ListModificationModal listItem= {this.props.listItem} isRenameModalOpen= {this.state.isRenameModalOpen} 
+                sendModalUpdate= {this.sendSelectedListToAppView} updateList= {this.props.updateList} closeModal= {this.closeModalBox}/>
              </Fragment>
       }
     }
-  }
-
-  handleEnterKey = (event) => {
-    if (event.key === 'Enter') { 
-      this.renameList();
-    }
-  }
-
-  renameList = () => {
-    const listItems = appJson.listItems;
-    const currentList = this.props.listItem;
-    const renamedIndex = listItems.findIndex(listItem => listItem.listID === currentList.listID);
-
-    let newListName = this.state.newListName;
-    listItems[renamedIndex].listName = newListName;
-    currentList.listName = newListName;
-
-    this.props.sendSelectedToView(currentList);
-    this.props.updateList();
   }
   
   setSelectedList = () => { 
@@ -149,24 +114,18 @@ export default class ListItem extends React.Component {
           </span>
   }
 
+  showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
+
   renderListMenu = (uniqueID) => {
     return <Menu id= {uniqueID}>
-            <Item onClick= {this.openRenameModalBox}>Rename list</Item>
+            <Item onClick= {this.openModalBox}>Rename list</Item>
             <Item onClick= {this.removeList}>Remove list</Item>
            </Menu>
   }
+ 
+  openModalBox = () => {this.setState({ isRenameModalOpen: true })}
 
-  openRenameModalBox = () => {
-    this.setState({ isRenameModalOpen: true });
-  }
-
-  setInputComingFromUser = () => {
-    this.setState({
-      newListName: this.userInput.current.value 
-    })
-  }
-
-  showCount = (count) => { if (count !== 0) return <h2 className="todo-count-text">{count}</h2> }
+  closeModalBox = () => {this.setState({ isRenameModalOpen: false })} 
 
   removeList = () => {
     const answer = window.confirm("Are you sure remove this list?");

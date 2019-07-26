@@ -30,12 +30,7 @@ export default class ButtonContainer extends React.Component {
     );
   }
 
-  handleListModal = () => {
-    this.props.displayModal("list");
-    
-  }
+  handleListModal = () => { this.props.displayModal("list"); }
 
-  handleFolderModal = () => {
-    this.props.displayModal("folder");
-  }
+  handleFolderModal = () => { this.props.displayModal("folder"); }
 }

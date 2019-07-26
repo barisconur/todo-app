@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 
 import SearchContainer from '../container/SearchContainer';
 import ButtonContainer from '../container/ButtonContainer';
-import ModalContainer from '../container/ModalContainer';
+import CreateItemModal from '../container/CreateItemModal';
+
 import ListItem from '../container/ListItem';
 import FolderItem from '../container/FolderItem';
 
@@ -18,13 +19,9 @@ export default class ListPanelView extends React.Component {
     whichModal: "",
   }
 
-  sendSelectedListToAppView = (selectedList) => {
-    this.props.setSelectedList(selectedList);
-  }
+  sendSelectedListToAppView = (selectedList) => { this.props.setSelectedList(selectedList) }
 
-  sendSearchedWordToAppView = (searchedWord) => {
-    this.props.setSearchedWord(searchedWord);
-  }
+  sendSearchedWordToAppView = (searchedWord) => { this.props.setSearchedWord(searchedWord) }
 
   render() {
     return (
@@ -48,7 +45,7 @@ export default class ListPanelView extends React.Component {
 
         <ButtonContainer displayModal= {this.openModalBox}/>
 
-        <ModalContainer isModalShown= {this.state.isModalShown}
+        <CreateItemModal isModalShown= {this.state.isModalShown}
                           closeModal= {this.closeModalBox}
                           whichModal= {this.state.whichModal}
                           sendSelectedListToAppView= {this.sendSelectedListToAppView}/>
@@ -100,9 +97,5 @@ export default class ListPanelView extends React.Component {
     });
   }
 
-  closeModalBox = () => {
-    this.setState({
-      isModalShown: false
-    })
-  }
+  closeModalBox = () => { this.setState({ isModalShown: false }) }
 }

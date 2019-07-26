@@ -4,7 +4,7 @@ import folderIcon from '../../../../../assets/icons/folder-icon.svg';
 import dropDownIcon from '../../../../../assets/icons/dropdown-icon.svg';
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 
-// import appJson from '../../../../../app';
+import appJson from '../../../../../app';
 import '../view/ListPanelView.scss';
 
 export default class FolderItem extends React.Component {
@@ -35,13 +35,13 @@ export default class FolderItem extends React.Component {
     );
   }
 
-  // removeFolder = () => {
-  //   const folderItems = appJson.folderItems;
-  //   const currentFolder = this.props.folderItem;
-  //   const removedIndex = folderItems.findIndex(folderItem => folderItem.listID === currentFolder.listID);
+  removeFolder = () => {
+    const folderItems = appJson.folderItems;
+    const currentFolder = this.props.folderItem;
+    const removedIndex = folderItems.findIndex(folderItem => folderItem.listID === currentFolder.listID);
 
-  //   if (removedIndex !== undefined) folderItems.splice(removedIndex,1);
+    if (removedIndex !== undefined) folderItems.splice(removedIndex,1);
     
-  //   this.props.updateFolder();
-  // }
+    this.props.updateFolder();
+  }
 }
