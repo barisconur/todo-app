@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import ToDoItem from '../container/ToDoItem';
 import searchIcon from '../../../../../assets/background-images/search-big-icon.svg';
+
 import appJson from '../../../../../app';
 
 import '../view/ToDoPanelView.scss';

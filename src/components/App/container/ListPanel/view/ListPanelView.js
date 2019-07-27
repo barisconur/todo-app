@@ -56,21 +56,21 @@ export default class ListPanelView extends React.Component {
   renderStaticLists = () => {
     const staticLists = appJson.listItems.slice(0, 4);
     return staticLists.map((list) => {
-      return <ListItem listItem= { list } key= {shortid.generate()} sendSelectedToView= {this.sendSelectedListToAppView}/>
+      return <ListItem listItem={ list } key={shortid.generate()} sendSelectedToView={this.sendSelectedListToAppView}/>
     })
   }
 
   renderFolderItems = () => {
     return appJson.folderItems.map((folder => {
-      return <FolderItem folderItem= { folder } key= {shortid.generate()} updateFolder= {this.updateFolder}/>
+      return <FolderItem folderItem={ folder } key={shortid.generate()} updateFolder={this.updateFolder}/>
     }))
   }
 
   renderAddedLists = () => {
     const newListItems = appJson.listItems.slice(4, appJson.listItems.length);
     return newListItems.map((list) => {
-      return <ListItem listItem= { list } key= {shortid.generate()} 
-      sendSelectedToView= {this.sendSelectedListToAppView} updateList= {this.updateList}/>
+      return <ListItem listItem={ list } key={shortid.generate()} 
+      sendSelectedToView={this.sendSelectedListToAppView} updateList={this.updateList}/>
     })
   }
 
@@ -97,5 +97,5 @@ export default class ListPanelView extends React.Component {
     });
   }
 
-  closeModalBox = () => { this.setState({ isModalShown: false }) }
+  closeModalBox = () => {this.setState({ isModalShown: false })}
 }

@@ -3,7 +3,7 @@ import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 import appJson from '../../../../../app';
 
-import { isEmptyString, isEnterKeyPressed } from '../../../../../utils';
+import { isEmptyString, isEnterKeyPressed } from '../../../utils';
 
 import '../view/ListPanelView.scss';
 
@@ -57,9 +57,8 @@ export default class CreateItemModal extends React.Component {
     if (isEmptyString(input)) {
       alert("Please enter not an empty text");
       return;
-    } 
-    this.setInputComingFromUser();
-
+    }
+    
     const folderItems = appJson.folderItems;
 
     if (this.props.whichModal === 'folder') {

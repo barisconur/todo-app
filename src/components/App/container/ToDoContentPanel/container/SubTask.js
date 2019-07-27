@@ -5,6 +5,7 @@ import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg
 import removeIcon from '../../../../../assets/icons/remove-icon.svg';
 
 import '../view/ToDoContentPanelView.scss';
+import {findCurrentToDoInJSON, findSubTaskInJSON, findSubTaskIndex } from '../../../utils';
 
 export default class SubTask extends React.Component {
 
@@ -42,31 +43,24 @@ export default class SubTask extends React.Component {
   }
 
   completeSubTask = () => {
-    const selectedToDo = this.props.selectedToDo;
-    const currSubTask = this.props.subTask;
-    const currentSubTaskList = selectedToDo.toDoDetails.subTaskList;
-
     const subTaskStatus = this.state.isCompletedSubtask;
+    const currSubTask = findSubTaskInJSON(this.props.selectedList, this.props.selectedToDo, this.props.subTask);
 
-    const currIndex = currentSubTaskList.findIndex((subTask) => currSubTask.subTaskID === subTask.subTaskID);
-
-    currentSubTaskList[currIndex].isCompleted = !subTaskStatus;
+    currSubTask.isCompleted = !subTaskStatus;
 
     this.setState({ isCompletedSubtask: !subTaskStatus });
 
-    this.props.updateSelectedList(currentSubTaskList);
 
   }
 
   removeSubTask = () => {
-    const selectedToDo = this.props.selectedToDo;
-    const currSubTask = this.props.subTask;
-    const currentSubTaskList = selectedToDo.toDoDetails.subTaskList;
+    const currentToDo = findCurrentToDoInJSON(this.props.selectedList, this.props.selectedToDo);
+    const index = findSubTaskIndex(this.props.selectedList, this.props.selectedToDo, this.props.subTask);
 
-    const currIndex = currentSubTaskList.findIndex((subTask) => currSubTask.subTaskID === subTask.subTaskID);
+    if (index !== undefined) {
+      currentToDo.toDoDetails.subTaskList.splice(index, 1);
+    }
 
-    if (currIndex !== undefined) currentSubTaskList.splice(currIndex, 1);
-    
-    this.props.updateSelectedList(currentSubTaskList);
+    this.props.updateSelectedToDo();
   }
 }

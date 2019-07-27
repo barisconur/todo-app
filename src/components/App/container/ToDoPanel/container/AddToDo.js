@@ -66,12 +66,12 @@ export default class AddToDo extends React.Component {
       const listItems = appJson.listItems;
       const selectedList = this.props.selectedList;
       
-      const newToDoDetails = { dueDate: "", 
-                               reminderDate: "", 
-                               reminderHour: "", 
-                               subTaskList: [],
+      const newToDoDetails = { creationDate: new Date(),
+                               dueDate: null, 
+                               reminderDate: null, 
+                               starLevel: 0,
                                toDoDescription: "",
-                               attachedFiles: []
+                               subTaskList: [],                           
                               };
 
       const newToDoStatus = { isStarred: false, 

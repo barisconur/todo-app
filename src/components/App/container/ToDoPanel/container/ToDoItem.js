@@ -1,99 +1,113 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
 import { MenuProvider, Menu, Item, Separator, Submenu } from 'react-contexify';
 
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 
+import { findCurrentListInJSON, findCurrentToDoInJSON, findCurrentToDoIndex } from '../../../utils';
+
 import appJson from '../../../../../app';
 
 import '../view/ToDoPanelView.scss';
 
-const shortid = require('shortid');
-
 export default class ToDoItem extends React.Component {
 
   render() {
+    const toDoItem = this.props.toDoItem;
     return (
       <Router>
-         { this.renderToDoItem() }
+        <MenuProvider id= {toDoItem.toDoID}>
+          { this.renderToDoItem(toDoItem) }
+        </MenuProvider>
+
+        { this.renderToDoMenu(toDoItem.toDoID) }
       </Router>
     );
   }
 
-  showToDoContentPanel = () => {
-    const toDoItem = this.props.toDoItem;
-    this.props.updateToDoContentPanel(toDoItem);
-  }
+  renderToDoItem = (toDoItem) => {
+    const status = this.props.toDoItem.toDoStatus.isCompleted;
+    switch(status) {
+      case false: return <span className="todo-item-wrapper">
+                          <span className="checkbox-btn" onClick={this.toggleCompleteToDo}>
+                            <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
+                          </span>
 
-  renderToDoItem = () => {
-    const toDoItem = this.props.toDoItem;
-    const uniqueID = shortid.generate();
-    if (!toDoItem.toDoStatus.isCompleted) {
-      return <Fragment>
-                <MenuProvider id= {uniqueID}>
-                  <span className="todo-item-wrapper">
-                    <span className="checkbox-btn" onClick={this.toggleCompleteToDo}>
-                      <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
-                    </span>
+                          <NavLink to={"/todos/" + toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
+                            <h2 className="todo-item-text">{toDoItem.toDoName}</h2>
+                            { this.showDueDate() }
+                          </NavLink>
+                        </span>
+     case true: return <span className="completed-item-wrapper">   
+                        <span className="checkbox-filled-btn" onClick={this.toggleCompleteToDo}>
+                          <img className="checkbox-filled-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
+                        </span>
 
-                    <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
-                      <h2 className="todo-item-text">{toDoItem.toDoName}</h2>
-                      { this.showDueDate() }
-                    </NavLink>
-                  </span>
-                </MenuProvider>
-                { this.renderToDoMenu(uniqueID) }
-             </Fragment>
-    } else {
-      return <span className="completed-item-wrapper">   
+                        <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
+                        <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
+                        { this.showDueDate() }
+                        </NavLink> 
+                      </span>
 
-              <span className="checkbox-filled-btn" onClick={this.toggleCompleteToDo}>
-                <img className="checkbox-filled-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
-              </span>
-              <NavLink to={"/todos/" + this.props.toDoItem.toDoID} className="todopanel-todo-link" onClick= {this.showToDoContentPanel}>
-              <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
-              </NavLink> 
-
-            </span>
+     default : return null;
     }
   }
+
+  toggleCompleteToDo = (event) => {
+    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentToDo = findCurrentToDoInJSON(currentList, this.props.toDoItem);
+
+    if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {
+      currentToDo.toDoStatus.isCompleted = true;
+    } else {
+      currentToDo.toDoStatus.isCompleted = false;
+    }
+
+    if (this.props.isSearchRendering) {
+      this.props.updateThisSearchPanel(appJson.listItems);
+      return;
+    }
+    this.props.updateToDoChanges(currentList);
+  }
+
+  showToDoContentPanel = () => { this.props.updateToDoContentPanel(this.props.toDoItem) }
 
   showDueDate = () => {
-    const date = this.props.selectedDate;
-    console.log(date);
-    if (this.props.selectedDate !== undefined) {
-      if (date !== null) {
-        const currentDate = new Date().toDateString();
-        const selectedDate = date.toDateString();
-        const currentDateSplitted = currentDate.split(" ");
-        const selectedDateSplitted = selectedDate.split(" ");
-  
-        let dateMessage = "";
-        let selectedMonthAsNumber = "";
-      
-        if ((currentDateSplitted[1] === selectedDateSplitted[1]) && currentDateSplitted[3] === selectedDateSplitted[3]) {
-          if (currentDateSplitted[2] === selectedDateSplitted[2]) {
-            dateMessage = "Today";
-          } else if (currentDateSplitted[2] - selectedDateSplitted[2] === -1) {
-            dateMessage = "Tomorrow"
-          } else {
-            selectedMonthAsNumber = this.convertMonthToNumber(selectedDateSplitted);
-            dateMessage = selectedDateSplitted[2] + "." + selectedMonthAsNumber + "." + selectedDateSplitted[3];  
-          }
-        } else {
-          selectedMonthAsNumber = this.convertMonthToNumber(selectedDateSplitted);
-          dateMessage = selectedDateSplitted[2] + "." + selectedMonthAsNumber + "." + selectedDateSplitted[3];  
-        }
-        return <h2 className="todo-item-date">{dateMessage}</h2>
-      }
-    }
+    const selectedDate = this.props.toDoItem.toDoDetails.dueDate;
+    if (selectedDate === null) return;
+    if (selectedDate !== undefined) return <h2 className="todo-item-date">{ this.setDateMessage(selectedDate) }</h2>
   }
 
-  convertMonthToNumber = (selectedDateSplitted) => {
+  setDateMessage = (date) => {
+    let dateMessage = "";
+    let selectedMonthAsNumber = "";
+
+    const currentDate = new Date().toDateString();
+    const selectedDate = date.toDateString();
+
+    const currDateArr = currentDate.split(" ");
+    const selectedDateArr = selectedDate.split(" ");
+
+    selectedMonthAsNumber = this.convertMonthToNumber(selectedDateArr);
+    if ((currDateArr[1] === selectedDateArr[1]) && currDateArr[3] === selectedDateArr[3]) {
+      if (currDateArr[2] === selectedDateArr[2]) {
+        dateMessage = "Today";
+      } else if (currDateArr[2] - selectedDateArr[2] === -1) {
+        dateMessage = "Tomorrow"
+      } else {
+        dateMessage = selectedDateArr[2] + "." + selectedMonthAsNumber + "." + selectedDateArr[3];  
+      }
+    } else {
+      dateMessage = selectedDateArr[2] + "." + selectedMonthAsNumber + "." + selectedDateArr[3];  
+    }
+    return dateMessage;
+  }
+
+  convertMonthToNumber = (selectedDateArr) => {
     let month = "";
 
-    switch(selectedDateSplitted[1]) {
+    switch(selectedDateArr[1]) {
       case 'Jan': month = "01"; break;
       case 'Feb': month = "02"; break;
       case 'Mar': month = "03"; break;
@@ -106,6 +120,7 @@ export default class ToDoItem extends React.Component {
       case 'Oct': month = "10"; break;
       case 'Nov': month = "11"; break;
       case 'Dec': month = "12"; break;
+      default: month = -1;
     }
     return month;
   }
@@ -127,46 +142,14 @@ export default class ToDoItem extends React.Component {
     const answer = window.confirm("Are you sure remove this todo?");
     if (!answer) return;
 
-    const listItems = appJson.listItems;
-    const selectedList = this.props.selectedList;
-    const currentIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
-    const currentList = listItems[currentIndex];
+    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const index = findCurrentToDoIndex(currentList, this.props.toDoItem);
 
-    const toDoItems = currentList.toDoItems;
-    const currentToDoItem = this.props.toDoItem;
-    const currentToDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === currentToDoItem.toDoID);
-
-    if (currentToDoIndex !== undefined) toDoItems.splice(currentToDoIndex, 1);
-    currentList.toDoItems = toDoItems;
+    if (index !== undefined) currentList.toDoItems.splice(index, 1);
     this.props.updateToDoContentPanel();
 
     if (this.props.isSearchRendering) {
-      this.props.updateThisSearchPanel(listItems);
-      return;
-    }
-
-    this.props.updateToDoChanges(currentList);
-  }
-
-  toggleCompleteToDo = (event) => {
-    const listItems = appJson.listItems;
-    const selectedList = this.props.selectedList;
-    const currentIndex = listItems.findIndex(listItem => listItem.listID === selectedList.listID);
-    const currentList = listItems[currentIndex];
-
-    const toDoItems = currentList.toDoItems;
-    const currentToDoItem = this.props.toDoItem;
-    const currentToDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === currentToDoItem.toDoID);
-    const currentToDo = toDoItems[currentToDoIndex];
-
-    if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {
-      currentToDo.toDoStatus.isCompleted = true;
-    } else {
-      currentToDo.toDoStatus.isCompleted = false;
-    }
-
-    if (this.props.isSearchRendering) {
-      this.props.updateThisSearchPanel(listItems);
+      this.props.updateThisSearchPanel(appJson.listItems);
       return;
     }
     this.props.updateToDoChanges(currentList);

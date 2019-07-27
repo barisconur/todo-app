@@ -13,9 +13,8 @@ import './AppView.scss';
 export default class AppView extends React.Component {
   state = {
     selectedList: appJson.selectedList,
-    searchedWord: "",
     selectedToDo: undefined,
-    selectedDate: undefined,
+    searchedWord: "",
     isToDoContentPanelOpen: false,
     toDoPanelSize: 10
   }
@@ -30,6 +29,7 @@ export default class AppView extends React.Component {
 
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
+    console.log(appJson);
     return (
       <Fragment>
         <Container id="app-container">
@@ -43,8 +43,7 @@ export default class AppView extends React.Component {
               
               <Col sm={toDoPanelSize} className="todo-panel-container">
                 <ToDoPanelView renderThisSelectedList= {this.state.selectedList} searchedWord= {this.state.searchedWord}
-                updateThisSelectedList= {this.setSelectedList} updateSelectedToDoItem= {this.setToDoItem} 
-                selectedDate= {this.state.selectedDate}/>
+                updateThisSelectedList= {this.setSelectedList} updateSelectedToDoItem= {this.setSelectedToDo} />
               </Col>
               
               { this.openToDoContentPanel() }
@@ -57,10 +56,8 @@ export default class AppView extends React.Component {
   }
 
   setSelectedList = (newSelectedList) => {
-    this.setState({
-      selectedList: newSelectedList,
-      searchedWord: "" 
-    });
+    this.setState({ selectedList: newSelectedList }, () => console.log(this.state.selectedList));
+    if (this.isSearchFieldWritten) this.setState({ searchedWord: "" });
   }
 
   setSearchedWord = (searchedWord) => {
@@ -71,15 +68,8 @@ export default class AppView extends React.Component {
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
-  setToDoItem = (toDoItem) => {
-    const selectedToDo = this.state.selectedToDo;
-    console.log("selectedTodo: ", selectedToDo);
-    console.log("toDoItem", toDoItem);
-    console.log("isContentPAnelOPen", this.state.isToDoContentPanelOpen);
-
-    if (selectedToDo === toDoItem || selectedToDo === undefined) {
-      this.toggleToDoContentPanel();
-    } 
+  setSelectedToDo = (toDoItem) => {
+    if (this.state.selectedToDo === undefined) this.toggleToDoContentPanel();
     this.setState({ selectedToDo: toDoItem });
   }
 
@@ -97,68 +87,15 @@ export default class AppView extends React.Component {
     this.setState({ 
       toDoPanelSize: 10,
       isToDoContentPanelOpen: !this.state.isToDoContentPanelOpen
-    }, () => {
-      console.log(this.state.isToDoContentPanelOpen);
     });
   }
 
   openToDoContentPanel = () => {
     if (this.state.isToDoContentPanelOpen) {
       return   <Col sm={3} className="todo-content-panel-container">
-                <ToDoContentPanelView selectedToDo= {this.state.selectedToDo} updateSelectedList= {this.updateSelectedList} 
-                updateSelectedList2={this.updateSel} selectedDate= {this.setSelectedDate}/>
+                <ToDoContentPanelView selectedList={this.state.selectedList} selectedToDo={this.state.selectedToDo}
+                setSelectedList={this.setSelectedList} setSelectedToDo= {this.setSelectedToDo}/>
                </Col>
     }
-  }
-
-  setSelectedDate = (date) => {
-    this.setState({ selectedDate: date });
-    
-  }
-
-  updateSel = (subTaskList) => {
-    const selectedToDo = this.state.selectedToDo;
-
-    const listItems = appJson.listItems;
-    const index = listItems.findIndex(listItem => listItem.listID === selectedToDo.listID);
-    const currentList = listItems[index];
-
-    const selectedToDoIndex = currentList.toDoItems.findIndex(toDo => toDo.toDoID === selectedToDo.toDoID);
-    currentList.toDoItems[selectedToDoIndex].toDoDetails.subTaskList = subTaskList;
-
-    this.setState({
-      selectedList: currentList
-    });
-
-  }
-
-  updateSelectedList = (toDo) => {
-    const listItems = appJson.listItems;
-    const index = listItems.findIndex(listItem => listItem.listID === toDo.listID);
-    const currentList = listItems[index];
-
-    const selectedToDo = toDo; /// update here
-    
-    this.setState({ 
-      selectedList: currentList,
-      selectedToDo: selectedToDo
-    });
-  }
-
-  updateSelectedList = (toDo, toDoDescription) => {
-    const listItems = appJson.listItems;
-    const index = listItems.findIndex(listItem => listItem.listID === toDo.listID);
-    const currentList = listItems[index];
-
-    const toDoItems = currentList.toDoItems;
-    const toDoIndex = toDoItems.findIndex((toDoItem) => toDoItem.toDoID === toDo.toDoID);
-    const selectedToDo = toDoItems[toDoIndex];
-
-    selectedToDo.toDoDetails.toDoDescription = toDoDescription;
-    
-    this.setState({ 
-      selectedList: currentList,
-      selectedToDo: selectedToDo
-    });
   }
 }

@@ -1,6 +1,10 @@
 @import '../../../sass/mixins.scss';
 @import '../../../sass/variables.scss';
 
+input {
+  width: 100%;
+}
+
 #todo-header-first-line {
   margin-top: 0;
 }
@@ -38,6 +42,51 @@
       margin-right: 14px;
       padding-left: 2px;
     }
+
+    .react-datepicker-wrapper {
+      width: 75%;
+      .react-datepicker__input-container {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.set-tag-container {
+  .tag-text {
+    font-size: $small-font-size;
+    line-height: 40px;
+    padding-left: 7.5px;
+    margin-bottom: 0px;
+  }
+}
+
+.set-star-level-container {
+  display: flex;
+
+  .star-level-text {
+    font-size: $small-font-size;
+    line-height: 40px;
+    padding-right: 10px;
+    padding-left: 7.5px;
+  }
+
+  .remove-star-wrapper {
+    padding-left: 20px;
+    line-height: 35px;
+
+    .remove-icon:hover {
+      background-color: rgb(122, 44, 44);
+    }
+  }
+}
+
+.add-subtask-container {
+  display: flex;
+  margin-bottom: 15px;
+
+  .plus-icon-wrapper {
+    line-height: 35px;
   }
 }
 
@@ -50,22 +99,6 @@
   }
   .todo-description-field {
     resize: none;
-  }
-}
-
-.set-star-level-container {
-  .star-level-input {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.add-subtask-container {
-  display: flex;
-  margin-bottom: 15px;
-
-  .plus-icon-wrapper {
-    line-height: 35px;
   }
 }
 

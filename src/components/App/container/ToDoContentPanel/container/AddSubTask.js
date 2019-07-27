@@ -54,7 +54,7 @@ export default class AddSubTask extends React.Component {
                        }
     this.clearInput();
     selectedToDo.toDoDetails.subTaskList.push(newSubTask);
-    this.props.updateSelectedList(selectedToDo);
+    this.props.updateSelectedToDo(selectedToDo);
    }
 
    isNotEmpty = (input) => (input.length === 0) ? true : false;
