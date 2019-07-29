@@ -24,7 +24,6 @@ export const findCurrentListIndex = (list) => {
 
 export const findCurrentToDoIndex = (list, toDo) => {
   const index = list.toDoItems.findIndex(toDoItem => toDoItem.toDoID === toDo.toDoID);
-
   return index;
 }
 

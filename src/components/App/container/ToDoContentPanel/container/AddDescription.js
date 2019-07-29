@@ -16,7 +16,7 @@ export default class AddDescription extends React.Component {
   }
 
    render() {
-     const toDoDescription = this.props.selectedToDo.toDoDetails.toDoDescription;
+    //  const toDoDescription = this.props.selectedToDo.toDoDetails.toDoDescription;
       return (
         <Fragment>
             <span className="todo-icon-wrapper">
@@ -28,7 +28,7 @@ export default class AddDescription extends React.Component {
             name='description' placeholder='Add description...' 
             onChange = { () => this.autoResizeTextArea() }
             onKeyPress = {this.handleChange}
-            defaultValue= {toDoDescription}
+            defaultValue= {"default"}
             data-autoresize
             ></textarea>
         </Fragment>

@@ -19,14 +19,6 @@ export default class AppView extends React.Component {
     toDoPanelSize: 10
   }
 
-
-  // componentDidUpdate() {
-  //   let searchStatus = false;
-  //   if (this.state.isSearchRendering !== searchStatus) {
-  //     this.closeToDoContentPanel();
-  //   }
-  // }
-
   render() {
     const toDoPanelSize = this.state.toDoPanelSize;
     console.log(appJson);
@@ -56,7 +48,7 @@ export default class AppView extends React.Component {
   }
 
   setSelectedList = (newSelectedList) => {
-    this.setState({ selectedList: newSelectedList }, () => console.log(this.state.selectedList));
+    this.setState({ selectedList: newSelectedList });
     if (this.isSearchFieldWritten) this.setState({ searchedWord: "" });
   }
 
@@ -68,9 +60,34 @@ export default class AppView extends React.Component {
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
-  setSelectedToDo = (toDoItem) => {
-    if (this.state.selectedToDo === undefined) this.toggleToDoContentPanel();
-    this.setState({ selectedToDo: toDoItem });
+  setSelectedToDo = (toDo) => {
+    if (this.state.selectedToDo !== toDo) {
+      this.handleToggleContentPanel(toDo);
+    }
+
+    this.setState({
+      selectedToDo: toDo
+    });
+  }
+
+  handleToggleContentPanel = (toDoItem) => {
+    if (this.state.selectedToDo === undefined) { // first time toDoItem is selected
+      console.log("if2");
+      this.toggleToDoContentPanel();
+    } else if (this.state.selectedToDo !== toDoItem && !this.state.isToDoContentPanelOpen) { // if different toDo is selected
+      console.log("if3");
+      this.toggleToDoContentPanel();
+    }
+    if (this.state.selectedToDo === toDoItem) { // if same toDoItem is selected
+      console.log("if4");
+      this.toggleToDoContentPanel();
+    }
+    let prevToDoItem = this.state.selectedToDo;
+    this.setState({ selectedToDo: toDoItem}, () => {
+      if (prevToDoItem !== toDoItem && toDoItem === undefined) { 
+        this.closeToDoContentPanel() 
+      }
+    });
   }
 
   toggleToDoContentPanel = () => {
@@ -84,9 +101,9 @@ export default class AppView extends React.Component {
   }
 
   closeToDoContentPanel = () => {
-    this.setState({ 
+    this.setState({
       toDoPanelSize: 10,
-      isToDoContentPanelOpen: !this.state.isToDoContentPanelOpen
+      isToDoContentPanelOpen: false
     });
   }
 

@@ -61,6 +61,6 @@ export default class SubTask extends React.Component {
       currentToDo.toDoDetails.subTaskList.splice(index, 1);
     }
 
-    this.props.updateSelectedToDo();
+    // this.props.updateSelectedToDo();
   }
 }

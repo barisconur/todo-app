@@ -13,7 +13,7 @@ import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import checkboxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 
 import '../view/ToDoContentPanelView.scss';
-import { findCurrentToDoInJSON } from '../../../utils';
+import { findCurrentToDoInJSON, findCurrentListInJSON } from '../../../utils';
 
 export default class ToDoContentPanelView extends React.Component {
   constructor(props) {
@@ -33,32 +33,32 @@ export default class ToDoContentPanelView extends React.Component {
 
           <div className="set-date-container"> 
           <AddDate selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-          updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
+          updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
           </div>
 
           <div className="set-reminder-container"> 
           <AddReminder selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-          updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}
+          updateSelectedToDo={this.sendSelectedToDoToAppView}
           /> </div>
           <hr/>
           <div className="set-tag-container"> <SetTag/> </div>
           
           <div className="set-star-level-container"> 
           <SetStarLevel  selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-          updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
+          updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
           </div>
     
         </div>
         <hr/>
         <div className="todo-description-container"> 
           <AddDescription selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-          updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
+          updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
         </div>
 
         <hr/>
         <div className="add-subtask-container"> 
           <AddSubTask selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-          updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
+          updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
         </div>
 
         <div className="subtask-items-container">
@@ -68,7 +68,7 @@ export default class ToDoContentPanelView extends React.Component {
     )
   }
 
-  sendSelectedListToAppView = (list) => { this.props.setSelectedList(list) } 
+  // sendSelectedListToAppView = (list) => { this.props.setSelectedList(list) } 
 
   sendSelectedToDoToAppView = (toDo) => { this.props.setSelectedToDo(toDo) } 
 
@@ -112,17 +112,19 @@ export default class ToDoContentPanelView extends React.Component {
     selectedToDo.toDoName = data.text;
 
     this.setState({toDoName: data.text}, () => {
-      this.props.updateSelectedList(selectedToDo, this.state.toDoDescription);
+      findCurrentToDoInJSON(this.props.selectedList, selectedToDo);
+      this.props.sendSelectedListToAppView(findCurrentListInJSON(this.props.selectedList));
     });
   } 
   customValidateText = (text) => (text.length > 0 && text.length < 64);
 
 
   renderSubtasks = () => {
-    const selectedToDo = findCurrentToDoInJSON(this.props.selectedList, this.props.selectedToDo);
+    const selectedToDo = this.props.selectedToDo;
+    if (selectedToDo === undefined) return;
     return selectedToDo.toDoDetails.subTaskList.map((subTask) => {
       return <SubTask selectedList={this.props.selectedList} selectedToDo={selectedToDo} subTask={subTask} key={subTask.subTaskID} 
-      updateSelectedList={this.sendSelectedListToAppView} updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
+      updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
     })
   }
 }

@@ -4,6 +4,7 @@ import { InputGroup, FormControl } from 'react-bootstrap';
 import plusIcon from '../../../../../assets/icons/plus-icon.svg';
 
 import '../view/ToDoContentPanelView.scss';
+import { findCurrentToDoInJSON } from '../../../utils';
 
 const shortid = require('shortid');
 
@@ -47,14 +48,15 @@ export default class AddSubTask extends React.Component {
       alert("Please enter not an empty text");
       return;
     }
-    const selectedToDo = this.props.selectedToDo;
+    const selected = findCurrentToDoInJSON(this.props.selectedList, this.props.selectedToDo);
     const newSubTask = { subTaskID: shortid.generate(),
                          subTaskName: this.state.subTaskName,
                          isCompleted: false
                        }
     this.clearInput();
-    selectedToDo.toDoDetails.subTaskList.push(newSubTask);
-    this.props.updateSelectedToDo(selectedToDo);
+
+    selected.toDoDetails.subTaskList.push(newSubTask);
+    this.props.updateSelectedToDo(selected);
    }
 
    isNotEmpty = (input) => (input.length === 0) ? true : false;

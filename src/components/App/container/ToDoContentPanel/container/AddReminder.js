@@ -44,8 +44,12 @@ export default class AddReminder extends React.Component {
 
 
   readReminderDateFromJSON = () => {
+    if (this.props.selectedToDo === undefined || this.props.selectedList === undefined) return;
+    console.log(this.props.selectedList);
     const currentList = findCurrentListInJSON(this.props.selectedList);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
+
+    if (currentToDo === undefined) return;
 
     return currentToDo.toDoDetails.reminderDate;
   }

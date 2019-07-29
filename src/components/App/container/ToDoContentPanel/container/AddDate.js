@@ -11,6 +11,10 @@ import '../view/ToDoContentPanelView.scss';
 export default class AddDate extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      dueDate: null
+    }
   }
 
   render() {
@@ -39,13 +43,15 @@ export default class AddDate extends React.Component {
     currentToDo.toDoStatus.isDueTimeSet = true;
     currentToDo.toDoDetails.dueDate = date; 
 
-    this.props.updateSelectedList(currentList);
     this.props.updateSelectedToDo(currentToDo);
   }
 
   readDueDateFromJSON = () => {
+    if (this.props.selectedToDo === undefined) return;
     const currentList = findCurrentListInJSON(this.props.selectedList);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
+
+    if (currentToDo === undefined) return;
 
     return currentToDo.toDoDetails.dueDate;
   }
