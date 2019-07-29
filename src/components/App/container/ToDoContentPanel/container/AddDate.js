@@ -11,10 +11,6 @@ import '../view/ToDoContentPanelView.scss';
 export default class AddDate extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      dueDate: null
-    }
   }
 
   render() {
@@ -23,15 +19,27 @@ export default class AddDate extends React.Component {
         <span className="due-date-btn">
           <img className="date-icon" src={dateIcon} alt="date-icon"></img>
         </span>
-
-        <DatePicker placeholderText="Set due date" 
-        minDate={new Date()}
-        isClearable={true}
-        selected={this.readDueDateFromJSON()}
-        dateFormat="dd/MM/yyyy"
-        onChange={this.handleChange}/>
+        { this.renderDatePicker() }
       </Fragment>
     );
+  }
+
+  renderDatePicker = () => {
+    if (this.props.selectedToDo.toDoStatus.isCompleted) {
+      return <DatePicker placeholderText="Set due date" 
+              minDate={new Date()}
+              selected={this.readDueDateFromJSON()}
+              dateFormat="dd/MM/yyyy"
+              disabled={true}
+              onChange={this.handleChange}/>
+    } else {
+      return <DatePicker placeholderText="Set due date" 
+              minDate={new Date()}
+              isClearable={true}
+              selected={this.readDueDateFromJSON()}
+              dateFormat="dd/MM/yyyy"
+              onChange={this.handleChange}/>
+    }
   }
 
   handleChange = (date) => { this.updateDueDateInJSON(date, this.props.selectedList, this.props.selectedToDo) }
@@ -48,11 +56,11 @@ export default class AddDate extends React.Component {
 
   readDueDateFromJSON = () => {
     if (this.props.selectedToDo === undefined) return;
+
     const currentList = findCurrentListInJSON(this.props.selectedList);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
 
-    if (currentToDo === undefined) return;
-
+    if (currentToDo === undefined) return; // if selected list is changes
     return currentToDo.toDoDetails.dueDate;
   }
 

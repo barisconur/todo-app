@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 import { MenuProvider, Menu, Item, Separator, Submenu } from 'react-contexify';
 
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
@@ -38,7 +39,9 @@ export default class ToDoItem extends React.Component {
                             <h2 className="todo-item-text">{toDoItem.toDoName}</h2>
                             { this.showDueDate() }
                           </NavLink>
+                          <div className="star-level-container"> { this.showStars() }</div>
                         </span>
+
      case true: return <span className="completed-item-wrapper">   
                         <span className="checkbox-filled-btn" onClick={this.toggleCompleteToDo}>
                           <img className="checkbox-filled-icon" src={checkBoxFilled} alt="checkbox-Filled-icon"></img>
@@ -48,6 +51,7 @@ export default class ToDoItem extends React.Component {
                         <h2 className="completed-item-text">{toDoItem.toDoName}</h2> 
                         { this.showDueDate() }
                         </NavLink> 
+                        <div className="star-level-container"> { this.showStars() }</div>
                       </span>
 
      default : return null;
@@ -68,15 +72,64 @@ export default class ToDoItem extends React.Component {
       this.props.updateThisSearchPanel(appJson.listItems);
       return;
     }
-    this.props.updateToDoChanges(currentList);
+    this.props.updateList(currentList);
   }
 
-  showToDoContentPanel = () => { this.props.updateToDoContentPanel(this.props.toDoItem) }
+  showToDoContentPanel = () => { this.props.updateToDo(this.props.toDoItem) }
 
   showDueDate = () => {
     const selectedDate = this.props.toDoItem.toDoDetails.dueDate;
     if (selectedDate === null) return;
     if (selectedDate !== undefined) return <h2 className="todo-item-date">{ this.setDateMessage(selectedDate) }</h2>
+  }
+
+  showStars = () => {
+    const starCount = this.props.toDoItem.toDoDetails.starLevel;
+    console.log(starCount);
+    if (starCount !== undefined) {
+      if (this.props.toDoItem.toDoStatus.isCompleted) {
+        return  <StarRatings className="todo-item-star-rating"
+        name='starLevel'
+        rating= {starCount}
+        numberOfStars={5}
+        starRatedColor= 'rgb(241, 241, 31)'
+        starHoverColor= 'rgb(241, 241, 31)'
+        starDimension= '25px'
+        starSpacing= '0.1px'/>
+      } else {
+        return  <StarRatings className="todo-item-star-rating"
+        name='starLevel'
+        rating= {starCount}
+        numberOfStars={5}
+        starRatedColor= 'rgb(241, 241, 31)'
+        starHoverColor= 'rgb(241, 241, 31)'
+        starDimension= '25px'
+        starSpacing= '0.1px'
+        changeRating= {this.setStarLevel}/>
+      }
+    }
+  }
+
+  setStarLevel = (newRating) => { this.updateStarLevelInJSON(newRating, this.props.selectedList, this.props.toDoItem) }
+
+  updateStarLevelInJSON = (starLevel, list, toDo) => {
+    const currentList = findCurrentListInJSON(list);
+    const currentToDo = findCurrentToDoInJSON(currentList, toDo);
+
+    currentToDo.toDoStatus.isStarred = true;
+    currentToDo.toDoDetails.starLevel = starLevel; 
+
+    this.props.updateToDo(currentToDo);
+  } 
+
+  readStarLevelFromJSON = () => {
+    if (this.props.selectedToDo === undefined) return;
+    
+    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentToDo = findCurrentToDoInJSON(currentList, this.props.toDoItem);
+
+    console.log(currentToDo);
+    return currentToDo.toDoDetails.starLevel;
   }
 
   setDateMessage = (date) => {
@@ -134,7 +187,7 @@ export default class ToDoItem extends React.Component {
           
             <Item >Save as pdf </Item>
             <Separator />
-            <Item onClick= {this.removeToDo}>Remove to-do </Item>
+            <Item onClick={this.removeToDo}>Remove to-do </Item>
            </Menu>
   }
 
@@ -153,6 +206,6 @@ export default class ToDoItem extends React.Component {
       this.props.updateThisSearchPanel(appJson.listItems);
       return;
     }
-    this.props.updateToDoChanges(currentList);
+    this.props.updateList(currentList);
   }
 }

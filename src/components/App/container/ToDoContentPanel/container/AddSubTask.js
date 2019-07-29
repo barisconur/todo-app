@@ -25,16 +25,32 @@ export default class AddSubTask extends React.Component {
                 <img className="plus-icon" src={plusIcon} alt="plus-icon"></img>
             </span>
 
-            <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
+            { this.renderAddSubtaskField() }
+        </Fragment>
+      );
+   } 
+
+   renderAddSubtaskField = () => {
+     if (!this.props.selectedToDo.toDoStatus.isCompleted) {
+       return <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
                 <FormControl className="subtask-field"
                 ref= {this.userInput}
                 placeholder="Add a subtask"
                 aria-label="Subtask-name"
                 aria-describedby="basic-addon2"
                 onChange={ () => this.handleChange() }/>
+          </InputGroup>
+     } else {
+      return <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
+              <FormControl className="subtask-field"
+              disabled
+              ref= {this.userInput}
+              placeholder="Add a subtask"
+              aria-label="Subtask-name"
+              aria-describedby="basic-addon2"
+              onChange={ () => this.handleChange() }/>
             </InputGroup>
-        </Fragment>
-      );
+     }
    }
 
    handleEnterKeyEvent = (event) => {

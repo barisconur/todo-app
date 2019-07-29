@@ -26,11 +26,13 @@ export default class ToDoPanelView extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.renderThisSelectedList !== prevProps.renderThisSelectedList) {
-      this.setState({
-        isCompletedShown: false,
-      });
+      this.setState({ isCompletedShown: false });
     }
   }
+
+  sendSelectedListToAppView = (selectedList) => { this.props.updateSelectedList(selectedList) }
+
+  sendToDoItemToAppView = (toDoItem) => { this.props.updateSelectedToDo(toDoItem) }
 
   render() {
     return (
@@ -42,16 +44,11 @@ export default class ToDoPanelView extends React.Component {
 
   displayToDoPanel = () => {
     if (this.props.searchedWord.length !== 0) {
-      return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendNewSelected} 
-      updateToDoContentPanel= {this.sendToDoItemToAppView}/>
+      return <SearchPanel searchedWord= {this.props.searchedWord} newSelectedList= {this.sendSelectedListToAppView} 
+      updateToDo= {this.sendToDoItemToAppView}/>
     } else {
       return this.renderToDoPanel();
     }
-  }
-
-  sendNewSelected = (listItem) => {
-    console.log(listItem);
-    this.props.updateThisSelectedList(listItem);
   }
 
   renderToDoPanel = () => {
@@ -60,6 +57,7 @@ export default class ToDoPanelView extends React.Component {
          <Navbar newSelectedListName= {this.props.renderThisSelectedList.listName}/>
          { this.renderAddToDoComponent() }
          { this.renderOpeningScene() }
+
          <div className="completed-items-container">
           { this.showCompletedButton() }
           { this.renderCompletedItems() }
@@ -80,53 +78,37 @@ export default class ToDoPanelView extends React.Component {
 
   renderEmptyListPanel = () => {
     return <div className="empty-todo-panel-container">
-            { this.renderSpecificEmptyPanel() }
+            <div className="empty-todo-container">
+              { this.renderImageSrc() }
+              { this.renderTextSrc() }
+            </div>
           </div>
     
   }
 
-  renderSpecificEmptyPanel = () => {
-    const selectedList = this.props.renderThisSelectedList;
+  renderImageSrc = () => {
+    switch(this.props.renderThisSelectedList.listName) {
+      case 'Inbox'    : return <img className="empty-list-img" src={inboxIcon} alt="inbox-img"></img>
+      case 'Starred'  : return <img className="empty-list-img" src={starIcon} alt="starred-img"></img>
+      case 'Today'    : return <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
+      case 'This Week': return <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
+      default         : return <img className="empty-list-img" src={inboxIcon} alt="list-img"></img> // bu değişecek
+    }
+  }
 
-    switch(selectedList.listName) {
-      case 'Inbox'    : return <div className="empty-todo-container"> 
-                                <img className="empty-list-img" src={inboxIcon} alt="inbox-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some to-dos'}</h2>
-                              </div>
-
-      case 'Starred'  : return <div className="empty-todo-container"> 
-                                <img className="empty-list-img" src={starIcon} alt="starred-img"></img>
-                                <h2 className="empty-list-text">You have no Starred to-do</h2>
-                              </div>
-      
-      case 'Today'    : return <div className="empty-todo-container"> 
-                                <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
-                                <h2 className="empty-list-text">You have no to-do due today</h2>
-                              </div>
-                              
-      case 'This Week': return <div className="empty-todo-container"> 
-                                <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
-                                <h2 className="empty-list-text">You have no to-do due this week</h2>
-                              </div>
-
-      default         : return <div className="empty-todo-container"> 
-                                <img className="empty-list-img" src={inboxIcon} alt="list-img"></img>
-                                <h2 className="empty-list-text">{selectedList.listName + ' is empty. Please add some to-dos'}</h2>
-                              </div>
+  renderTextSrc = () => {
+    const selectedListName = this.props.renderThisSelectedList.listName;
+    switch(selectedListName) {
+      case 'Inbox'    : return <h2 className="empty-list-text">{selectedListName + ' is empty. Please add some to-dos'}</h2>
+      case 'Starred'  : return <h2 className="empty-list-text">You have no Starred to-do</h2>
+      case 'Today'    : return <h2 className="empty-list-text">You have no to-do due today</h2>
+      case 'This Week': return <h2 className="empty-list-text">You have no to-do due this week</h2>
+      default         : return <h2 className="empty-list-text">{selectedListName + ' is empty. Please add some to-dos'}</h2> // bu değişecek
     }
   }
 
   renderAddToDoComponent = () => {
-    const selectedList = this.props.renderThisSelectedList;
-    return <AddToDo selectedList= {selectedList} updateToDoChanges={this.sendSelectedListToAppView}/> 
-  }
-
-  sendSelectedListToAppView = (newSelectedList) => {
-    this.props.updateThisSelectedList(newSelectedList);
-  }
-
-  sendToDoItemToAppView = (toDoItem) => {
-    this.props.updateSelectedToDoItem(toDoItem);
+    return <AddToDo selectedList={this.props.renderThisSelectedList} updateList={this.sendSelectedListToAppView}/> 
   }
 
   renderToDoItems = () => {
@@ -143,7 +125,7 @@ export default class ToDoPanelView extends React.Component {
     }
     return incompletedToDos.map((toDoItem) => {
       return <ToDoItem selectedList= {selectedList} toDoItem= {toDoItem} key={shortid.generate()}
-      updateToDoChanges= {this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
+      updateList= {this.sendSelectedListToAppView} updateToDo= {this.sendToDoItemToAppView}/>
     })
   } 
 
@@ -153,22 +135,16 @@ export default class ToDoPanelView extends React.Component {
     
     if (selectedList.toDoItems !== undefined) {
       const allToDos = selectedList.toDoItems;
-      if (allToDos.length !== 0) {
-        allToDos.forEach((toDo) => { if (toDo.toDoStatus.isCompleted) completedToDos.push(toDo); 
-        })
-      }
-      if(completedToDos.length === 0) return;
+      if (allToDos.length !== 0) allToDos.forEach((toDo) => { if (toDo.toDoStatus.isCompleted) completedToDos.push(toDo) })
+      
+      if (completedToDos.length === 0) return;
         return <Button className="show-completed-btn" variant="dark" size="sm" onClick={this.toggleShowButton}>
                 SHOW COMPLETED TO-DOS
               </Button>
     }
   }
 
-  toggleShowButton = () => {
-    this.setState({
-      isCompletedShown: !this.state.isCompletedShown
-    });
-  }
+  toggleShowButton = () => {this.setState({ isCompletedShown: !this.state.isCompletedShown })}
   
   renderCompletedItems = () => {
     if(!this.state.isCompletedShown) return;  
@@ -178,16 +154,12 @@ export default class ToDoPanelView extends React.Component {
 
     if (selectedList !== undefined) {
       const allToDos = selectedList.toDoItems;
+      if (allToDos.length !== 0) allToDos.forEach((toDo) => { if (toDo.toDoStatus.isCompleted) completedToDos.push(toDo) })
 
-      if (allToDos.length !== 0) {
-        allToDos.forEach((toDo) => { if (toDo.toDoStatus.isCompleted) completedToDos.push(toDo);
-        })
-      }
-        return completedToDos.map((toDoItem) => {
-          return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-          updateToDoChanges={this.sendSelectedListToAppView} updateToDoContentPanel= {this.sendToDoItemToAppView}/>
-        })
-      
+      return completedToDos.map((toDoItem) => {
+        return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
+        updateList={this.sendSelectedListToAppView} updateToDo= {this.sendToDoItemToAppView}/>
+      })
     }
   }
 }

@@ -15,8 +15,8 @@ export default class AppView extends React.Component {
     selectedList: appJson.selectedList,
     selectedToDo: undefined,
     searchedWord: "",
-    isToDoContentPanelOpen: false,
-    toDoPanelSize: 10
+    isToDoContentPanelOpen: true,
+    toDoPanelSize: 7
   }
 
   render() {
@@ -29,13 +29,13 @@ export default class AppView extends React.Component {
             <Row>
     
               <Col sm={2} className="list-panel-container">
-                <ListPanelView setSelectedList= {this.setSelectedList} setSearchedWord= {this.setSearchedWord} 
-                updateSearchField= {this.isSearchFieldWritten()} />
+                <ListPanelView setSelectedList={this.setSelectedList} setSearchedWord={this.setSearchedWord} 
+                updateSearchField={this.isSearchFieldWritten()} />
               </Col>
               
               <Col sm={toDoPanelSize} className="todo-panel-container">
-                <ToDoPanelView renderThisSelectedList= {this.state.selectedList} searchedWord= {this.state.searchedWord}
-                updateThisSelectedList= {this.setSelectedList} updateSelectedToDoItem= {this.setSelectedToDo} />
+                <ToDoPanelView renderThisSelectedList={this.state.selectedList} selectedToDo={this.state.selectedToDo} 
+                searchedWord={this.state.searchedWord} updateSelectedList={this.setSelectedList} updateSelectedToDo={this.setSelectedToDo} />
               </Col>
               
               { this.openToDoContentPanel() }
@@ -52,6 +52,10 @@ export default class AppView extends React.Component {
     if (this.isSearchFieldWritten) this.setState({ searchedWord: "" });
   }
 
+  setSelectedToDo = (toDo) => {
+    this.setState({ selectedToDo: toDo });
+  }
+
   setSearchedWord = (searchedWord) => {
     this.setState({
       searchedWord: searchedWord
@@ -60,58 +64,48 @@ export default class AppView extends React.Component {
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
-  setSelectedToDo = (toDo) => {
-    if (this.state.selectedToDo !== toDo) {
-      this.handleToggleContentPanel(toDo);
-    }
+  // handleToggleContentPanel = (toDoItem) => {
+  //   if (this.state.selectedToDo === undefined) { // first time toDoItem is selected
+  //     // console.log("if2");
+  //     this.toggleToDoContentPanel();
+  //   } else if (this.state.selectedToDo !== toDoItem && !this.state.isToDoContentPanelOpen) { // if different toDo is selected
+  //     // console.log("if3");
+  //     this.toggleToDoContentPanel();
+  //   }
+  //   if (this.state.selectedToDo === toDoItem) { // if same toDoItem is selected
+  //     // console.log("if4");
+  //     this.toggleToDoContentPanel();
+  //   }
+  //   let prevToDoItem = this.state.selectedToDo;
+  //   this.setState({ selectedToDo: toDoItem}, () => {
+  //     if (prevToDoItem !== toDoItem && toDoItem === undefined) { 
+  //       this.closeToDoContentPanel() 
+  //     }
+  //   });
+  // }
 
-    this.setState({
-      selectedToDo: toDo
-    });
-  }
+  // toggleToDoContentPanel = () => {
+  //   const isPanelOpen = this.state.isToDoContentPanelOpen;
+  //   if (isPanelOpen) {
+  //     this.setState({ toDoPanelSize: 10 });
+  //   } else {
+  //     this.setState({ toDoPanelSize: 7 });
+  //   }
+  //   this.setState({ isToDoContentPanelOpen: !isPanelOpen } );
+  // }
 
-  handleToggleContentPanel = (toDoItem) => {
-    if (this.state.selectedToDo === undefined) { // first time toDoItem is selected
-      console.log("if2");
-      this.toggleToDoContentPanel();
-    } else if (this.state.selectedToDo !== toDoItem && !this.state.isToDoContentPanelOpen) { // if different toDo is selected
-      console.log("if3");
-      this.toggleToDoContentPanel();
-    }
-    if (this.state.selectedToDo === toDoItem) { // if same toDoItem is selected
-      console.log("if4");
-      this.toggleToDoContentPanel();
-    }
-    let prevToDoItem = this.state.selectedToDo;
-    this.setState({ selectedToDo: toDoItem}, () => {
-      if (prevToDoItem !== toDoItem && toDoItem === undefined) { 
-        this.closeToDoContentPanel() 
-      }
-    });
-  }
-
-  toggleToDoContentPanel = () => {
-    const isPanelOpen = this.state.isToDoContentPanelOpen;
-    if (isPanelOpen) {
-      this.setState({ toDoPanelSize: 10 });
-    } else {
-      this.setState({ toDoPanelSize: 7 });
-    }
-    this.setState({ isToDoContentPanelOpen: !isPanelOpen } );
-  }
-
-  closeToDoContentPanel = () => {
-    this.setState({
-      toDoPanelSize: 10,
-      isToDoContentPanelOpen: false
-    });
-  }
+  // closeToDoContentPanel = () => {
+  //   this.setState({
+  //     toDoPanelSize: 10,
+  //     isToDoContentPanelOpen: false
+  //   });
+  // }
 
   openToDoContentPanel = () => {
     if (this.state.isToDoContentPanelOpen) {
       return   <Col sm={3} className="todo-content-panel-container">
                 <ToDoContentPanelView selectedList={this.state.selectedList} selectedToDo={this.state.selectedToDo}
-                setSelectedList={this.setSelectedList} setSelectedToDo= {this.setSelectedToDo}/>
+                updateList={this.setSelectedList} setSelectedToDo= {this.setSelectedToDo}/>
                </Col>
     }
   }

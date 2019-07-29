@@ -94,7 +94,7 @@ export default class AddToDo extends React.Component {
         currentList = listItems[0];
       } 
       appJson.selectedList = currentList;
-      this.props.updateToDoChanges(currentList);
+      this.props.updateList(currentList);
       
       currentList.toDoItems.push(newToDoItem);
     });

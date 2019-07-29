@@ -167,14 +167,14 @@ export default class SearchPanel extends React.Component {
     return toDoGroup.map((toDoItem) => {
       return <div className="search-todo-item-wrapper">
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateToDoChanges= {this.props.updateThisSelectedList} isSearchRendering= {true}
-              updateThisSearchPanel= {this.updateListItems} updateToDoContentPanel= {this.updateToDoContentPanel} />
+              updateList= {this.props.updateThisSelectedList} isSearchRendering= {true}
+              updateThisSearchPanel= {this.updateListItems} updateToDo= {this.updateToDo} />
             </div>
     })
   }
 
-  updateToDoContentPanel = (toDoItem) => {
-    this.props.updateToDoContentPanel(toDoItem);
+  updateToDo = (toDoItem) => {
+    this.props.updateToDo(toDoItem);
   }
 
   renderSelectedList = (listName) => {

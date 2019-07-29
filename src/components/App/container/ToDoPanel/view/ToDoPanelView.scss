@@ -4,6 +4,11 @@
 strong {
   font-weight: 600;
 }
+
+.star-ratings {
+  display: flex !important;
+}
+
 .navbar-container {
   background-color: $navbar-background-color;
   top: 0%;  
@@ -58,41 +63,41 @@ strong {
     margin-left: 20px;
     margin-bottom: 5px;
     
+    .checkbox-btn, .checkbox-filled-btn {
+      padding-top: 12px;
+      padding-left: 3px;
+    }
+
     .todopanel-todo-link {
       color: black;
       text-decoration: none;
-      width: 100%;
+      width: 90%;
       display: flex;
 
       .todo-item-text, .completed-item-text {
-        width: 80%;
-
         @include hideTextWhenOverflow;
+        width: 85%;
         font-size: $middle-font-size;
         line-height: 50px;
         padding-left: 10px;
       }
 
       .todo-item-date {
-        width: 10%;
+        width: 75px;
+        text-align: right;
         font-size: $extra-small-font-size;
         line-height: 50px;
       }
     }
 
-    .checkbox-btn, .checkbox-filled-btn {
-      padding-top: 12px;
-      padding-left: 3px;
+
+    .star-level-container {
+      line-height: 43px;
+      padding-right: 10px;
     }
 
     .completed-item-text {
       text-decoration: line-through;
-    }
-    
-    .remove-todo-btn {
-      position: absolute;
-      right: 0%;
-      padding-top: 12px;
     }
   }
 
@@ -101,7 +106,7 @@ strong {
   }
 
   .completed-item-wrapper {
-    background-color: rgba(255, 255, 255, 0.432);
+    background-color: $completed-item-bacground-color;
   }
 }
 
@@ -118,7 +123,7 @@ strong {
       height: 50px;
       margin-left: 20px;
       margin-bottom: 5px;
-      
+
       .todopanel-todo-link {
         color: black;
         text-decoration: none;
@@ -140,11 +145,6 @@ strong {
         text-decoration: line-through;
       }
 
-      .remove-todo-btn {
-        position: absolute;
-        right: 0%;
-        padding-top: 12px;
-      }
     }
 
     .todo-item-wrapper {

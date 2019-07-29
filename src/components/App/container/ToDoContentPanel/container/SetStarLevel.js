@@ -16,21 +16,36 @@ export default class SetStarLevel extends React.Component {
     return (
       <Fragment>
         <h2 className="star-level-text">Star level: </h2>
-
-        <StarRatings
-        name='starLevel'
-        rating= {this.readStarLevelFromJSON()}
-        numberOfStars={5}
-        starRatedColor= 'rgb(241, 241, 31)'
-        starHoverColor= 'rgb(241, 241, 31)'
-        starDimension= '33px'
-        starSpacing= '2.5px'
-        changeRating= {this.setStarLevel}/>
-
-        { this.showClearStarLevel() }
-      
+        { this.renderStarLevel() }      
       </Fragment>   
     );
+  }
+
+  renderStarLevel = () => {
+    if (!this.props.selectedToDo.toDoStatus.isCompleted) {
+      return <Fragment>
+               <StarRatings
+                name='starLevel'
+                rating= {this.readStarLevelFromJSON()}
+                numberOfStars={5}
+                starRatedColor= 'rgb(241, 241, 31)'
+                starHoverColor= 'rgb(241, 241, 31)'
+                starDimension= '33px'
+                starSpacing= '2.5px'
+                changeRating= {this.setStarLevel}/>
+
+                { this.showClearStarLevel() }
+            </Fragment>
+    } else {
+      return <StarRatings
+              name='starLevel'
+              rating= {this.readStarLevelFromJSON()}
+              numberOfStars={5}
+              starRatedColor= 'rgb(241, 241, 31)'
+              starHoverColor= 'rgb(241, 241, 31)'
+              starDimension= '33px'
+              starSpacing= '2.5px'/>
+    }
   }
 
   respondStarDimension = () => {
@@ -42,7 +57,7 @@ export default class SetStarLevel extends React.Component {
   updateStarLevelInJSON = (starLevel, list, toDo) => {
     const currentList = findCurrentListInJSON(list);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
-
+    
     currentToDo.toDoStatus.isStarred = true;
     currentToDo.toDoDetails.starLevel = starLevel; 
 
@@ -50,12 +65,13 @@ export default class SetStarLevel extends React.Component {
   } 
 
   readStarLevelFromJSON = () => {
-    if (this.props.selectedToDo === undefined || this.props.selectedList === undefined) return;
-    const currentList = findCurrentListInJSON(this.props.selectedList);
-    const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
+    if (this.props.selectedToDo === undefined) return;
 
-    if (currentToDo === undefined) return;
-    
+    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);    
+
+    if (currentToDo === undefined) return; // if selected list is changes
+
     return currentToDo.toDoDetails.starLevel;
   }
 

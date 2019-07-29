@@ -43,6 +43,8 @@ export default class SubTask extends React.Component {
   }
 
   completeSubTask = () => {
+    if (this.props.selectedToDo.toDoStatus.isCompleted) return;
+    
     const subTaskStatus = this.state.isCompletedSubtask;
     const currSubTask = findSubTaskInJSON(this.props.selectedList, this.props.selectedToDo, this.props.subTask);
 
@@ -54,6 +56,8 @@ export default class SubTask extends React.Component {
   }
 
   removeSubTask = () => {
+    if (this.props.selectedToDo.toDoStatus.isCompleted) return;
+
     const currentToDo = findCurrentToDoInJSON(this.props.selectedList, this.props.selectedToDo);
     const index = findSubTaskIndex(this.props.selectedList, this.props.selectedToDo, this.props.subTask);
 
@@ -61,6 +65,6 @@ export default class SubTask extends React.Component {
       currentToDo.toDoDetails.subTaskList.splice(index, 1);
     }
 
-    // this.props.updateSelectedToDo();
+    this.props.updateSelectedToDo(currentToDo);
   }
 }
