@@ -9,18 +9,17 @@ import SubTask from '../container/SubTask';
 import SetStarLevel from '../container/SetStarLevel';
 import SetTag from '../container/SetTag';
 
-import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
-import checkboxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
+import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
+import checkboxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
+
+import { findCurrentToDoInJSON, findCurrentListInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
-import { findCurrentToDoInJSON, findCurrentListInJSON } from '../../../utils';
+
 
 export default class ToDoContentPanelView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      toDoName: "",
-    }
   }
 
   sendSelectedToDoToAppView = (toDo) => { this.props.setSelectedToDo(toDo) } 
@@ -33,7 +32,6 @@ export default class ToDoContentPanelView extends React.Component {
 
   renderContentPanel = () => {
     if (this.props.selectedToDo === undefined) return;
-
     if (!this.props.selectedToDo.toDoStatus.isCompleted) {
       return <Fragment>
             { this.displayToDoName() }
@@ -150,7 +148,7 @@ export default class ToDoContentPanelView extends React.Component {
       currentToDo.toDoStatus.isCompleted = false;
     }
 
-    this.props.updateList(currentList);
+    this.props.setSelectedToDo(currentToDo);
   }
 
 
@@ -165,10 +163,6 @@ export default class ToDoContentPanelView extends React.Component {
 
       default: return <h2 className="completed-item-text">{this.props.selectedToDo.toDoName}</h2>
     }
-  }
-
-  doNothing = () => {
-    return null;
   }
 
   renameToDoItem = (data) => {

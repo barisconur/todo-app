@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-import dateIcon from '../../../../../assets/icons/date-icon.svg';
+import dateIcon from '../../../../../../assets/icons/date-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../utils';
+import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 

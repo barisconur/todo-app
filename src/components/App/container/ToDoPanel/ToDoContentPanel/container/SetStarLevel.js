@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import StarRatings from 'react-star-ratings';
 
-import clearIcon from '../../../../../assets/icons/clear-icon.svg';
+import clearIcon from '../../../../../../assets/icons/clear-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../utils';
+import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 

@@ -10,7 +10,7 @@ import '../view/ToDoPanelView.scss';
 
 const shortid = require('shortid');
 
-export default class SearchPanel extends React.Component {
+export default class DueTimePanel extends React.Component {
   constructor(props) {
     super(props);
 

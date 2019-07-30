@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import { InputGroup, FormControl } from 'react-bootstrap';
 
-import plusIcon from '../../../../../assets/icons/plus-icon.svg';
+import plusIcon from '../../../../../../assets/icons/plus-icon.svg';
+
+import { findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
-import { findCurrentToDoInJSON } from '../../../utils';
 
 const shortid = require('shortid');
 

@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 
-import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
-import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
-import removeIcon from '../../../../../assets/icons/remove-icon.svg';
+import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
+import checkBoxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
+import removeIcon from '../../../../../..//assets/icons/remove-icon.svg';
+
+import {findCurrentToDoInJSON, findSubTaskInJSON, findSubTaskIndex } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
-import {findCurrentToDoInJSON, findSubTaskInJSON, findSubTaskIndex } from '../../../utils';
 
 export default class SubTask extends React.Component {
 

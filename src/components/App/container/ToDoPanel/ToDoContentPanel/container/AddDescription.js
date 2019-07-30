@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 
-import renameIcon from '../../../../../assets/icons/rename-icon.svg';
+import renameIcon from '../../../../../../assets/icons/rename-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../utils';
+import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 

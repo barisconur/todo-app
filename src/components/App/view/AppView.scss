@@ -1,5 +1,4 @@
 #app-container {
-  height:100vh;
   max-width: 3840px;
   font-family: 'Nunito', sans-serif;
 
@@ -11,6 +10,7 @@
 
   .list-panel-container, .todo-panel-container {
     height: 100vh;
+    width: 100vh;
     padding: 0;
   }
 

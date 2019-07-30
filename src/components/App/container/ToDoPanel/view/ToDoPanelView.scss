@@ -5,8 +5,23 @@ strong {
   font-weight: 600;
 }
 
+.col-sm-12, .col-sm-9 {
+  padding: 0;
+}
+
 .star-ratings {
   display: flex !important;
+}
+
+#todo-panel-container {
+  max-width: 3840px;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+
+  #todo-panel-row {
+    margin: 0;
+  }
 }
 
 .navbar-container {

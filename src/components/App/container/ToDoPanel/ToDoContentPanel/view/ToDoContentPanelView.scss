@@ -1,0 +1,138 @@
+@import '../../../../sass/mixins.scss';
+@import '../../../../sass/variables.scss';
+
+input {
+  width: 100%;
+}
+
+.todo-content-panel-container {
+  height: 100vh;
+  background-color: whitesmoke;
+
+  #todo-header-first-line {
+    margin-top: 0;
+  }
+  
+  .todo-header, .completed-todo-header {
+    display: flex;
+    height: 53px;
+  
+    .checkbox-btn { 
+      line-height: 53px;
+    }
+  
+    .todo-item-text, .completed-item-text {
+      @include hideTextWhenOverflow;
+      font-size: $middle-font-size;
+      padding-left: 10px;
+      line-height: 55px;
+      height: fit-content;
+    }
+  
+    .completed-item-text {
+      text-decoration: line-through;
+    }
+  }
+  
+  .completed-todo-header {
+    background-color: rgb(204, 204, 204); 
+  }
+  
+  .todo-main-container {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    
+    .set-date-container, .set-reminder-container {
+      padding-bottom: 5px;
+  
+      .due-date-btn {
+        margin-right: 10px;
+      }
+  
+      .reminder-date-btn {
+        margin-right: 14px;
+        padding-left: 2px;
+      }
+  
+      .react-datepicker-wrapper {
+        width: 75%;
+        .react-datepicker__input-container {
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  .set-tag-container {
+    .tag-text {
+      font-size: $small-font-size;
+      line-height: 40px;
+      padding-left: 7.5px;
+      margin-bottom: 0px;
+    }
+  }
+  
+  .set-star-level-container {
+    display: flex;
+  
+    .star-level-text {
+      font-size: $small-font-size;
+      line-height: 40px;
+      padding-right: 10px;
+      padding-left: 7.5px;
+    }
+  
+    .remove-star-wrapper {
+      padding-left: 10px;
+      line-height: 35px;
+  
+      .remove-icon:hover {
+        background-color: rgb(122, 44, 44);
+      }
+    }
+  }
+  
+  .add-subtask-container {
+    display: flex;
+    margin-bottom: 15px;
+  
+    .plus-icon-wrapper {
+      line-height: 35px;
+    }
+  }
+  
+  .todo-description-container {
+    display: flex;
+    width: 100%;
+    .todo-icon-wrapper {
+      padding-left: 2px;
+      padding-right: 11px;
+    }
+    .todo-description-field {
+      resize: none;
+    }
+  }
+  
+  .subtask-items-container {
+    .subtask-wrapper {
+      display: flex;
+      align-items: center;
+      height: 40px;
+  
+      .subtask-text {
+        @include hideTextWhenOverflow;
+        font-size: $small-font-size;
+        padding-left: 10px;
+        padding-top: 8px;
+      }
+  
+      .remove-btn {
+        position: absolute;
+        right: 5%;
+      }
+  
+    }
+  }
+}
+
