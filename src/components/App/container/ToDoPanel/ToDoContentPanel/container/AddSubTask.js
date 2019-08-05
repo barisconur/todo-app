@@ -3,7 +3,7 @@ import { InputGroup, FormControl } from 'react-bootstrap';
 
 import plusIcon from '../../../../../../assets/icons/plus-icon.svg';
 
-import { findCurrentToDoInJSON } from '../../../../utils';
+import { findCurrentToDoInJSON, isEnterKeyPressed } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -54,11 +54,7 @@ export default class AddSubTask extends React.Component {
      }
    }
 
-   handleEnterKeyEvent = (event) => {
-     if (event.key === 'Enter') {
-       this.addSubTask();
-     }
-   }
+   handleEnterKeyEvent = (event) => { if (isEnterKeyPressed(event)) this.addSubTask() }
 
    addSubTask = () => {
     if (this.isNotEmpty(this.state.subTaskName)) {

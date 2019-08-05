@@ -6,6 +6,8 @@ import searchIcon from '../../../../../assets/background-images/search-big-icon.
 
 import appJson from '../../../../../app';
 
+import { groupByListID, orderToDoSet, getAllToDos } from '../../../utils';
+
 import '../view/ToDoPanelView.scss';
 
 const shortid = require('shortid');
@@ -15,106 +17,51 @@ export default class SearchPanel extends React.Component {
     super(props);
 
     this.state = {
-      listItems: appJson.listItems,
       toDos: [],
-      toDoSet: [],
+      toDoSet: []
     };
   }
 
-  componentWillMount() {
-    this.setToDos();
-  }
+  componentWillMount() { this.setToDos() }
 
   componentDidUpdate(prevProps, prevStates) {
-    if (this.props.searchedWord !== prevProps.searchedWord) { this.setToDos() }
-
-    if (this.state.listItems !== prevStates.listItems) { this.setToDos() }
-    
+    if (this.props.searchedWord !== prevProps.searchedWord) this.setToDos();
+    if (this.state.listItems !== prevStates.listItems) this.setToDos();
   }
   
   setToDos = () => { 
-    const listItems = this.state.listItems;
-    let todos = [];
-
-    listItems.forEach(listItem => {
-      listItem.toDoItems.forEach(toDoItem => {
-        toDoItem.listID = listItem.listID;
-        toDoItem.listName = listItem.listName;
-
-        todos.push(toDoItem);
-      }) 
-    }); 
-
-    this.setState({ toDos: todos }, () => {
+    this.setState({ toDos: getAllToDos() }, () => {
       this.searchInSet(this.state.toDos);
     })
   }
 
   searchInSet = (todos) => { 
     const foundedToDos = this.search(todos);
-    const toDoSet = this.groupBylistID(foundedToDos);
-    const orderedToDoSet = this.orderToDoSet(toDoSet);
+    const toDoSet = groupByListID(foundedToDos);
+    const orderedToDoSet = orderToDoSet(toDoSet);
 
     this.setState({ toDoSet: orderedToDoSet });
   }
 
   search = (list) => {
     if (list === undefined) return;
-
     const searchedWord = this.props.searchedWord;
     return list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(searchedWord.toLowerCase()));
   } 
-  
-  groupBylistID = (list) => {
-    if (list === undefined) return;
 
-    let remainingList = list;
-    let groupArr = [];
-
-    while (remainingList.length !== 0) {
-      let listGroup = [];
-      let firstToDo = remainingList[0];
-      remainingList.splice(0, 1); 
-      listGroup.push(firstToDo);
-
-      for (let i = 0; i < remainingList.length; i++) {
-        if (firstToDo.listID === remainingList[i].listID) {
-          listGroup.push(remainingList[i]);
-          remainingList.splice(i, 1);
-          i--;
-        }
-      }
-      groupArr.push(listGroup);
-      listGroup = [];
-    }
-    return groupArr;
+  updateToDo = (toDoItem) => {
+    this.props.updateToDo(toDoItem);
   }
 
-  orderToDoSet = (toDoSet) => {
-    let newToDoSet = [];
-
-    toDoSet.forEach(toDoItems => {
-      let incompletedToDos = [];
-      let completedToDos = [];
-      let orderToDoArr  = [];
-
-      toDoItems.forEach((toDoItem) => {
-        if (!toDoItem.toDoStatus.isCompleted) {
-        incompletedToDos.push(toDoItem);
-        } else { 
-        completedToDos.push(toDoItem);
-        }
-      })
-      orderToDoArr = incompletedToDos.concat(completedToDos);
-      newToDoSet.push(orderToDoArr);
+  updateListItems = (updatedListItems) => {
+    this.setState({ listItems: updatedListItems }, () => {
+      this.setToDos();
     });
-
-    return newToDoSet;
   }
 
   render() { 
     return (
-      <div className="search-panel-container"> { this.renderSearchPanel(this.state.toDoSet) } </div>
+      <Fragment> { this.renderSearchPanel(this.state.toDoSet) } </Fragment> 
     );
   }
 
@@ -124,7 +71,7 @@ export default class SearchPanel extends React.Component {
     if (toDoSet.length === 0) {
       return this.renderNotFoundPanel()
     } else {
-      return <Fragment> { this.renderToDoSet() } </Fragment>
+      return <div className="all-items-container"> { this.renderToDoSet() } </div>
     }
   }
 
@@ -156,16 +103,12 @@ export default class SearchPanel extends React.Component {
     const selectedList = listItems[currentIndex];
     
     return toDoGroup.map((toDoItem) => {
-      return <div className="search-todo-item-wrapper">
+      return <Fragment>
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
               updateList= {this.props.updateThisSelectedList} isSearchRendering= {true}
               updateThisSearchPanel= {this.updateListItems} updateToDo= {this.updateToDo} />
-            </div>
+            </Fragment>
     })
-  }
-
-  updateToDo = (toDoItem) => {
-    this.props.updateToDo(toDoItem);
   }
 
   renderSelectedList = (listName) => {
@@ -174,11 +117,5 @@ export default class SearchPanel extends React.Component {
     const selectedList = listItems[currentIndex];
     
     this.props.updateSelectedList(selectedList);
-  }
-
-  updateListItems = (updatedListItems) => {
-    this.setState({ listItems: updatedListItems }, () => {
-      this.setToDos();
-    });
   }
 } 

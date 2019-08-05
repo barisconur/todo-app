@@ -12,7 +12,7 @@ import SetTag from '../container/SetTag';
 import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
 import checkboxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
 
-import { findCurrentToDoInJSON, findCurrentListInJSON } from '../../../../utils';
+import { findCurrentToDoInJSON, findCurrentListInJSON, orderToDoSet } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -38,7 +38,7 @@ export default class ToDoContentPanelView extends React.Component {
             <hr id="todo-header-first-line"/>
             <div className="todo-main-container">
 
-              <div className="set-date-container"> 
+              <div className="set-date-container">
               <AddDate selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
               updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
               </div>
@@ -131,6 +131,7 @@ export default class ToDoContentPanelView extends React.Component {
                     </div>
                     }
   }
+
   selectCheckBoxSource = () => {
     switch(this.props.selectedToDo.toDoStatus.isCompleted) {
       case false: return <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon" onClick={this.toggleCompleteToDo}></img>
@@ -150,7 +151,6 @@ export default class ToDoContentPanelView extends React.Component {
 
     this.props.setSelectedToDo(currentToDo);
   }
-
 
   displayToDoHeader = () => {
     switch (this.props.selectedToDo.toDoStatus.isCompleted) {
@@ -178,7 +178,9 @@ export default class ToDoContentPanelView extends React.Component {
   renderSubtasks = () => {
     const selectedToDo = this.props.selectedToDo;
     if (selectedToDo === undefined) return;
-    return selectedToDo.toDoDetails.subTaskList.map((subTask) => {
+
+    const subTaskList = selectedToDo.toDoDetails.subTaskList;
+    return subTaskList.map((subTask) => {
       return <SubTask selectedList={this.props.selectedList} selectedToDo={selectedToDo} subTask={subTask} key={subTask.subTaskID} 
       updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
     })

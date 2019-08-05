@@ -2,9 +2,13 @@ import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 
 import ToDoItem from '../container/ToDoItem';
-import searchIcon from '../../../../../assets/background-images/search-big-icon.svg';
+
+import todayIcon from '../../../../../assets/background-images/today-big-icon.svg';
+import weekIcon from '../../../../../assets/background-images/this-week-big-icon.svg';
 
 import appJson from '../../../../../app';
+
+import { groupByListID, orderToDoSet, getAllToDos } from '../../../utils';
 
 import '../view/ToDoPanelView.scss';
 
@@ -15,124 +19,91 @@ export default class DueTimePanel extends React.Component {
     super(props);
 
     this.state = {
-      listItems: appJson.listItems,
       toDos: [],
-      toDoSet: [],
+      toDoSet: []
     };
   }
 
-  componentWillMount() {
-    this.setToDos();
-  }
-
-  componentDidUpdate(prevProps, prevStates) {
-    if (this.props.searchedWord !== prevProps.searchedWord) { this.setToDos() }
-
-    if (this.state.listItems !== prevStates.listItems) { this.setToDos() }
-    
-  }
+  componentWillMount() { this.setToDos() }
   
+  componentDidUpdate(prevProps) { 
+    if (this.props.listID !== prevProps.listID) this.setToDos();
+  }
+
   setToDos = () => { 
-    const listItems = this.state.listItems;
-    let todos = [];
-
-    listItems.forEach(listItem => {
-      listItem.toDoItems.forEach(toDoItem => {
-        toDoItem.listID = listItem.listID;
-        toDoItem.listName = listItem.listName;
-
-        todos.push(toDoItem);
-      }) 
-    }); 
-
-    this.setState({ toDos: todos }, () => {
+    this.setState({ toDos: getAllToDos() }, () => {
       this.searchInSet(this.state.toDos);
     })
   }
 
   searchInSet = (todos) => { 
     const foundedToDos = this.search(todos);
-    const toDoSet = this.groupBylistID(foundedToDos);
-    const orderedToDoSet = this.orderToDoSet(toDoSet);
+    const toDoSet = groupByListID(foundedToDos);
+    const orderedToDoSet = orderToDoSet(toDoSet);
 
     this.setState({ toDoSet: orderedToDoSet });
   }
 
   search = (list) => {
     if (list === undefined) return;
-
-    const searchedWord = this.props.searchedWord;
-    return list.filter(toDoItem => toDoItem.toDoName.toLowerCase().includes(searchedWord.toLowerCase()));
-  } 
-  
-  groupBylistID = (list) => {
-    if (list === undefined) return;
-
-    let remainingList = list;
-    let groupArr = [];
-
-    while (remainingList.length !== 0) {
-      let listGroup = [];
-      let firstToDo = remainingList[0];
-      remainingList.splice(0, 1); 
-      listGroup.push(firstToDo);
-
-      for (let i = 0; i < remainingList.length; i++) {
-        if (firstToDo.listID === remainingList[i].listID) {
-          listGroup.push(remainingList[i]);
-          remainingList.splice(i, 1);
-          i--;
+    const currDate = new Date().toDateString();
+    return list.filter((toDoItem) => {
+      let selectedDate = toDoItem.toDoDetails.dueDate;
+      if (selectedDate === null) return;
+      if (this.props.listID === 2) {
+        if (selectedDate.toDateString() === currDate) return true;
+        return false;
+      } else {
+        if (selectedDate.toDateString().split(" ")[3] === currDate.split(" ")[3]) {
+          if (selectedDate.toDateString().split(" ")[2] - currDate.split(" ")[2] < 7) {
+            return true;
+          }
+          return false;
         }
-      }
-      groupArr.push(listGroup);
-      listGroup = [];
-    }
-    return groupArr;
+      }  
+    });
   }
 
-  orderToDoSet = (toDoSet) => {
-    let newToDoSet = [];
+  updateToDo = (toDoItem) => {
+    this.props.updateToDo(toDoItem);
+  }
 
-    toDoSet.forEach(toDoItems => {
-      let incompletedToDos = [];
-      let completedToDos = [];
-      let orderToDoArr  = [];
-
-      toDoItems.forEach((toDoItem) => {
-        if (!toDoItem.toDoStatus.isCompleted) {
-        incompletedToDos.push(toDoItem);
-        } else { 
-        completedToDos.push(toDoItem);
-        }
-      })
-      orderToDoArr = incompletedToDos.concat(completedToDos);
-      newToDoSet.push(orderToDoArr);
+  updateListItems = (updatedListItems) => {
+    this.setState({ listItems: updatedListItems }, () => {
+      this.setToDos();
     });
-
-    return newToDoSet;
   }
 
   render() { 
-    return (
-      <div className="search-panel-container"> { this.renderSearchPanel(this.state.toDoSet) } </div>
-    );
+    return <Fragment> { this.renderToDoPanel(this.state.toDoSet) } </Fragment>
   }
 
-  renderSearchPanel = (toDoSet) => {
+  renderToDoPanel = (toDoSet) => {
     if (toDoSet === undefined) return;
 
     if (toDoSet.length === 0) {
-      return this.renderNotFoundPanel()
+      return this.renderNotFoundPanel();
     } else {
-      return <Fragment> { this.renderToDoSet() } </Fragment>
+      return <div className="all-items-container"> { this.renderToDoSet() } </div>
     }
   }
 
   renderNotFoundPanel = () => {
-    return <div className="not-found-container">
-             <img className="search-img" src={searchIcon} alt="search-img"></img>
-             <h2 className="searched-word-text"><strong> "{this.props.searchedWord}"</strong> is not found</h2>
-           </div>
+    return <div className="not-found-container"> { this.renderNotFoundPageSrc() } </div>
+  }
+
+  renderNotFoundPageSrc = () => {
+    if (this.props.listID === undefined) return;
+    switch (this.props.listID) {
+      case 2    : return <Fragment>
+                          <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
+                          <h2 className="empty-list-text">You have no to-do due today</h2>
+                       </Fragment>
+      default   : return <Fragment>
+                          <img className="empty-list-img" src={weekIcon} alt="week-img"></img>
+                          <h2 className="empty-list-text">You have no to-do due this week</h2>
+                        </Fragment>
+    }
   }
 
   renderToDoSet = () => {
@@ -156,16 +127,12 @@ export default class DueTimePanel extends React.Component {
     const selectedList = listItems[currentIndex];
     
     return toDoGroup.map((toDoItem) => {
-      return <div className="search-todo-item-wrapper">
+      return <Fragment>
               <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
               updateList= {this.props.updateThisSelectedList} isSearchRendering= {true}
               updateThisSearchPanel= {this.updateListItems} updateToDo= {this.updateToDo} />
-            </div>
+            </Fragment>
     })
-  }
-
-  updateToDo = (toDoItem) => {
-    this.props.updateToDo(toDoItem);
   }
 
   renderSelectedList = (listName) => {
@@ -176,9 +143,5 @@ export default class DueTimePanel extends React.Component {
     this.props.updateSelectedList(selectedList);
   }
 
-  updateListItems = (updatedListItems) => {
-    this.setState({ listItems: updatedListItems }, () => {
-      this.setToDos();
-    });
-  }
+
 } 

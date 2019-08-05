@@ -47,7 +47,7 @@ export default class AppView extends React.Component {
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
 
-  setSelectedToDo = (toDo) => { this.setState({ selectedToDo: toDo })}
+  setSelectedToDo = (toDo) => { this.setState({ selectedToDo: toDo }, () => {console.log(this.state.selectedToDo)})}
 
   setSearchedWord = (searchedWord) => { this.setState({ searchedWord: searchedWord })}
 

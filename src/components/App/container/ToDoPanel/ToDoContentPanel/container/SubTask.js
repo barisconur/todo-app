@@ -26,8 +26,8 @@ export default class SubTask extends React.Component {
               <span className="checkbox-btn" onClick= {this.completeSubTask}>
                { this.selectCheckBoxSource() }
               </span>
-             <h3 className="subtask-text"> {this.props.subTask.subTaskName}</h3>
-
+              { this.selectTextSource() }
+              
              <span className="remove-btn" onClick= {this.removeSubTask}>
                <img className="remove-icon" src={removeIcon} alt="remove-icon"></img>
              </span>
@@ -39,6 +39,15 @@ export default class SubTask extends React.Component {
     switch(isCompleted) {
       case true: return <img className="checkbox-icon" src={checkBoxFilled} alt="checkbox-icon"></img>
       default: return <img className="checkbox-icon" src={checkBoxIcon} alt="checkbox-icon"></img>
+
+    }
+  }
+
+  selectTextSource = () => {
+    const isCompleted = this.props.subTask.isCompleted;
+    switch(isCompleted) {
+      case true: return  <h3 className="completed-subtask-text"> {this.props.subTask.subTaskName}</h3>
+      default: return <h3 className="subtask-text"> {this.props.subTask.subTaskName}</h3>
 
     }
   }
@@ -68,4 +77,4 @@ export default class SubTask extends React.Component {
 
     this.props.updateSelectedToDo(currentToDo);
   }
-}
+} 

@@ -194,9 +194,7 @@ export default class ToDoItem extends React.Component {
 
     const currentList = findCurrentListInJSON(this.props.selectedList);
     const index = findCurrentToDoIndex(currentList, this.props.toDoItem);
-
-    this.props.removedItem(currentList.toDoItems[index]);
-
+    
     if (index !== undefined) currentList.toDoItems.splice(index, 1);
     this.props.updateToDo();
 

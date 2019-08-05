@@ -1,11 +1,21 @@
 @import '../../../../sass/mixins.scss';
 @import '../../../../sass/variables.scss';
 
-input {
+input, input:focus {
   width: 100%;
+  outline: none;
+}
+
+.editing {
+  background-color: whitesmoke;
+  padding-left: 10px;
+  font-size: $middle-font-size;
+  border-width: 0px;
+  border: none;
 }
 
 .todo-content-panel-container {
+  overflow: auto;
   height: 100vh;
   background-color: whitesmoke;
 
@@ -21,12 +31,13 @@ input {
       line-height: 53px;
     }
   
-    .todo-item-text, .completed-item-text {
+    .todo-item-text, .completed-item-text, .todo-item-text:focus {
       @include hideTextWhenOverflow;
       font-size: $middle-font-size;
       padding-left: 10px;
       line-height: 55px;
       height: fit-content;
+      outline: none;
     }
   
     .completed-item-text {
@@ -120,11 +131,15 @@ input {
       align-items: center;
       height: 40px;
   
-      .subtask-text {
+      .subtask-text, .completed-subtask-text {
         @include hideTextWhenOverflow;
         font-size: $small-font-size;
         padding-left: 10px;
         padding-top: 8px;
+      }
+
+      .completed-subtask-text {
+        text-decoration: line-through;
       }
   
       .remove-btn {

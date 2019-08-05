@@ -15,8 +15,11 @@
 }
 
 .lists-container {
+  height: 84.5%;
+  overflow: auto;
   padding-left: 7.5px;
   padding-top: 7.5px;
+
   .static-lists-container, .list-items-container {
     .list-item-wrapper {
       display: flex; 
@@ -27,6 +30,7 @@
         display: flex;
         width: 100%;
         text-decoration: none;
+      &:focus { background-color: $focus-link-color }
 
         .list-text {
           @include hideTextWhenOverflow;

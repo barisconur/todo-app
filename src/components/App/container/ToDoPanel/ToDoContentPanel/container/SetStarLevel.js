@@ -5,6 +5,8 @@ import clearIcon from '../../../../../../assets/icons/clear-icon.svg';
 
 import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
 
+import appJson from '../../../../../../app';
+
 import '../view/ToDoContentPanelView.scss';
 
 export default class SetStarLevel extends React.Component {
@@ -55,12 +57,15 @@ export default class SetStarLevel extends React.Component {
   setStarLevel = (newRating) => { this.updateStarLevelInJSON(newRating, this.props.selectedList, this.props.selectedToDo) }
 
   updateStarLevelInJSON = (starLevel, list, toDo) => {
+    const starredList = appJson.listItems[1];
     const currentList = findCurrentListInJSON(list);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
-    
-    currentToDo.toDoStatus.isStarred = true;
-    currentToDo.toDoDetails.starLevel = starLevel; 
 
+    currentToDo.toDoStatus.isStarred = true;
+    if (starLevel === 0) {
+      currentToDo.toDoStatus.isStarred = false;
+    }
+    currentToDo.toDoDetails.starLevel = starLevel; 
     this.props.updateSelectedToDo(currentToDo);
   } 
 
@@ -71,7 +76,6 @@ export default class SetStarLevel extends React.Component {
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);    
 
     if (currentToDo === undefined) return; // if selected list is changes
-
     return currentToDo.toDoDetails.starLevel;
   }
 
