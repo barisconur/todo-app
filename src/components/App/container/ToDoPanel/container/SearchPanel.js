@@ -24,9 +24,8 @@ export default class SearchPanel extends React.Component {
 
   componentWillMount() { this.setToDos() }
 
-  componentDidUpdate(prevProps, prevStates) {
+  componentDidUpdate(prevProps) {
     if (this.props.searchedWord !== prevProps.searchedWord) this.setToDos();
-    if (this.state.listItems !== prevStates.listItems) this.setToDos();
   }
   
   setToDos = () => { 
@@ -99,13 +98,13 @@ export default class SearchPanel extends React.Component {
 
   renderToDoGroupItem = (toDoGroup) => {
     const listItems = appJson.listItems;
+    console.log(listItems);
     const currentIndex = listItems.findIndex(listItem => listItem.listID === toDoGroup[0].listID);
     const selectedList = listItems[currentIndex];
     
     return toDoGroup.map((toDoItem) => {
       return <Fragment>
-              <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateList= {this.props.updateThisSelectedList} isSearchRendering= {true}
+              <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()} isSearchRendering= {true}
               updateThisSearchPanel= {this.updateListItems} updateToDo= {this.updateToDo} />
             </Fragment>
     })

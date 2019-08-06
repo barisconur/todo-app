@@ -12,7 +12,6 @@ import './AppView.scss';
 export default class AppView extends React.Component {
   state = {
     selectedList: appJson.selectedList,
-    selectedToDo: undefined,
     searchedWord: ""
   }
 
@@ -29,8 +28,8 @@ export default class AppView extends React.Component {
               </Col>
               
               <Col sm={10} className="todo-panel-container">
-                <ToDoPanelView selectedList={this.state.selectedList} selectedToDo={this.state.selectedToDo} 
-                searchedWord={this.state.searchedWord} updateSelectedList={this.setSelectedList} updateSelectedToDo={this.setSelectedToDo} />
+                <ToDoPanelView selectedList={this.state.selectedList} searchedWord={this.state.searchedWord} 
+                updateSelectedList={this.setSelectedList}/>
               </Col>
 
             </Row>
@@ -46,8 +45,6 @@ export default class AppView extends React.Component {
   }
 
   isSearchFieldWritten = () => (this.state.searchedWord.length !== 0) ? true : false;
-
-  setSelectedToDo = (toDo) => { this.setState({ selectedToDo: toDo }, () => {console.log(this.state.selectedToDo)})}
 
   setSearchedWord = (searchedWord) => { this.setState({ searchedWord: searchedWord })}
 

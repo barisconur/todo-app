@@ -2,9 +2,9 @@
   "selectedList" : { "listID": 0, "listName": "Inbox", "toDoItems": [] },
   
   "listItems" : [
-    { "listID": 0, "listName": "Inbox"     , "toDoItems": [] },
-    { "listID": 1, "listName": "Starred"    },
-    { "listID": 2, "listName": "Today"     },
+    { "listID": 0, "listName": "Inbox", "toDoItems": [] },
+    { "listID": 1, "listName": "Starred" },
+    { "listID": 2, "listName": "Today" },
     { "listID": 3, "listName": "This Week" }
   ],
 

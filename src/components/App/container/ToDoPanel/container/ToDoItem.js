@@ -72,9 +72,12 @@ export default class ToDoItem extends React.Component {
 
     if (this.props.isSearchRendering) {
       this.props.updateThisSearchPanel(appJson.listItems);
+      this.props.updateToDo(currentToDo);
       return;
     }
+    
     this.props.updateList(currentList);
+    this.props.updateToDo(currentToDo);
   }
 
   showDueDate = () => {

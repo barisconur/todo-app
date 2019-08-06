@@ -32,6 +32,7 @@ export default class StarredPanel extends React.Component {
   }
 
   searchInSet = (todos) => { 
+    console.log(todos);
     const foundedToDos = this.search(todos);
     const toDoSet = groupByListID(foundedToDos);
     const orderedToDoSet = orderToDoSet(toDoSet);
@@ -40,8 +41,10 @@ export default class StarredPanel extends React.Component {
   }
 
   search = (list) => {
+    console.log(list);
     if (list === undefined) return;
     return list.filter((toDoItem) => {
+      console.log(toDoItem);
       if (toDoItem.toDoStatus.isStarred) return true;
       return false;
     });
@@ -51,17 +54,12 @@ export default class StarredPanel extends React.Component {
     this.props.updateToDo(toDoItem);
   }
 
-  updateListItems = (updatedListItems) => {
-    this.setState({ listItems: updatedListItems }, () => {
-      this.setToDos();
-    });
-  }
-
   render() { 
     return <Fragment> { this.renderToDoPanel(this.state.toDoSet) } </Fragment>
   }
 
   renderToDoPanel = (toDoSet) => {
+    console.log(toDoSet);
     if (toDoSet === undefined) return;
 
     if (toDoSet.length === 0) {
@@ -85,8 +83,10 @@ export default class StarredPanel extends React.Component {
 
   renderToDoSet = () => {
     const toDoSet = this.state.toDoSet;
+    console.log("todoSet: ", toDoSet);
     if (toDoSet !== undefined) {
         return toDoSet.map((toDoGroup => {
+          console.log(toDoGroup);
           const listName = toDoGroup[0].listName;
           return <div className="todo-items-container">
                    <Button variant="info" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
@@ -99,14 +99,11 @@ export default class StarredPanel extends React.Component {
   }
 
   renderToDoGroupItem = (toDoGroup) => {
-    const listItems = appJson.listItems;
-    const currentIndex = listItems.findIndex(listItem => listItem.listID === toDoGroup[0].listID);
-    const selectedList = listItems[currentIndex];
+    console.log(toDoGroup);
     return toDoGroup.map((toDoItem) => {
       return <Fragment>
-              <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-              updateList= {this.props.updateThisSelectedList} isSearchRendering= {true}
-              updateThisSearchPanel= {this.updateListItems} updateToDo= {this.updateToDo} />
+              <ToDoItem toDoItem={toDoItem} key={shortid.generate()} 
+              updateToDo= {this.updateToDo} />
             </Fragment>
     })
   }

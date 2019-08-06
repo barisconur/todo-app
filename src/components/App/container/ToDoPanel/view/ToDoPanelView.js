@@ -25,6 +25,7 @@ export default class ToDoPanelView extends React.Component {
     super(props);
 
     this.state = {
+      selectedToDo: undefined,
       isCompletedShown: false
     };
   }
@@ -37,7 +38,7 @@ export default class ToDoPanelView extends React.Component {
 
   sendSelectedListToAppView = (selectedList) => { this.props.updateSelectedList(selectedList) }
 
-  sendToDoItemToAppView = (toDoItem) => { this.props.updateSelectedToDo(toDoItem) }
+  setSelectedToDo = (toDo) => { this.setState({ selectedToDo: toDo }) }
 
   render() {
     return (
@@ -59,18 +60,18 @@ export default class ToDoPanelView extends React.Component {
   displayToDoPanel = () => {
     if (this.props.searchedWord.length !== 0) {
       return <SearchPanel searchedWord={this.props.searchedWord} updateSelectedList={this.sendSelectedListToAppView} 
-      updateToDo={this.sendToDoItemToAppView}/>
+      updateToDo={this.setSelectedToDo}/>
     } else if (typeof this.props.selectedList.listID === 'string' || this.props.selectedList.listID === 0) {
       return this.renderToDoPanel();
     } else {
-      console.log(this.props.selectedList.listID); 
+      console.log("buraya giriyo mu");
       switch(this.props.selectedList.listID) {
         case 2: return <DueTimePanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.sendToDoItemToAppView}/> 
+        updateToDo={this.setSelectedToDo}/> 
         case 3: return <DueTimePanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.sendToDoItemToAppView}/> 
+        updateToDo={this.setSelectedToDo}/> 
         default: return <StarredPanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.sendToDoItemToAppView}/> 
+        updateToDo={this.setSelectedToDo}/> 
      }
     }
   }
@@ -137,7 +138,7 @@ export default class ToDoPanelView extends React.Component {
     }
     return incompletedToDos.map((toDoItem)  => {
       return <ToDoItem selectedList= {selectedList} toDoItem= {toDoItem} key={shortid.generate()}
-      updateList= {this.sendSelectedListToAppView} updateToDo= {this.sendToDoItemToAppView}/>
+      updateList= {this.sendSelectedListToAppView} updateToDo= {this.setSelectedToDo}/>
     })
   } 
 
@@ -170,17 +171,15 @@ export default class ToDoPanelView extends React.Component {
 
       return completedToDos.map((toDoItem) => {
         return <ToDoItem selectedList= {selectedList} toDoItem={toDoItem} key={shortid.generate()}
-        updateList={this.sendSelectedListToAppView} updateToDo={this.sendToDoItemToAppView}/>
+        updateList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/>
       })
     }
   }
 
   renderContentPanel = () => {
-    console.log(this.props.selectedList);
-    console.log(this.props.selectedToDo); 
       return <Col sm={CONTENT_PANEL_SIZE} className="todo-content-panel-container">
-              <ToDoContentPanelView selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-              setSelectedList={this.sendSelectedListToAppView} setSelectedToDo={this.sendToDoItemToAppView}/>
+              <ToDoContentPanelView selectedList={this.props.selectedList} selectedToDo={this.state.selectedToDo}
+              setSelectedList={this.sendSelectedListToAppView} setSelectedToDo={this.setSelectedToDo}/>
              </Col>
     }
 }
