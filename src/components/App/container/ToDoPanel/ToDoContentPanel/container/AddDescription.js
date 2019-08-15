@@ -18,15 +18,28 @@ export default class AddDescription extends React.Component {
             <span className="todo-icon-wrapper">
                 <img className="rename-icon" src={renameIcon} alt="rename-icon"></img>
             </span>
-
-            <textarea className="todo-description-field" rows='3' cols='50' 
-            ref= {this.userInput}
-            name='description' placeholder='Add description...' 
-            onChange = { () => this.handleChange() }
-            data-autoresize
-            ></textarea>
+            { this.renderDescriptionField() }
         </Fragment>
       );
+   }
+
+   renderDescriptionField = () => {
+     if (this.props.selectedToDo.toDoStatus.isCompleted) {
+       return <textarea className="todo-description-field" rows='3' cols='50' 
+              disabled
+              ref= {this.userInput}
+              value= {this.readDescriptionFromJSON()}
+              name='description' placeholder='Add description...' 
+              onChange = { () => this.handleChange() }
+              data-autoresize />
+     } else {
+      return <textarea className="todo-description-field" rows='3' cols='50' 
+              ref= {this.userInput}
+              value= {this.readDescriptionFromJSON()}
+              name='description' placeholder='Add description...' 
+              onChange = { () => this.handleChange() }
+              data-autoresize />
+     }
    }
 
    handleChange = () => { 
@@ -55,13 +68,13 @@ export default class AddDescription extends React.Component {
       this.props.updateSelectedToDo(currentToDo); 
     }
 
-    // readDescriptionFromJSON = () => {
-    //   if (this.props.selectedToDo === undefined) return;
-    //   const currentList = findCurrentListInJSON(this.props.selectedList);
-    //   const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
+    readDescriptionFromJSON = () => {
+      if (this.props.selectedToDo === undefined) return;
+      const currentList = findCurrentListInJSON(this.props.selectedList);
+      const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
   
-    //   if (currentToDo === undefined) return;
+      if (currentToDo === undefined) return;
   
-    //   return currentToDo.toDoDetails.toDoDescription;
-    // }
+      return currentToDo.toDoDetails.toDoDescription;
+    }
 }

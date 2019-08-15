@@ -5,7 +5,7 @@
     { "listID": 0, "listName": "Inbox", "toDoItems": [] },
     { "listID": 1, "listName": "Starred"},
     { "listID": 2, "listName": "Today"},
-    { "listID": 3, "listName": "This Week"}
+    { "listID": 3, "listName": "Next 7 Days"}
   ],
 
   "folderItems" : []

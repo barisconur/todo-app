@@ -56,22 +56,24 @@ export default class ToDoPanelView extends React.Component {
     if (this.props.searchedWord.length !== 0) {
       return <SearchPanel searchedWord={this.props.searchedWord} updateSelectedList={this.sendSelectedListToAppView} 
       updateToDo={this.setSelectedToDo}/>
-    } else if (this.props.selectedList.listID >= 4 || this.props.selectedList.listID === 0) {
-      return this.renderToDoPanel();
-    } else {
-      console.log("buraya giriyo mu");
-      switch(this.props.selectedList.listID) {
-        case 2: return <DueTimePanel selectedList={this.props.selectedList}  selectedToDo={this.props.selectedToDo}
-        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
-
-        case 3: return <DueTimePanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
-
-        default: return <StarredPanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
-        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
-     }
+    } else if (this.props.selectedList !== undefined) {
+      if (this.props.selectedList.listID >= 4 || this.props.selectedList.listID === 0) {
+        return this.renderToDoPanel();
+      } else {
+        switch(this.props.selectedList.listID) {
+          case 2: return <DueTimePanel selectedList={this.props.selectedList}  selectedToDo={this.props.selectedToDo}
+          updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
+  
+          case 3: return <DueTimePanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
+          updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
+  
+          default: return <StarredPanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
+          updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
+       }
+      }
     }
   }
+  
   renderToDoPanel = () => {
     return ( 
       <div className="all-items-container">

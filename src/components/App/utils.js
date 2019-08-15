@@ -8,11 +8,6 @@ export const findCurrentListInJSON = (list) => appJson.listItems[findCurrentList
 
 export const findCurrentList = (listID) => appJson.listItems[listID] 
 
-export const findCurrentToDo = (listID, toDo) => {
-  const currentList = findCurrentList(listID);
-  return currentList.toDoItems[toDo.listID];
-}
-
 export const findSubTask = (toDo, subTask) => {
   const currentList = findCurrentList(toDo.listID);
   const currentToDo = findCurrentToDoInJSON(currentList, toDo);
@@ -24,8 +19,8 @@ export const findSubTask = (toDo, subTask) => {
 }
 
 export const findCurrentToDoInJSON = (list, toDo) => {
-  console.log(toDo);
-  const currentList = findCurrentList(toDo.listID);
+  const currentList = findCurrentListInJSON(list);
+  if (currentList === undefined) return;
   return currentList.toDoItems[findCurrentToDoIndex(currentList, toDo)];
 }
 
@@ -36,11 +31,13 @@ export const findSubTaskInJSON = (listID, toDo, subTask) => {
 }
 
 export const findCurrentListIndex = (list) => {
+  if (list === undefined) return;
   const index = appJson.listItems.findIndex(listItem => listItem.listID === list.listID);
   return index;
 }
 
 export const findCurrentToDoIndex = (list, toDo) => {
+  if (list === undefined) return;
   const index = list.toDoItems.findIndex(toDoItem => toDoItem.toDoID === toDo.toDoID);
   return index;
 }

@@ -7,7 +7,6 @@ import AddDescription from '../container/AddDescription';
 import AddSubTask from '../container/AddSubTask';
 import SubTask from '../container/SubTask';
 import SetStarLevel from '../container/SetStarLevel';
-import SetTag from '../container/SetTag';
 
 import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
 import checkboxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
@@ -45,8 +44,7 @@ export default class ToDoContentPanelView extends React.Component {
               updateSelectedToDo={this.sendSelectedToDoToAppView}
               /> </div>
               <hr/>
-              <div className="set-tag-container"> <SetTag/> </div>
-              
+
               <div className="set-star-level-container"> 
               <SetStarLevel  selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
               updateSelectedToDo={this.sendSelectedToDoToAppView}/> 
@@ -85,7 +83,6 @@ export default class ToDoContentPanelView extends React.Component {
               updateSelectedToDo={this.sendSelectedToDoToAppView}
               /> </div>
               <hr/>
-              <div className="set-tag-container"> <SetTag/> </div>
               
               <div className="set-star-level-container"> 
               <SetStarLevel  selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}

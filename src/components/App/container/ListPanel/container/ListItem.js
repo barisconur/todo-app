@@ -42,9 +42,8 @@ export default class ListItem extends React.Component {
     const listItem = this.props.listItem;
     const listName = listItem.listName;
     const listID = listItem.listID;    
-    
+
     if (listID <= 3) {
-      console.log("buraya 222");
       return <div className="list-item-wrapper">
 
                 <NavLink className="list-link" to={'/lists/' + listName} onClick= {this.setSelectedList}>
@@ -54,7 +53,6 @@ export default class ListItem extends React.Component {
 
              </div>
     } else {
-      console.log("buradanmı renderlıyo"); 
       return <Fragment>
               <MenuProvider id= {listID}>
                 <div className="list-item-wrapper">
@@ -125,6 +123,7 @@ export default class ListItem extends React.Component {
     const currentList = this.props.listItem;
     const index = findCurrentListIndex(currentList);
 
+    console.log(index);
     if (index !== undefined) listItems.splice(index,1);
 
     if (currentList.listID === appJson.selectedList.listID) {

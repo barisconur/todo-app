@@ -53,6 +53,7 @@ export default class SetStarLevel extends React.Component {
 
   updateStarLevelInJSON = (starLevel, toDo) => {
     const currentList = findCurrentList(toDo.listID);
+    console.log(currentList);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
     currentToDo.toDoStatus.isStarred = true;

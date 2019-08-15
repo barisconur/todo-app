@@ -61,7 +61,7 @@ export default class ToDoItem extends React.Component {
   }
 
   toggleCompleteToDo = (event) => {
-    const currentList = findCurrentList(this.props.toDoItem.listID);
+    const currentList = this.props.toDoItem.listID;
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.toDoItem);
 
     if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {
