@@ -6,7 +6,7 @@ import { MenuProvider, Menu, Item, Separator, Submenu } from 'react-contexify';
 import checkBoxIcon from '../../../../../assets/icons/checkbox-icon.svg';
 import checkBoxFilled from '../../../../../assets/icons/checkbox-filled-icon.svg';
 
-import { findCurrentToDoInJSON, findCurrentToDoIndex, findCurrentList } from '../../../utils';
+import { findCurrentToDoInJSON, findCurrentToDoIndex, findCurrentListInJSON, findCurrentListOfToDoInJSON } from '../../../utils';
 
 import appJson from '../../../../../app';
 
@@ -61,9 +61,9 @@ export default class ToDoItem extends React.Component {
   }
 
   toggleCompleteToDo = (event) => {
-    const currentList = this.props.toDoItem.listID;
+    const currentList = findCurrentListOfToDoInJSON(this.props.toDoItem.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.toDoItem);
-
+    console.log(currentToDo);
     if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {
       currentToDo.toDoStatus.isCompleted = true;
     } else {
@@ -114,7 +114,7 @@ export default class ToDoItem extends React.Component {
   setStarLevel = (newRating) => { this.updateStarLevelInJSON(newRating, this.props.toDoItem.listID, this.props.toDoItem) }
 
   updateStarLevelInJSON = (starLevel, listID, toDo) => {
-    const currentList = findCurrentList(listID);
+    const currentList = findCurrentListOfToDoInJSON(listID);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
     currentToDo.toDoStatus.isStarred = true;
@@ -125,7 +125,7 @@ export default class ToDoItem extends React.Component {
   readStarLevelFromJSON = () => {
     if (this.props.selectedToDo === undefined) return;
     
-    const currentList = findCurrentList(this.props.toDoItem.listID);
+    const currentList = findCurrentListOfToDoInJSON(this.props.toDoItem.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.toDoItem);
 
     return currentToDo.toDoDetails.starLevel;
@@ -194,7 +194,7 @@ export default class ToDoItem extends React.Component {
     const answer = window.confirm("Are you sure remove this todo?");
     if (!answer) return;
 
-    const currentList = findCurrentList(this.props.toDoItem.listID);
+    const currentList = findCurrentListInJSON(this.props.selectedList);
     const index = findCurrentToDoIndex(currentList, this.props.toDoItem);
     
     if (index !== undefined) currentList.toDoItems.splice(index, 1);

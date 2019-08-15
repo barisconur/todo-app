@@ -7,8 +7,6 @@ import { isEmptyString, isEnterKeyPressed } from '../../../utils';
 
 import '../view/ListPanelView.scss';
 
-const shortid = require('shortid');
-
 export default class CreateItemModal extends React.Component {
   constructor(props) {
     super(props);

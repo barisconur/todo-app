@@ -33,7 +33,6 @@ export default class ToDoPanelView extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.selectedList !== prevProps.selectedList) { 
       this.setState({ isCompletedShown: false });
-      this.renderContentPanel();
     }
   }
 
@@ -176,9 +175,9 @@ export default class ToDoPanelView extends React.Component {
   }
 
   renderContentPanel = () => {
-      return <Col sm={CONTENT_PANEL_SIZE} className="todo-content-panel-container">
-              <ToDoContentPanelView selectedList={this.props.selectedList} selectedToDo={this.state.selectedToDo}
-              setSelectedList={this.sendSelectedListToAppView} setSelectedToDo={this.setSelectedToDo}/>
-             </Col>
-    }
+    return <Col sm={CONTENT_PANEL_SIZE} className="todo-content-panel-container">
+            <ToDoContentPanelView selectedList={this.props.selectedList} selectedToDo={this.state.selectedToDo}
+            setSelectedList={this.sendSelectedListToAppView} setSelectedToDo={this.setSelectedToDo}/>
+            </Col>
+  }
 }

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import renameIcon from '../../../../../../assets/icons/rename-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
+import { findCurrentListOfToDoInJSON, findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -24,22 +24,24 @@ export default class AddDescription extends React.Component {
    }
 
    renderDescriptionField = () => {
-     if (this.props.selectedToDo.toDoStatus.isCompleted) {
-       return <textarea className="todo-description-field" rows='3' cols='50' 
-              disabled
-              ref= {this.userInput}
-              value= {this.readDescriptionFromJSON()}
-              name='description' placeholder='Add description...' 
-              onChange = { () => this.handleChange() }
-              data-autoresize />
-     } else {
+    if (this.props.selectedToDo === undefined) return;
+
+    if (this.props.selectedToDo.toDoStatus.isCompleted) {
       return <textarea className="todo-description-field" rows='3' cols='50' 
-              ref= {this.userInput}
-              value= {this.readDescriptionFromJSON()}
-              name='description' placeholder='Add description...' 
-              onChange = { () => this.handleChange() }
-              data-autoresize />
-     }
+            disabled
+            ref= {this.userInput}
+            value= {this.readDescriptionFromJSON()}
+            name='description' placeholder='Add description...' 
+            onChange = { () => this.handleChange() }
+            data-autoresize />
+    } else {
+    return <textarea className="todo-description-field" rows='3' cols='50' 
+            ref= {this.userInput}
+            value= {this.readDescriptionFromJSON()}
+            name='description' placeholder='Add description...' 
+            onChange = { () => this.handleChange() }
+            data-autoresize />
+    }
    }
 
    handleChange = () => { 
@@ -61,7 +63,7 @@ export default class AddDescription extends React.Component {
      }
 
     updateDescriptionInJSON = (list, toDo) => {
-      const currentList = findCurrentListInJSON(list);
+      const currentList = findCurrentListOfToDoInJSON(this.props.selectedToDo.listID);
       const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
       currentToDo.toDoDetails.toDoDescription = this.userInput.current.value; 
@@ -69,8 +71,7 @@ export default class AddDescription extends React.Component {
     }
 
     readDescriptionFromJSON = () => {
-      if (this.props.selectedToDo === undefined) return;
-      const currentList = findCurrentListInJSON(this.props.selectedList);
+      const currentList = findCurrentListOfToDoInJSON(this.props.selectedToDo.listID);
       const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
   
       if (currentToDo === undefined) return;

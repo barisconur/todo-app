@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import reminderIcon from '../../../../../../assets/icons/reminder-icon.svg';
 
-import { findCurrentToDoInJSON, findCurrentList } from '../../../../utils';
+import { findCurrentToDoInJSON, findCurrentListOfToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -22,6 +22,8 @@ export default class AddReminder extends React.Component {
   }
 
   renderReminderDatePicker = () => {
+    if (this.props.selectedToDo === undefined) return;
+
     if (this.props.selectedToDo.toDoStatus.isCompleted) {
       return <DatePicker placeholderText="Set reminder" 
               minDate={new Date()}
@@ -48,7 +50,7 @@ export default class AddReminder extends React.Component {
   handleChange = (date) => { this.updateReminderDateInJSON(date, this.props.selectedToDo) }
 
   updateReminderDateInJSON = (date, toDo) => {
-    const currentList = findCurrentList(toDo.listID);
+    const currentList = findCurrentListOfToDoInJSON(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
     currentToDo.toDoDetails.reminderDate = date; 
@@ -58,9 +60,7 @@ export default class AddReminder extends React.Component {
 
 
   readReminderDateFromJSON = () => {
-    if (this.props.selectedToDo === undefined) return;
-
-    const currentList = findCurrentList(this.props.selectedToDo.listID);
+    const currentList = findCurrentListOfToDoInJSON(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
 
     if (currentToDo === undefined) return; // if selected list is changes

@@ -11,7 +11,7 @@ import SetStarLevel from '../container/SetStarLevel';
 import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
 import checkboxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
 
-import { findCurrentToDoInJSON, findCurrentList } from '../../../../utils';
+import { findCurrentToDoInJSON, findCurrentListOfToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -21,6 +21,8 @@ export default class ToDoContentPanelView extends React.Component {
   sendSelectedToDoToAppView = (toDo) => { this.props.setSelectedToDo(toDo) } 
 
   render() {
+    console.log(this.props.selectedList);
+    console.log(this.props.selectedToDo);
     return (
       <Fragment> { this.renderContentPanel() } </Fragment>
     )
@@ -134,7 +136,7 @@ export default class ToDoContentPanelView extends React.Component {
   }
 
   toggleCompleteToDo = (event) => {
-    const currentList = findCurrentList(this.props.selectedToDo.listID);
+    const currentList = findCurrentListOfToDoInJSON(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
 
     if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {

@@ -32,26 +32,28 @@ export default class AddSubTask extends React.Component {
    } 
 
    renderAddSubtaskField = () => {
-     if (!this.props.selectedToDo.toDoStatus.isCompleted) {
-       return <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
-                <FormControl className="subtask-field"
-                ref= {this.userInput}
-                placeholder="Add a subtask"
-                aria-label="Subtask-name"
-                aria-describedby="basic-addon2"
-                onChange={ () => this.handleChange() }/>
-          </InputGroup>
-     } else {
+    if (this.props.selectedToDo === undefined) return;
+
+    if (!this.props.selectedToDo.toDoStatus.isCompleted) {
       return <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
               <FormControl className="subtask-field"
-              disabled
               ref= {this.userInput}
               placeholder="Add a subtask"
               aria-label="Subtask-name"
               aria-describedby="basic-addon2"
               onChange={ () => this.handleChange() }/>
-            </InputGroup>
-     }
+        </InputGroup>
+    } else {
+    return <InputGroup className="add-subtask-field" onKeyPress={this.handleEnterKeyEvent}>
+            <FormControl className="subtask-field"
+            disabled
+            ref= {this.userInput}
+            placeholder="Add a subtask"
+            aria-label="Subtask-name"
+            aria-describedby="basic-addon2"
+            onChange={ () => this.handleChange() }/>
+          </InputGroup>
+    }
    }
 
    handleEnterKeyEvent = (event) => { if (isEnterKeyPressed(event)) this.addSubTask() }
@@ -62,7 +64,6 @@ export default class AddSubTask extends React.Component {
       return;
     }
     const selected = this.props.selectedToDo;
-    console.log(selected);
     const newSubTask = { subTaskID: shortid.generate(),
                          subTaskName: this.state.subTaskName,
                          isCompleted: false
