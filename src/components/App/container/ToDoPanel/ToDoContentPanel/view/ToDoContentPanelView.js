@@ -12,15 +12,12 @@ import SetTag from '../container/SetTag';
 import checkBoxIcon from '../../../../../../assets/icons/checkbox-icon.svg';
 import checkboxFilled from '../../../../../../assets/icons/checkbox-filled-icon.svg';
 
-import { findCurrentToDoInJSON, findCurrentListInJSON, orderToDoSet } from '../../../../utils';
+import { findCurrentToDoInJSON, findCurrentList } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
 
 export default class ToDoContentPanelView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   sendSelectedToDoToAppView = (toDo) => { this.props.setSelectedToDo(toDo) } 
 
@@ -140,7 +137,7 @@ export default class ToDoContentPanelView extends React.Component {
   }
 
   toggleCompleteToDo = (event) => {
-    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentList = findCurrentList(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
 
     if (event.target.className === 'checkbox-icon' || event.target.className === 'checkbox-btn') {

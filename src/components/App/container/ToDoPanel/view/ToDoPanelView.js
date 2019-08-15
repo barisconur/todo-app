@@ -33,6 +33,7 @@ export default class ToDoPanelView extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.selectedList !== prevProps.selectedList) { 
       this.setState({ isCompletedShown: false });
+      this.renderContentPanel();
     }
   }
 
@@ -51,12 +52,6 @@ export default class ToDoPanelView extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedList !== prevProps.selectedList) {
-      this.renderContentPanel();
-    }
-  }
-
   displayToDoPanel = () => {
     if (this.props.searchedWord.length !== 0) {
       return <SearchPanel searchedWord={this.props.searchedWord} updateSelectedList={this.sendSelectedListToAppView} 
@@ -66,12 +61,14 @@ export default class ToDoPanelView extends React.Component {
     } else {
       console.log("buraya giriyo mu");
       switch(this.props.selectedList.listID) {
-        case 2: return <DueTimePanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.setSelectedToDo}/> 
-        case 3: return <DueTimePanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.setSelectedToDo}/> 
-        default: return <StarredPanel listID={this.props.selectedList.listID}  updateSelectedList={this.sendSelectedListToAppView} 
-        updateToDo={this.setSelectedToDo}/> 
+        case 2: return <DueTimePanel selectedList={this.props.selectedList}  selectedToDo={this.props.selectedToDo}
+        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
+
+        case 3: return <DueTimePanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
+        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
+
+        default: return <StarredPanel selectedList={this.props.selectedList} selectedToDo={this.props.selectedToDo}
+        updateSelectedList={this.sendSelectedListToAppView} updateToDo={this.setSelectedToDo}/> 
      }
     }
   }

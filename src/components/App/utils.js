@@ -4,15 +4,38 @@ export const isEmptyString = (str) => (str.length === 0) ? true : false;
 
 export const isEnterKeyPressed = (ev) => (ev.key === 'Enter') ? true : false;
 
-export const findCurrentListInJSON = (list) => appJson.listItems[findCurrentListIndex(list)]
+export const findCurrentListInJSON = (list) => {
+  return appJson.listItems[findCurrentListIndex(list)];
+}
+
+export const findCurrentList = (listID) => { 
+  console.log(listID);
+  return appJson.listItems[listID];
+}
+
+export const findCurrentToDo = (listID, toDo) => {
+  const currentList = findCurrentList(listID);
+  return currentList.toDoItems[toDo.listID];
+}
+
+export const findSubTask = (toDo, subTask) => {
+  const currentList = findCurrentList(toDo.listID);
+  const currentToDo = findCurrentToDoInJSON(currentList, toDo);
+
+  const index = currentToDo.toDoDetails.subTaskList.findIndex(subTaskItem => subTaskItem.subTaskID === subTask.subTaskID);
+
+  return index;
+
+}
 
 export const findCurrentToDoInJSON = (list, toDo) => {
-  const currentList = findCurrentListInJSON(list);
+  console.log(toDo);
+  const currentList = findCurrentList(toDo.listID);
   return currentList.toDoItems[findCurrentToDoIndex(currentList, toDo)];
 }
 
-export const findSubTaskInJSON = (list, toDo, subTask) => {
-  const currentList = findCurrentListInJSON(list);
+export const findSubTaskInJSON = (listID, toDo, subTask) => {
+  const currentList = findCurrentList(listID);
   const currentToDo = findCurrentToDoInJSON(currentList, toDo);
   return currentToDo.toDoDetails.subTaskList[findSubTaskIndex(currentList, currentToDo, subTask)];
 }

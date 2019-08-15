@@ -4,15 +4,12 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import dateIcon from '../../../../../../assets/icons/date-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
+import { findCurrentList, findCurrentToDoInJSON } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
 export default class AddDate extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
     return (
       <Fragment>
@@ -42,10 +39,11 @@ export default class AddDate extends React.Component {
     }
   }
 
-  handleChange = (date) => { this.updateDueDateInJSON(date, this.props.selectedList, this.props.selectedToDo) }
+  handleChange = (date) => { this.updateDueDateInJSON(date, this.props.selectedToDo) }
 
-  updateDueDateInJSON = (date, list, toDo) => {
-    const currentList = findCurrentListInJSON(list);
+  updateDueDateInJSON = (date, toDo) => {
+    console.log(toDo);
+    const currentList = findCurrentList(toDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
     currentToDo.toDoStatus.isDueTimeSet = true;
@@ -57,7 +55,7 @@ export default class AddDate extends React.Component {
   readDueDateFromJSON = () => {
     if (this.props.selectedToDo === undefined) return;
 
-    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentList = findCurrentList(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);
 
     if (currentToDo === undefined) return; // if selected list is changes

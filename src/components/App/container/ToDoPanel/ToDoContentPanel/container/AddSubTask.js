@@ -3,7 +3,7 @@ import { InputGroup, FormControl } from 'react-bootstrap';
 
 import plusIcon from '../../../../../../assets/icons/plus-icon.svg';
 
-import { findCurrentToDoInJSON, isEnterKeyPressed } from '../../../../utils';
+import { findCurrentToDo, isEnterKeyPressed } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
@@ -61,7 +61,7 @@ export default class AddSubTask extends React.Component {
       alert("Please enter not an empty text");
       return;
     }
-    const selected = findCurrentToDoInJSON(this.props.selectedList, this.props.selectedToDo);
+    const selected = findCurrentToDo(this.props.selectedToDo.listID, this.props.selectedToDo);
     const newSubTask = { subTaskID: shortid.generate(),
                          subTaskName: this.state.subTaskName,
                          isCompleted: false

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 
 import ToDoItem from '../container/ToDoItem';
+import Navbar from './Navbar';
 
 import todayIcon from '../../../../../assets/background-images/today-big-icon.svg';
 import weekIcon from '../../../../../assets/background-images/this-week-big-icon.svg';
@@ -27,7 +28,7 @@ export default class DueTimePanel extends React.Component {
   componentWillMount() { this.setToDos() }
   
   componentDidUpdate(prevProps) { 
-    if (this.props.listID !== prevProps.listID) this.setToDos();
+    if (this.props.selectedList.listID !== prevProps.selectedList.listID) this.setToDos();
   }
 
   setToDos = () => { 
@@ -49,7 +50,6 @@ export default class DueTimePanel extends React.Component {
     const currDate = new Date().toDateString();
     return list.filter((toDoItem) => {
       let selectedDate = toDoItem.toDoDetails.dueDate;
-      if (selectedDate === null) return;
       if (this.props.listID === 2) {
         if (selectedDate.toDateString() === currDate) return true;
         return false;
@@ -60,13 +60,12 @@ export default class DueTimePanel extends React.Component {
           }
           return false;
         }
-      }  
+      }
+      return false;
     });
   }
 
-  updateToDo = (toDoItem) => {
-    this.props.updateToDo(toDoItem);
-  }
+  updateToDo = (toDoItem) => { this.props.updateToDo(toDoItem) }
 
   updateListItems = (updatedListItems) => {
     this.setState({ listItems: updatedListItems }, () => {
@@ -84,7 +83,10 @@ export default class DueTimePanel extends React.Component {
     if (toDoSet.length === 0) {
       return this.renderNotFoundPanel();
     } else {
-      return <div className="all-items-container"> { this.renderToDoSet() } </div>
+      return <div className="all-items-container">
+         <Navbar newSelectedListName= {this.props.selectedList.listName}></Navbar>
+         { this.renderToDoSet() } 
+         </div>
     }
   }
 
@@ -93,8 +95,8 @@ export default class DueTimePanel extends React.Component {
   }
 
   renderNotFoundPageSrc = () => {
-    if (this.props.listID === undefined) return;
-    switch (this.props.listID) {
+    if (this.props.selectedList.listID === undefined) return;
+    switch (this.props.selectedList.listID) {
       case 2    : return <Fragment>
                           <img className="empty-list-img" src={todayIcon} alt="today-img"></img>
                           <h2 className="empty-list-text">You have no to-do due today</h2>

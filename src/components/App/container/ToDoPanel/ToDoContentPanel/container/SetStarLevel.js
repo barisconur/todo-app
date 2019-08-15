@@ -3,16 +3,11 @@ import StarRatings from 'react-star-ratings';
 
 import clearIcon from '../../../../../../assets/icons/clear-icon.svg';
 
-import { findCurrentListInJSON, findCurrentToDoInJSON } from '../../../../utils';
-
-import appJson from '../../../../../../app';
+import { findCurrentToDoInJSON, findCurrentList } from '../../../../utils';
 
 import '../view/ToDoContentPanelView.scss';
 
 export default class SetStarLevel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -54,11 +49,10 @@ export default class SetStarLevel extends React.Component {
     //TO-DO starDimensionları responsive yap
   }
 
-  setStarLevel = (newRating) => { this.updateStarLevelInJSON(newRating, this.props.selectedList, this.props.selectedToDo) }
+  setStarLevel = (newRating) => { this.updateStarLevelInJSON(newRating, this.props.selectedToDo) }
 
-  updateStarLevelInJSON = (starLevel, list, toDo) => {
-    const starredList = appJson.listItems[1];
-    const currentList = findCurrentListInJSON(list);
+  updateStarLevelInJSON = (starLevel, toDo) => {
+    const currentList = findCurrentList(toDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, toDo);
 
     currentToDo.toDoStatus.isStarred = true;
@@ -72,7 +66,7 @@ export default class SetStarLevel extends React.Component {
   readStarLevelFromJSON = () => {
     if (this.props.selectedToDo === undefined) return;
 
-    const currentList = findCurrentListInJSON(this.props.selectedList);
+    const currentList = findCurrentList(this.props.selectedToDo.listID);
     const currentToDo = findCurrentToDoInJSON(currentList, this.props.selectedToDo);    
 
     if (currentToDo === undefined) return; // if selected list is changes
@@ -88,5 +82,5 @@ export default class SetStarLevel extends React.Component {
     }
   }
 
-  clearStarLevel = () => { this.updateStarLevelInJSON(0, this.props.selectedList, this.props.selectedToDo) }
+  clearStarLevel = () => { this.updateStarLevelInJSON(0, this.props.selectedToDo) }
 }

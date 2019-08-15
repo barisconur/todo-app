@@ -16,6 +16,7 @@ export default class AppView extends React.Component {
   }
 
   render() {
+    console.log(appJson);
     return (
       <Fragment>
         <Container id="app-container">

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 
 import ToDoItem from '../container/ToDoItem';
+import Navbar from './Navbar';
 
 import starIcon from '../../../../../assets/background-images/star-big-icon.svg';
 
@@ -25,6 +26,13 @@ export default class StarredPanel extends React.Component {
 
   componentWillMount() { this.setToDos() }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedToDo !== prevProps.selectedToDo) {
+      console.log("buraya girdi mi");
+      this.setToDos();
+    }
+  }
+
   setToDos = () => { 
     this.setState({ toDos: getAllToDos() }, () => {
       this.searchInSet(this.state.toDos);
@@ -32,7 +40,6 @@ export default class StarredPanel extends React.Component {
   }
 
   searchInSet = (todos) => { 
-    console.log(todos);
     const foundedToDos = this.search(todos);
     const toDoSet = groupByListID(foundedToDos);
     const orderedToDoSet = orderToDoSet(toDoSet);
@@ -41,10 +48,8 @@ export default class StarredPanel extends React.Component {
   }
 
   search = (list) => {
-    console.log(list);
     if (list === undefined) return;
     return list.filter((toDoItem) => {
-      console.log(toDoItem);
       if (toDoItem.toDoStatus.isStarred) return true;
       return false;
     });
@@ -59,13 +64,15 @@ export default class StarredPanel extends React.Component {
   }
 
   renderToDoPanel = (toDoSet) => {
-    console.log(toDoSet);
     if (toDoSet === undefined) return;
 
     if (toDoSet.length === 0) {
       return this.renderNotFoundPanel();
     } else {
-      return <div className="all-items-container"> { this.renderToDoSet() } </div>
+      return <div className="all-items-container"> 
+      <Navbar newSelectedListName= {this.props.selectedList.listName}></Navbar>
+      { this.renderToDoSet() }
+      </div>
     }
   }
 
@@ -74,7 +81,7 @@ export default class StarredPanel extends React.Component {
   }
 
   renderNotFoundPageSrc = () => {
-    if (this.props.listID === undefined) return;
+    if (this.props.selectedList.listID === undefined) return;
     return <Fragment>
             <img className="empty-list-img" src={starIcon} alt="star-img"></img>
             <h2 className="empty-list-text">You have no Starred to-do</h2>
@@ -83,10 +90,8 @@ export default class StarredPanel extends React.Component {
 
   renderToDoSet = () => {
     const toDoSet = this.state.toDoSet;
-    console.log("todoSet: ", toDoSet);
     if (toDoSet !== undefined) {
         return toDoSet.map((toDoGroup => {
-          console.log(toDoGroup);
           const listName = toDoGroup[0].listName;
           return <div className="todo-items-container">
                    <Button variant="info" className="list-group-tag" onClick={() =>this.renderSelectedList(listName)}>
@@ -99,10 +104,9 @@ export default class StarredPanel extends React.Component {
   }
 
   renderToDoGroupItem = (toDoGroup) => {
-    console.log(toDoGroup);
     return toDoGroup.map((toDoItem) => {
       return <Fragment>
-              <ToDoItem toDoItem={toDoItem} key={shortid.generate()} 
+              <ToDoItem toDoItem={toDoItem} key={shortid.generate()}c
               updateToDo= {this.updateToDo} />
             </Fragment>
     })
