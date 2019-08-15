@@ -56,7 +56,7 @@ export default class ToDoPanelView extends React.Component {
     if (this.props.searchedWord.length !== 0) {
       return <SearchPanel searchedWord={this.props.searchedWord} updateSelectedList={this.sendSelectedListToAppView} 
       updateToDo={this.setSelectedToDo}/>
-    } else if (typeof this.props.selectedList.listID === 'string' || this.props.selectedList.listID === 0) {
+    } else if (this.props.selectedList.listID >= 4 || this.props.selectedList.listID === 0) {
       return this.renderToDoPanel();
     } else {
       console.log("buraya giriyo mu");

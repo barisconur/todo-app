@@ -4,14 +4,9 @@ export const isEmptyString = (str) => (str.length === 0) ? true : false;
 
 export const isEnterKeyPressed = (ev) => (ev.key === 'Enter') ? true : false;
 
-export const findCurrentListInJSON = (list) => {
-  return appJson.listItems[findCurrentListIndex(list)];
-}
+export const findCurrentListInJSON = (list) => appJson.listItems[findCurrentListIndex(list)] 
 
-export const findCurrentList = (listID) => { 
-  console.log(listID);
-  return appJson.listItems[listID];
-}
+export const findCurrentList = (listID) => appJson.listItems[listID] 
 
 export const findCurrentToDo = (listID, toDo) => {
   const currentList = findCurrentList(listID);

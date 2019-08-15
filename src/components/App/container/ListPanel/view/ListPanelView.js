@@ -68,6 +68,7 @@ export default class ListPanelView extends React.Component {
 
   renderAddedLists = () => {
     const newListItems = appJson.listItems.slice(4, appJson.listItems.length);
+    console.log(newListItems);
     return newListItems.map((list) => {
       return <ListItem listItem={ list } key={shortid.generate()} 
       sendSelectedToView={this.sendSelectedListToAppView} updateList={this.updateList}/>

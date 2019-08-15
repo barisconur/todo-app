@@ -41,9 +41,10 @@ export default class ListItem extends React.Component {
   renderList = () => {
     const listItem = this.props.listItem;
     const listName = listItem.listName;
-    const listID = listItem.listID;
+    const listID = listItem.listID;    
     
-    if (typeof listID === 'number') {
+    if (listID <= 3) {
+      console.log("buraya 222");
       return <div className="list-item-wrapper">
 
                 <NavLink className="list-link" to={'/lists/' + listName} onClick= {this.setSelectedList}>
@@ -53,25 +54,24 @@ export default class ListItem extends React.Component {
 
              </div>
     } else {
-      if (listName !== undefined) {
-        return <Fragment>
-                <MenuProvider id= {listID}>
-                  <div className="list-item-wrapper">
+      console.log("buradanmı renderlıyo"); 
+      return <Fragment>
+              <MenuProvider id= {listID}>
+                <div className="list-item-wrapper">
 
-                    <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
-                      <img className="list-icon" src={listIcon} alt="list-icon"></img>
-                      <h2 className="list-text">{listName}</h2>
-                    </NavLink>
-                    { this.renderCountTexts() }
-                  </div>
-                </MenuProvider>
+                  <NavLink className="list-link" to={'/lists/' + listID} onClick={this.setSelectedList}>
+                    <img className="list-icon" src={listIcon} alt="list-icon"></img>
+                    <h2 className="list-text">{listName}</h2>
+                  </NavLink>
+                  { this.renderCountTexts() }
+                </div>
+              </MenuProvider>
 
-                { this.renderListMenu(listID) }
+              { this.renderListMenu(listID) }
 
-                <ListModificationModal listItem={ listItem } isRenameModalOpen={this.state.isRenameModalOpen} 
-                sendModalUpdate={this.sendSelectedListToAppView} updateList={this.props.updateList} closeModal={this.closeModalBox}/>
-             </Fragment>
-      }
+              <ListModificationModal listItem={ listItem } isRenameModalOpen={this.state.isRenameModalOpen} 
+              sendModalUpdate={this.sendSelectedListToAppView} updateList={this.props.updateList} closeModal={this.closeModalBox}/>
+            </Fragment>
     }
   }
   

@@ -16,7 +16,9 @@ export default class CreateItemModal extends React.Component {
     this.userInput = React.createRef();
 
     this.state = {
-      input: ""
+      input: "",
+      listID: 4,
+      folderID: 0
     }
   }
 
@@ -84,21 +86,24 @@ export default class CreateItemModal extends React.Component {
   }
 
   registerNewFolderItem = (folderItems) => {
-    const newFolder = { folderID: shortid.generate(),
+    const newFolder = { folderID: this.state.folderID,
                        folderName: this.state.input,
                        listGroup: []
                       };
-
+      this.setState(prevState => {
+       return {folderID: prevState.folderID + 1}
+    })
+    this.setState(prevState => {return { folderID: prevState.folderID++ }});
     folderItems.push(newFolder);
   }
 
   registerNewListItem = (listItems) => {
-    const newList = { listID: shortid.generate(),
-                          listName: this.state.input,
-                          toDoItems: [],
-                          numberOfIncompletedToDoCount: 0
-                        };
-
+    this.setState(prevState => {return { listID: prevState.listID + 1}});
+    const newList = { listID: this.state.listID,
+                      listName: this.state.input,
+                      toDoItems: [],
+                      numberOfIncompletedToDoCount: 0
+                    };
     const newSelectedList = newList;
 
     appJson.selectedList = newSelectedList;
