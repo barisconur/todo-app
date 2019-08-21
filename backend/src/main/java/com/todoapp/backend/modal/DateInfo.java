@@ -1,4 +1,4 @@
-package com.personal.todobackend.modal;
+package com.todoapp.backend.modal;
 
 public class DateInfo {
     private String creationDate;

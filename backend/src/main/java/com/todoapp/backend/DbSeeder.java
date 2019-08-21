@@ -1,13 +1,11 @@
-package com.personal.todobackend;
+package com.todoapp.backend;
 
-import com.personal.todobackend.modal.ListItem;
-import com.personal.todobackend.repository.ListItemRepository;
+import com.todoapp.backend.modal.ListItem;
+import com.todoapp.backend.repository.ListItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {

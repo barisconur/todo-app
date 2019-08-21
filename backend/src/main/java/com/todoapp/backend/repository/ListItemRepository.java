@@ -1,6 +1,6 @@
-package com.personal.todobackend.repository;
+package com.todoapp.backend.repository;
 
-import com.personal.todobackend.modal.ListItem;
+import com.todoapp.backend.modal.ListItem;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

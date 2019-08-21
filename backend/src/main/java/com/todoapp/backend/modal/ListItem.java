@@ -1,4 +1,4 @@
-package com.personal.todobackend.modal;
+package com.todoapp.backend.modal;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
