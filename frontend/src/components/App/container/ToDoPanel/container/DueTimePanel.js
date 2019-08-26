@@ -51,11 +51,12 @@ export default class DueTimePanel extends React.Component {
     return list.filter((toDoItem) => {
       if (toDoItem.toDoDetails.dueDate === null) return;
       let selectedDate = toDoItem.toDoDetails.dueDate;
-      if (this.props.listID === 2) {
+      if (this.props.selectedList.listID === 2) {
         if (selectedDate.toDateString() === currDate) return true;
         return false;
       } else {
-        if (selectedDate.toDateString().split(" ")[3] === currDate.split(" ")[3]) {
+        if ((selectedDate.toDateString().split(" ")[3] === currDate.split(" ")[3])
+         && selectedDate.toDateString().split(" ")[1] === currDate.split(" ")[1]) {
           if (selectedDate.toDateString().split(" ")[2] - currDate.split(" ")[2] < 7) {
             return true;
           }

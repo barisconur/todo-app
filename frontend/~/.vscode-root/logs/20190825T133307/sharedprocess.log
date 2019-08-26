@@ -1,0 +1,14 @@
+[2019-08-25 13:33:10.560] [sharedprocess] [info] main {"machineId":"fe9b618750eb3170c524812632d3986061d13e22dbada6317312847856f16d7b"}
+[2019-08-25 13:33:12.857] [sharedprocess] [info] Installing extension: tobiasalthoff.atom-material-theme
+[2019-08-25 13:33:12.858] [sharedprocess] [info] Installing extension: zhuangtongfa.material-theme
+[2019-08-25 13:33:13.922] [sharedprocess] [info] Downloaded extension: zhuangtongfa.material-theme /tmp/83c932d0-2bd3-4bdb-9586-839b6d517cc5
+[2019-08-25 13:33:13.950] [sharedprocess] [info] Extracted extension to /home/cemal-pro/.vscode/extensions/.zhuangtongfa.material-theme-2.27.0: zhuangtongfa.material-theme
+[2019-08-25 13:33:13.951] [sharedprocess] [info] Renamed to /home/cemal-pro/.vscode/extensions/zhuangtongfa.material-theme-2.27.0
+[2019-08-25 13:33:13.951] [sharedprocess] [info] Installation completed. zhuangtongfa.material-theme
+[2019-08-25 13:33:13.957] [sharedprocess] [info] Extensions installed successfully: zhuangtongfa.material-theme
+[2019-08-25 13:33:14.669] [sharedprocess] [info] Downloaded extension: tobiasalthoff.atom-material-theme /tmp/4b1c0131-9379-4e1e-ad09-966f5cff67fa
+[2019-08-25 13:33:14.759] [sharedprocess] [info] Extracted extension to /home/cemal-pro/.vscode/extensions/.tobiasalthoff.atom-material-theme-1.8.0: tobiasalthoff.atom-material-theme
+[2019-08-25 13:33:14.759] [sharedprocess] [info] Renamed to /home/cemal-pro/.vscode/extensions/tobiasalthoff.atom-material-theme-1.8.0
+[2019-08-25 13:33:14.760] [sharedprocess] [info] Installation completed. tobiasalthoff.atom-material-theme
+[2019-08-25 13:33:14.767] [sharedprocess] [info] Extensions installed successfully: tobiasalthoff.atom-material-theme
+[2019-08-25 13:33:50.556] [sharedprocess] [info] Starting to clean up unused language packs.
